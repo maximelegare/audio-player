@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { AudioPLayer } from "../components/AudioPLayer";
+import { AudioPlayer } from "../components/AudioPlayer";
 import styles from "../styles/Home.module.scss";
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <AudioPLayer />
+        <AudioPlayer />
       </main>
     </div>
   );
