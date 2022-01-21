@@ -95,7 +95,7 @@ $selected-knobby: #26c9c3;
   }
 
   // Section before the knobby - chrome & safari
-    ::before {
+    &::before {
     content: "";
     height: 11px;
     width: $seek-before-width;

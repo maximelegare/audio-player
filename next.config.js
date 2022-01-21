@@ -2,7 +2,7 @@ module.exports = {
   reactStrictMode: true,
   webpack(config, options) {
     config.module.rules.push({
-      test: /\.(ogg|mp3|wav|mpe?g)$/i,
+      test: /\.(ogg|mp3|wav|mpe|flac|m4a?g)$/i,
       use: [
         {
           loader: "url-loader",
