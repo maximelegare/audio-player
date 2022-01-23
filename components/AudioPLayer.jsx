@@ -94,11 +94,6 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
   //   updates the player current time (the range input)
 
   const changePlayerCurrentTime = () => {
-    // progressBar.current.style.setProperty(
-    //   "$seek-before-width",
-    //   `${(progressBar.current.value / duration) * 100}%`
-    // );
-
     setCurrentTime(progressBar.current.value);
   };
 
@@ -112,15 +107,16 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
     return `${minutes}:${returnedSeconds}`;
   };
 
-  const backThirty = () => {
-    //   console.log(audioPlayer.current.currentTime - 30)
-    progressBar.current.value = Number(audioPlayer.current.currentTime - 30);
-    changeRange();
+  const backFive = () => {
+    const values = Number(audioPlayer.current.currentTime - 5);
+    setRangeInput({...rangeInput, values:[values]})  
+    changeRange(values);
   };
 
-  const forwardThirty = () => {
-    progressBar.current.value = Number(audioPlayer.current.currentTime + 30);
-    changeRange();
+  const forwardFive = () => {
+    const values = Number(audioPlayer.current.currentTime + 5);
+    setRangeInput({...rangeInput, values:[values]})  
+    changeRange(values);
   };
 
   return (
@@ -150,7 +146,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
       <div className={styles.controles}>
         <div className={styles.controlesButtons}>
           <audio ref={audioPlayer} src={fileUrl} preload="metadata"></audio>
-          <button className={styles.forwardBackward} onClick={backThirty}>
+          <button className={styles.forwardBackward} onClick={backFive}>
             <GoArrowLeft className={styles.arrow} />
           </button>
 
@@ -158,7 +154,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
             {isPlaying ? <GiPauseButton /> : <FaPlay className={styles.play} />}
           </button>
 
-          <button className={styles.forwardBackward} onClick={forwardThirty}>
+          <button className={styles.forwardBackward} onClick={forwardFive}>
             <GoArrowRight className={styles.arrow} />
           </button>
         </div>
