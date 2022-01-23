@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import styles from "../styles/AudioPlayer.module.scss";
+import styles from "../../styles/AudioPlayer.module.scss";
 
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { FaPlay } from "react-icons/fa";
 import { GiPauseButton } from "react-icons/gi";
 import { getTrackBackground, Range } from "react-range";
+import RangeInput from "../_Core/RangeInput";
 
 const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
   // State
@@ -17,6 +18,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
     values: [0],
     max: 100,
     min: 0,
+    step:1
   });
 
   const [scroll, setScroll] = useState({
@@ -66,7 +68,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
   useEffect(() => {
     const seconds = Math.floor(audioPlayer.current.duration);
 
-    progressBar.current.max = seconds;
+    // progressBar.current.max = seconds;
 
     // setDuration(seconds);
     setRangeInput({ ...rangeInput, max: seconds });
@@ -76,7 +78,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
 
   //   animation that updates the range while it's playing
   const whilePlaying = () => {
-    setRangeInput({...rangeInput,values:[audioPlayer.current.currentTime]});
+    setRangeInput({ ...rangeInput, values: [audioPlayer.current.currentTime] });
     changePlayerCurrentTime();
 
     // call itself to always do the animation
@@ -85,16 +87,16 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
 
   //   when a user drag the knob, it updates the progress-bar
   const changeRange = (values) => {
-    setRangeInput({ ...rangeInput, values: [values] })
+    setRangeInput({ ...rangeInput, values: [values] });
 
     audioPlayer.current.currentTime = values;
-    changePlayerCurrentTime();
+    changePlayerCurrentTime(values);
   };
 
   //   updates the player current time (the range input)
 
-  const changePlayerCurrentTime = () => {
-    setCurrentTime(progressBar.current.value);
+  const changePlayerCurrentTime = (values) => {
+    setCurrentTime(values);
   };
 
   // calculate the time that is displayed
@@ -109,13 +111,13 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
 
   const backFive = () => {
     const values = Number(audioPlayer.current.currentTime - 5);
-    setRangeInput({...rangeInput, values:[values]})  
+    setRangeInput({ ...rangeInput, values: [values] });
     changeRange(values);
   };
 
   const forwardFive = () => {
     const values = Number(audioPlayer.current.currentTime + 5);
-    setRangeInput({...rangeInput, values:[values]})  
+    setRangeInput({ ...rangeInput, values: [values] });
     changeRange(values);
   };
 
@@ -159,7 +161,9 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
           </button>
         </div>
         <div className={styles.rangeBar}>
-          <div className={styles.currentTime}>{calculateTime(rangeInput.values[0])}</div>
+          <div className={styles.currentTime}>
+            {calculateTime(rangeInput.values[0])}
+          </div>
 
           {/* <input
             className={styles.progressBar}
@@ -169,7 +173,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
             onChange={changeRange}
           /> */}
 
-          <Range
+          {/* <Range
             step={1}
             min={rangeInput.min}
             max={rangeInput.max}
@@ -231,7 +235,15 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
                 }}
               />
             )}
+          /> */}
+          <RangeInput
+            values={rangeInput.values}
+            min={rangeInput.min}
+            max={rangeInput.max}
+            step={rangeInput.step}
+            updateValues={(values) => changeRange(values)}
           />
+
           <div className={styles.duration}>
             {calculateTime(audioPlayer?.current?.duration)}
           </div>
