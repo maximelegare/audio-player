@@ -13,7 +13,11 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
-  const [rangeValues, setRangeValues] = useState([50])
+  const [rangeInput, setRangeInput] = useState({
+    values: [0],
+    max: 100,
+    min: 0,
+  });
 
   const [scroll, setScroll] = useState({
     title: false,
@@ -64,42 +68,39 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
 
     progressBar.current.max = seconds;
 
-    setDuration(seconds);
-    setRangeValues([seconds]);
+    // setDuration(seconds);
+    setRangeInput({ ...rangeInput, max: seconds });
+
     // make sure the audioPlayer exists
   }, [audioPlayer?.current?.loadedmetadata]);
 
-
-
   //   animation that updates the range while it's playing
-  // const whilePlaying = () => {
-  //   progressBar.current.value = audioPlayer.current.currentTime;
-  //   changePlayerCurrentTime();
+  const whilePlaying = () => {
+    setRangeInput({...rangeInput,values:[audioPlayer.current.currentTime]});
+    changePlayerCurrentTime();
 
-  //   // call itself to always do the animation
-  //   animationRef.current = requestAnimationFrame(whilePlaying);
-  // };
+    // call itself to always do the animation
+    animationRef.current = requestAnimationFrame(whilePlaying);
+  };
 
-  
-  
   //   when a user drag the knob, it updates the progress-bar
+  const changeRange = (values) => {
+    setRangeInput({ ...rangeInput, values: [values] })
 
-  // const changeRange = (values) => {
-  //   setRangeValue([values])
-  //   audioPlayer.current.currentTime = progressBar.current.value;
-  //   changePlayerCurrentTime();
-  // };
+    audioPlayer.current.currentTime = values;
+    changePlayerCurrentTime();
+  };
 
   //   updates the player current time (the range input)
 
-  // const changePlayerCurrentTime = () => {
-  //   progressBar.current.style.setProperty(
-  //     "$seek-before-width",
-  //     `${(progressBar.current.value / duration) * 100}%`
-  //   );
+  const changePlayerCurrentTime = () => {
+    // progressBar.current.style.setProperty(
+    //   "$seek-before-width",
+    //   `${(progressBar.current.value / duration) * 100}%`
+    // );
 
-  //   setCurrentTime(progressBar.current.value);
-  // };
+    setCurrentTime(progressBar.current.value);
+  };
 
   // calculate the time that is displayed
   const calculateTime = (secs) => {
@@ -162,7 +163,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
           </button>
         </div>
         <div className={styles.rangeBar}>
-          <div className={styles.currentTime}>{calculateTime(currentTime)}</div>
+          <div className={styles.currentTime}>{calculateTime(rangeInput.values[0])}</div>
 
           {/* <input
             className={styles.progressBar}
@@ -171,35 +172,52 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
             ref={progressBar}
             onChange={changeRange}
           /> */}
+
           <Range
             step={1}
-            min={0}
-            max={duration? duration : 100}
+            min={rangeInput.min}
+            max={rangeInput.max}
             ref={progressBar}
-            values={rangeValues}
-            onChange={(values) => setRangeValues([values])}
+            values={rangeInput.values}
+            onChange={(values) =>
+              changeRange(values)
+            }
             renderTrack={({ props, children }) => (
               <div
-                {...props}
-                ref={props.ref}
+                onMouseDown={props.onMouseDown}
+                onTouchStart={props.onTouchStart}
                 style={{
                   ...props.style,
-                  height: "6px",
-                  width: "max(30vw, 100px)",
-                  // backgroundColor: "#ffe3d4",
-                  cursor: "pointer",
-                  background:getTrackBackground({
-                    values:rangeValues,
-                    colors:["#26c9c3", "#ffe3d4"],
-                    min:0,
-                    max:duration? duration :100
-                  })
+                  width: "max(30vw, 300px)",
+                  height: "20px",
+                  backgroundColor: "transparent",
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
-                {children}
+                <div
+                  {...props}
+                  ref={props.ref}
+                  style={{
+                    ...props.style,
+                    height: "6px",
+                    width: "max(30vw, 300px)",
+                    borderRadius: "10px",
+                    // backgroundColor: "#ffe3d4",
+                    cursor: "pointer",
+                    background: getTrackBackground({
+                      values: rangeInput.values,
+                      colors: ["#26c9c3", "#ffe3d4"],
+                      min: rangeInput.min,
+                      max: rangeInput.max,
+                    }),
+                  }}
+                >
+                  {children}
+                </div>
               </div>
             )}
-            renderThumb={({ props, isDragged }) => (
+            renderThumb={({ props, isDragged, value }) => (
               <div
                 {...props}
                 defaultValue={0}
@@ -209,16 +227,13 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
                   height: "20px",
                   width: "20px",
                   backgroundColor: "#26c9c3",
-                  visibility: isDragged?"visible":"hidden",
-                  borderRadius:"50%",
-                  justifyContent:"center",
-                  alignItems:"center",
+                  visibility: isDragged ? "visible" : "hidden",
+                  borderRadius: "50%",
+                  justifyContent: "center",
+                  alignItems: "center",
                   display: "flex",
-
                 }}
               />
-               
-              
             )}
           />
           <div className={styles.duration}>
