@@ -5,14 +5,15 @@ import styles from "../styles/AudioPlayer.module.scss";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { FaPlay } from "react-icons/fa";
 import { GiPauseButton } from "react-icons/gi";
-
-
+import { getTrackBackground, Range } from "react-range";
 
 const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
   // State
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+
+  const [rangeValues, setRangeValues] = useState([50])
 
   const [scroll, setScroll] = useState({
     title: false,
@@ -64,33 +65,41 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
     progressBar.current.max = seconds;
 
     setDuration(seconds);
+    setRangeValues([seconds]);
     // make sure the audioPlayer exists
   }, [audioPlayer?.current?.loadedmetadata]);
 
+
+
   //   animation that updates the range while it's playing
-  const whilePlaying = () => {
-    progressBar.current.value = audioPlayer.current.currentTime;
-    changePlayerCurrentTime();
+  // const whilePlaying = () => {
+  //   progressBar.current.value = audioPlayer.current.currentTime;
+  //   changePlayerCurrentTime();
 
-    // call itself to always do the animation
-    animationRef.current = requestAnimationFrame(whilePlaying);
-  };
+  //   // call itself to always do the animation
+  //   animationRef.current = requestAnimationFrame(whilePlaying);
+  // };
 
+  
+  
   //   when a user drag the knob, it updates the progress-bar
-  const changeRange = () => {
-    audioPlayer.current.currentTime = progressBar.current.value;
-    changePlayerCurrentTime();
-  };
+
+  // const changeRange = (values) => {
+  //   setRangeValue([values])
+  //   audioPlayer.current.currentTime = progressBar.current.value;
+  //   changePlayerCurrentTime();
+  // };
 
   //   updates the player current time (the range input)
-  const changePlayerCurrentTime = () => {
-    progressBar.current.style.setProperty(
-      "$seek-before-width",
-      `${(progressBar.current.value / duration) * 100}%`
-    );
 
-    setCurrentTime(progressBar.current.value);
-  };
+  // const changePlayerCurrentTime = () => {
+  //   progressBar.current.style.setProperty(
+  //     "$seek-before-width",
+  //     `${(progressBar.current.value / duration) * 100}%`
+  //   );
+
+  //   setCurrentTime(progressBar.current.value);
+  // };
 
   // calculate the time that is displayed
   const calculateTime = (secs) => {
@@ -149,18 +158,68 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
           </button>
 
           <button className={styles.forwardBackward} onClick={forwardThirty}>
-            <GoArrowRight className={styles.arrow}/>
+            <GoArrowRight className={styles.arrow} />
           </button>
         </div>
         <div className={styles.rangeBar}>
           <div className={styles.currentTime}>{calculateTime(currentTime)}</div>
 
-          <input
+          {/* <input
             className={styles.progressBar}
             defaultValue="0"
             type="range"
             ref={progressBar}
             onChange={changeRange}
+          /> */}
+          <Range
+            step={1}
+            min={0}
+            max={duration? duration : 100}
+            ref={progressBar}
+            values={rangeValues}
+            onChange={(values) => setRangeValues([values])}
+            renderTrack={({ props, children }) => (
+              <div
+                {...props}
+                ref={props.ref}
+                style={{
+                  ...props.style,
+                  height: "6px",
+                  width: "max(30vw, 100px)",
+                  // backgroundColor: "#ffe3d4",
+                  cursor: "pointer",
+                  background:getTrackBackground({
+                    values:rangeValues,
+                    colors:["#26c9c3", "#ffe3d4"],
+                    min:0,
+                    max:duration? duration :100
+                  })
+                }}
+              >
+                {children}
+              </div>
+            )}
+            renderThumb={({ props, isDragged }) => (
+              <div
+                {...props}
+                defaultValue={0}
+                // className={}
+                style={{
+                  ...props.style,
+                  height: "20px",
+                  width: "20px",
+                  backgroundColor: "#26c9c3",
+                  visibility: isDragged?"visible":"hidden",
+                  borderRadius:"50%",
+                  justifyContent:"center",
+                  alignItems:"center",
+                  display: "flex",
+
+                }}
+              />
+               
+              
+            )}
           />
           <div className={styles.duration}>
             {calculateTime(audioPlayer?.current?.duration)}
