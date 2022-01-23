@@ -1,68 +1,78 @@
 import React from "react";
 import { getTrackBackground, Range } from "react-range";
 
-const RangeInput = ({values, step ,min, max, updateValues}) => {
+import styles from "../../styles/AudioPlayer.module.scss";
+
+import { calculateTime } from "../../lib/calculateTime";
+
+const RangeInput = ({ values, step, min, max, updateValues, time }) => {
   return (
-    <Range
-      step={step}
-      min={min}
-      max={max}
-      values={values}
-      onChange={(values) => updateValues(values)}
-      renderTrack={({ props, children }) => (
-        <div
-          onMouseDown={props.onMouseDown}
-          onTouchStart={props.onTouchStart}
-          style={{
-            ...props.style,
-            width: "max(30vw, 300px)",
-            height: "20px",
-            backgroundColor: "transparent",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+    <div className={styles.rangeBar}>
+      {time && (
+        <div className={styles.currentTime}>{calculateTime(values[0])}</div>
+      )}
+      <Range
+        step={step}
+        min={min}
+        max={max}
+        values={values}
+        onChange={(values) => updateValues(values)}
+        renderTrack={({ props, children }) => (
           <div
-            {...props}
-            ref={props.ref}
+            onMouseDown={props.onMouseDown}
+            onTouchStart={props.onTouchStart}
             style={{
               ...props.style,
-              height: "6px",
               width: "max(30vw, 300px)",
-              borderRadius: "10px",
-              // backgroundColor: "#ffe3d4",
-              cursor: "pointer",
-              background: getTrackBackground({
-                values: values,
-                colors: ["#26c9c3", "#ffe3d4"],
-                min: min,
-                max: max,
-              }),
+              height: "20px",
+              backgroundColor: "transparent",
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            {children}
+            <div
+              {...props}
+              ref={props.ref}
+              style={{
+                ...props.style,
+                height: "6px",
+                width: "max(30vw, 300px)",
+                borderRadius: "10px",
+                // backgroundColor: "#ffe3d4",
+                cursor: "pointer",
+                background: getTrackBackground({
+                  values: values,
+                  colors: ["#26c9c3", "#ffe3d4"],
+                  min: min,
+                  max: max,
+                }),
+              }}
+            >
+              {children}
+            </div>
           </div>
-        </div>
-      )}
-      renderThumb={({ props, isDragged, value }) => (
-        <div
-          {...props}
-          defaultValue={0}
-          // className={}
-          style={{
-            ...props.style,
-            height: "20px",
-            width: "20px",
-            backgroundColor: "#26c9c3",
-            visibility: isDragged ? "visible" : "hidden",
-            borderRadius: "50%",
-            justifyContent: "center",
-            alignItems: "center",
-            display: "flex",
-          }}
-        />
-      )}
-    />
+        )}
+        renderThumb={({ props, isDragged, value }) => (
+          <div
+            {...props}
+            defaultValue={0}
+            // className={}
+            style={{
+              ...props.style,
+              height: "20px",
+              width: "20px",
+              backgroundColor: "#26c9c3",
+              visibility: isDragged ? "visible" : "hidden",
+              borderRadius: "50%",
+              justifyContent: "center",
+              alignItems: "center",
+              display: "flex",
+            }}
+          />
+        )}
+      />
+      {time && <div className={styles.duration}>{calculateTime(max)}</div>}
+    </div>
   );
 };
 
