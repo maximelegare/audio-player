@@ -1,22 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
-
+import Image from "next/image";
 import styles from "../styles/AudioPlayer.module.scss";
 
-import { BsArrowLeftShort, BsArrowRightShort } from "react-icons/bs";
+import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { FaPlay } from "react-icons/fa";
 import { GiPauseButton } from "react-icons/gi";
 
-const AudioPlayer = () => {
+
+
+const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
   // State
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [musicData, setMusicData] = useState(null);
 
-  const [musicList, setMusicList] = useState([
-    "http://k007.kiwi6.com/hotlink/gugxzndy8i/MojoWerkin.mp3",
-    "http://k007.kiwi6.com/hotlink/63pvscg93o/Inner_voice.mp3",
-  ]);
+  const [scroll, setScroll] = useState({
+    title: false,
+    artist: false,
+  });
 
   // reference
   const audioPlayer = useRef(null); // Reference audio component
@@ -25,21 +26,20 @@ const AudioPlayer = () => {
 
   const animationRef = useRef(null); // Animation
 
-  const fetchMusic = async (song = "http://k007.kiwi6.com/hotlink/63pvscg93o/Inner_voice.mp3") => {
-  
-    const data = await fetch("http://localhost:3000/api/music-infos", {
-      method: "POST",
-      body: song,
-    });
-    const result = await data.json();
-    setIsPlaying(false)
-    setCurrentTime(0)
-    setMusicData(result);
-  };
+  const titleRef = useRef();
+  const artistRef = useRef();
 
   useEffect(() => {
-    fetchMusic();
-  }, []);
+    if (titleRef.current) {
+      if (titleRef.current.offsetWidth === 300) {
+        setScroll({ ...scroll, title: true });
+      }
+      if (artistRef.current.offsetWidth === 300) {
+        setScroll({ ...scroll, artist: true });
+      }
+    }
+    console.log(scroll);
+  }, [titleRef.current, artistRef.current]);
 
   // need to get the previous value bc use state is asynchronous and wont have time to do conditionnal before it's done running
   function handleClickPlayPause() {
@@ -114,36 +114,47 @@ const AudioPlayer = () => {
   };
 
   return (
-    <div>
-      {musicList.map((song) => (
-        <div onClick={() => fetchMusic(song)} key={song}>{song}</div>
-      ))}
-       <br />
-       <div>{musicData?.data?.metadata.common.title}</div> 
-       <div>{musicData?.data?.metadata.common.artist}</div> 
+    <div className={styles.audioPlayer}>
+      <div className={styles.infosContainer}>
+        <div className={styles.infosWrapper}>
+          <div className={styles.imageWrapper}>
+            <Image
+              src={imgUrl}
+              alt=""
+              width={80}
+              height={75}
+              objectFit="cover"
+              className={styles.image}
+            />
+          </div>
 
-      <div className={styles.audioPlayer}>
-        <audio
-          ref={audioPlayer}
-          src={musicData?.data?.url}
-          preload="metadata"
-        ></audio>
+          <div className={styles.infos}>
+            <h3 ref={titleRef} className={styles.titleAnimation}>
+              {title}
+            </h3>
+            <p ref={artistRef}>{artist}</p>
+          </div>
+        </div>
+      </div>
+      {/* <div></div> */}
+      <div className={styles.controles}>
+        <div className={styles.controlesButtons}>
+          <audio ref={audioPlayer} src={fileUrl} preload="metadata"></audio>
+          <button className={styles.forwardBackward} onClick={backThirty}>
+            <GoArrowLeft className={styles.arrow} />
+          </button>
 
-        <button className={styles.forwardBackward} onClick={backThirty}>
-          <BsArrowLeftShort /> 30
-        </button>
+          <button onClick={handleClickPlayPause} className={styles.playPause}>
+            {isPlaying ? <GiPauseButton /> : <FaPlay className={styles.play} />}
+          </button>
 
-        <button onClick={handleClickPlayPause} className={styles.playPause}>
-          {isPlaying ? <GiPauseButton /> : <FaPlay className={styles.play} />}
-        </button>
+          <button className={styles.forwardBackward} onClick={forwardThirty}>
+            <GoArrowRight className={styles.arrow}/>
+          </button>
+        </div>
+        <div className={styles.rangeBar}>
+          <div className={styles.currentTime}>{calculateTime(currentTime)}</div>
 
-        <button className={styles.forwardBackward} onClick={forwardThirty}>
-          30 <BsArrowRightShort />
-        </button>
-
-        <div className={styles.currentTime}>{calculateTime(currentTime)}</div>
-
-        <div>
           <input
             className={styles.progressBar}
             defaultValue="0"
@@ -151,12 +162,12 @@ const AudioPlayer = () => {
             ref={progressBar}
             onChange={changeRange}
           />
-        </div>
-
-        <div className={styles.duration}>
-          {calculateTime(musicData?.data?.metadata.format.duration)}
+          <div className={styles.duration}>
+            {calculateTime(audioPlayer?.current?.duration)}
+          </div>
         </div>
       </div>
+      <div></div>
     </div>
   );
 };

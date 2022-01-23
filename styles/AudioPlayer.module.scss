@@ -1,41 +1,188 @@
-$primary-color: #f40082;
+$primary-color: linear-gradient(
+  90deg,
+  rgba(13, 231, 218, 1) 3%,
+  rgba(45, 226, 130, 1) 95%
+);
+
 $secondary-color: #ffd200;
+$bg-color: linear-gradient(
+  90deg,
+  rgba(41, 2, 64, 1) 0%,
+  rgba(34, 9, 98, 1) 100%
+);
+$white: #ffe3d4;
+$gray-100: #dbc5b9;
+$gray-200:#b9a69b;
+
+
 $bar-bg: #ffe3d4;
 $seek-before-width: 0;
 $seek-before-color: #ffc2a1;
 $knobby: #3452a5;
 $selected-knobby: #26c9c3;
 
+$gradiant-color: linear-gradient(
+  90deg,
+  rgba(13, 231, 218, 1) 3%,
+  rgb(18, 66, 41) 95%
+);
+
+// Title Animation
+.titleAnimation {
+  // transition: 100s opacity linear 0 infinite;
+  animation: title 20s linear 5s;
+  // animation-delay: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes title {
+  0% {
+    transform: translate(0);
+    opacity: 1;
+  }
+  49.998% {
+    opacity: 1;
+    transform: translate(-100%);
+  }
+  49.999% {
+    opacity: 0;
+  }
+  49.999% {
+    opacity: 0;
+    transform: translate(0);
+  }
+  50.000% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
 .audioPlayer {
-  display: flex;
-  width: 700px;
+  padding: 15px 0;
+  display: grid;
+  grid-template-columns: 4fr 8fr 4fr;
+  gap: 10px;
+  position: relative;
+  z-index: 0;
+  color: $white;
   align-items: center;
+  background: $bg-color;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  .controles {
+   
+  }
+
+  .controlesButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .rangeBar {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    align-items: center;
+  }
+}
+
+// Centers the informations section in the page
+.infosContainer {
+  // display: grid;
+  // justify-content: center;
+  position: relative;
+  width: 370px;
+
+  // informations about the track
+  .infosWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    // position: relative;
+    justify-content: flex-end;
+
+    .infos {
+      width: 250px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
+
+      // To make the container of the words the same as the content, to prevent problemes when the title is scrolling
+      h3,
+      p {
+        width: fit-content;
+        display: inline-block;
+      }
+      p{
+        margin-top: 5px;
+        color:$gray-100;
+      }
+    }
+  }
+
+  // position the Image component
+  .imageWrapper {
+    position: absolute;
+    top: -15px;
+    left: 25px;
+    cursor: pointer;
+
+    &:hover{
+      transform: scale(1.05);
+      transition: 200ms all ease-in-out;
+    }
+  }
+  
+  // Border-radius directly on the Image component
+  .image {
+    border-radius: 15px !important;
+  }
 }
 
 .forwardBackward {
+  color: $gray-200;
+
   background: none;
   border: none;
   display: flex;
   align-items: center;
   font-family: monospace;
-  font-size: 16px;
   cursor: pointer;
+  height: 100%;
+  height: 100%;
+  padding: 4px 11px;
+  margin: 0 10px;
+  border-radius: 5px;
+
+  font-size: 38px;
 
   &:hover {
-    color: $primary-color;
+    color: $white;
   }
 }
 .playPause {
   background: $primary-color;
   border: none;
   border-radius: 50%;
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
   font-size: 32px;
-  color: $secondary-color;
+  color: $white;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.05);
+    transition: 200ms all ease-in-out;
+  }
 }
 
 .play {
@@ -47,15 +194,14 @@ $selected-knobby: #26c9c3;
 .duration {
   font-family: monospace;
   font-size: 16px;
+  // display: inline-block;
 }
 
+.duration {
+  margin-left: 10px;
+}
 .currentTime {
-  margin: 0 10px 0 25px;
-
-}
-
-.duration{
-    margin-left: 10px;
+  margin-right: 10px;
 }
 
 .progressBar {
@@ -64,8 +210,8 @@ $selected-knobby: #26c9c3;
   background: $bar-bg;
   border-radius: 10px;
   position: relative;
-  width: 100%;
-  height: 11px;
+  height: 5px;
+  width: max(30vw, 200px);
   outline: none;
 
   // progressBar Safari
@@ -75,8 +221,9 @@ $selected-knobby: #26c9c3;
     border-radius: 10px;
     position: relative;
     width: 100%;
-    height: 11px;
+    height: 5px;
     outline: none;
+    cursor: pointer;
   }
 
   // progressBar Firefox
@@ -86,20 +233,23 @@ $selected-knobby: #26c9c3;
     border-radius: 10px;
     position: relative;
     width: 100%;
-    height: 11px;
+    height: 5px;
     outline: none;
+    cursor: pointer;
   }
+
   // no border Firefox
   &::-moz-focus-outer {
     border: 0;
   }
 
   // Section before the knobby - chrome & safari
-    &::before {
+  ::before {
     content: "";
-    height: 11px;
+    height: 5px;
     width: $seek-before-width;
-    background-color: $seek-before-color;
+    width: 20px;
+    background-color: $primary-color;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     position: absolute;
@@ -107,14 +257,16 @@ $selected-knobby: #26c9c3;
     left: 0;
     z-index: 3;
     cursor: pointer;
+    cursor: pointer;
   }
 
   // Section before the knobby - Firefox
   &::-moz-range-progress {
-    background-color: $seek-before-color;
+    background: $gradiant-color;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-    height: 11px;
+    height: 5px;
+    cursor: pointer;
   }
 
   // knobby chrome & safari
@@ -127,9 +279,10 @@ $selected-knobby: #26c9c3;
     background-color: $knobby;
     cursor: pointer;
     position: relative;
-    margin: -2px 0 0 0;
+    margin: -6px 0 0 0;
     z-index: 3;
     box-sizing: border-box;
+    cursor: pointer;
   }
 
   // knobby while dragging Chrome & Safari
@@ -149,13 +302,16 @@ $selected-knobby: #26c9c3;
     position: relative;
     z-index: 3;
     box-sizing: border-box;
+    visibility: hidden;
   }
 
   &:active::-moz-range-thumb {
     transform: scale(1.2);
     background: $selected-knobby;
+    visibility: visible;
   }
 }
+
 
 
 
