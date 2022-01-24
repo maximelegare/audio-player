@@ -40,8 +40,8 @@ const InfosAlbumPlaying = ({title, artist, imgUrl}) => {
           <Image
             src={imgUrl}
             alt=""
-            width={80}
-            height={75}
+            width={95}
+            height={90}
             objectFit="cover"
             className={styles.image}
           />
