@@ -29,7 +29,7 @@ $gradiant-color: linear-gradient(
 // Title Animation
 .titleAnimation {
   // transition: 100s opacity linear 0 infinite;
-  animation: title 20s linear 5s;
+  animation: title 10s linear 3s;
   // animation-delay: 2s;
   animation-iteration-count: infinite;
 }
@@ -39,18 +39,18 @@ $gradiant-color: linear-gradient(
     transform: translate(0);
     opacity: 1;
   }
-  49.998% {
+  69.998% {
     opacity: 1;
     transform: translate(-100%);
   }
-  49.999% {
+  69.999% {
     opacity: 0;
   }
-  49.999% {
+  69.999% {
     opacity: 0;
     transform: translate(0);
   }
-  50.000% {
+  70.000% {
     opacity: 1;
   }
   100% {
