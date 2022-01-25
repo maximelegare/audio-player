@@ -163,6 +163,7 @@ $gradiant-color: linear-gradient(
     color: $white;
   }
 }
+
 .playPause {
   background: $primary-color;
   border: none;
@@ -181,6 +182,7 @@ $gradiant-color: linear-gradient(
   }
 }
 
+ 
 .play {
   position: relative;
   margin-left: 5px;
@@ -209,4 +211,27 @@ $gradiant-color: linear-gradient(
   height: 5px;
   width: max(30vw, 200px);
   // outline: none;
+}
+
+
+.volumeContainer{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.iconButton{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  margin-right: 10px;
+  cursor: pointer;
+
+  .icon {
+    margin-top: 3px;
+    width: 25px;
+    height: 25px;
+    color:white
+  }
+  
 }

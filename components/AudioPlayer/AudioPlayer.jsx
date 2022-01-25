@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "../../styles/AudioPlayer.module.scss";
 
-import RangeInput from "../_Core/RangeInput";
 
 import ProgressBar from "../AudioPlayer/ProgressBar";
 
