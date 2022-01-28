@@ -29,12 +29,12 @@ $gradiant-color: linear-gradient(
 // Title Animation
 .titleAnimation {
   // transition: 100s opacity linear 0 infinite;
-  animation: title 10s linear 3s;
+  animation: scrollText 10s linear 3s;
   // animation-delay: 2s;
   animation-iteration-count: infinite;
 }
 
-@keyframes title {
+@keyframes scrollText {
   0% {
     transform: translate(0);
     opacity: 1;
@@ -129,7 +129,7 @@ $gradiant-color: linear-gradient(
   .imageWrapper {
     cursor: pointer;
     border-radius: 15px;
-    
+
     &:hover {
       transform: scale(1.05);
       transition: 200ms all ease-in-out;
@@ -142,9 +142,9 @@ $gradiant-color: linear-gradient(
   }
 }
 
+// Forward and backward buttons
 .forwardBackward {
   color: $gray-200;
-
   background: none;
   border: none;
   display: flex;
@@ -164,6 +164,7 @@ $gradiant-color: linear-gradient(
   }
 }
 
+// Play pause button
 .playPause {
   background: $primary-color;
   border: none;
@@ -182,7 +183,7 @@ $gradiant-color: linear-gradient(
   }
 }
 
- 
+//  Position only the play button
 .play {
   position: relative;
   margin-left: 5px;
@@ -195,6 +196,7 @@ $gradiant-color: linear-gradient(
   // display: inline-block;
 }
 
+// Duration & current time style
 .duration {
   margin-left: 10px;
 }
@@ -202,25 +204,15 @@ $gradiant-color: linear-gradient(
   margin-right: 10px;
 }
 
-.progressBar {
-  // chrome
-  // appearance: none;
-  background: $bar-bg;
-  border-radius: 10px;
-  position: relative;
-  height: 5px;
-  width: max(30vw, 200px);
-  // outline: none;
-}
-
-
-.volumeContainer{
+// Volume section container
+.volumeContainer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
-.iconButton{
+// Icon for the volume
+.iconButton {
   border: none;
   outline: none;
   background-color: transparent;
@@ -231,7 +223,6 @@ $gradiant-color: linear-gradient(
     margin-top: 3px;
     width: 25px;
     height: 25px;
-    color:white
+    color: white;
   }
-  
 }

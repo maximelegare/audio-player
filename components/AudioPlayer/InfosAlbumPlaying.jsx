@@ -20,6 +20,7 @@ const InfosAlbumPlaying = ({title, artist, imgUrl}) => {
   // checks the width of the text to determine if it needs to scroll or not
   useEffect(() => {
     if (titleRef.current) {
+      
       if (titleRef.current.offsetWidth === 300) {
         setScroll({ ...scroll, title: true });
       }

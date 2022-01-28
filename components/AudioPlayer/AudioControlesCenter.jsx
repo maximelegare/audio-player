@@ -23,7 +23,7 @@ const AudioControlesCenter = ({
         <GoArrowLeft className={styles.arrow} />
       </button>
 
-      <button onClick={handlePlayPause} className={styles.playPause}>
+      <button onClick={handlePlayPause} className={styles.playPause} >
         {isPlaying ? <GiPauseButton /> : <FaPlay className={styles.play} />}
       </button>
 
