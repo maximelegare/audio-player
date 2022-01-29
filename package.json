@@ -8,6 +8,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "imagemin": "^8.0.1",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2",
     "multer": "^1.4.4",
     "music-metadata": "^7.11.7",
     "mysql": "^2.18.1",
