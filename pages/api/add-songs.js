@@ -1,20 +1,20 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 // import mm from "music-metadata";
 // import { makeTokenizer } from "@tokenizer/http";
+import mm from "music-metadata";
+import multer from "multer";
 
 
-export default async function handler(req, res) {
-  // const musicUrl = req.body || "http://k007.kiwi6.com/hotlink/63pvscg93o/Inner_voice.mp3";
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
 
-  // const httpTokenizer = await makeTokenizer(musicUrl);
-  // const metadata = await mm.parseFromTokenizer(httpTokenizer);
+const upload = multer()
 
-  // const data = {
-  //   metadata: metadata,
-  //   url:musicUrl
-  // };
-
- 
-
-  // res.status(200).json({ data: "max" });
+export default function handler (req, res) {
+  upload.any()(req, {}, err =>{
+    console.log(req.files)
+  })
 }
