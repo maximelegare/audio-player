@@ -1,21 +1,11 @@
 import NextAuth from "next-auth";
-import AzureADProvider from "next-auth/providers/azure-ad";
-import { ONE_DRIVE_LOGIN_URL } from "../../../lib/onedrive";
-import DropboxProvider from "next-auth/providers/dropbox"
-
-
+import GoogleProvider from "next-auth/providers/google"
 
 export default NextAuth({
   providers: [
-    AzureADProvider({
-      clientId: process.env.AZURE_AD_FL_CLIENT_ID,
-      clientSecret: process.env.AZURE_AD_FL_CLIENT_SECRET,
-      tenantId: process.env.AZURE_AD_FL_TENANT_ID,
-      // authorization:ONE_DRIVE_LOGIN_URL
-    }),
-    DropboxProvider({
-      clientId:process.env.DROPBOX_CLIENT_ID,
-      clientSecret:process.env.DROPBOX_CLIENT_SECRET,
+    GoogleProvider({
+      clientId:process.env.GOOGLE_CLIENT_ID,
+      clientSecret:process.env.GOOGLE_CLIENT_SECRET,
     })
   ],
   secret: process.env.JWT_SECRET,
@@ -28,6 +18,7 @@ export default NextAuth({
       if (account) {
         token.accessToken = account.access_token;
       }
+      console.log(token)
       return token;
     },
     async session({session, token}){
