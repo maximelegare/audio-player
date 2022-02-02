@@ -17,7 +17,7 @@ export default function Home({providers}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <button onClick={() => signIn("azure-ad")}>sign in</button>
+        <button onClick={() => signIn("dropbox")}>sign in</button>
         <AudioPlayer
           title="This is a long long long long long skhfakajfh title"
           artist="Maxime Légaré"
