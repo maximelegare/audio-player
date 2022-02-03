@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { AudioPlayer } from "../components/AudioPlayer/AudioPlayer";
 import styles from "../styles/Home.module.scss";
-import { getProviders, signIn } from "next-auth/react";
+import { getProviders, signIn, signOut } from "next-auth/react";
 
 
 export default function Home({providers}) {
@@ -17,7 +17,8 @@ export default function Home({providers}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <button onClick={() => signIn("dropbox")}>sign in</button>
+        <button onClick={() => signIn("google")}>sign in</button>
+        <button onClick={() => signOut()}>sign out</button>
         <AudioPlayer
           title="This is a long long long long long skhfakajfh title"
           artist="Maxime Légaré"

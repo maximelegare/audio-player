@@ -3,7 +3,7 @@ import RangeInput from "../_Core/RangeInput";
 
 import styles from "../../styles/AudioPlayer.module.scss"
 
-import { calculateTime } from "../../lib/calculateTime";
+import { calculateTime } from "../../lib/utilities";
 
 
 const ProgressBar = ({values, min, max, step, updateValues, width}) => {

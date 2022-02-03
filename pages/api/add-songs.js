@@ -1,22 +1,43 @@
 import mm from "music-metadata/";
 import multer from "multer";
+import fs from "fs";
+
 
 import imagemin from "imagemin";
 import imageminMozjpeg from "imagemin-mozjpeg";
 import imageminPngquant from "imagemin-pngquant";
 
+import { readableStreamBuffer } from "../../lib/utilities";
+
+
+// import { useGoogleDrive } from "../../hooks/useGoogleDrive";
+// import { googleDriveAPI } from "../../lib/googledrive";
+
 import { sql_insert } from "../../lib/db";
 
+import { google } from "googleapis";
+
+
+// To make mutler parse the file
 export const config = {
   api: {
     bodyParser: false,
   },
 };
+
 // Library that receive files
 const upload = multer();
 
+
+
+
+
+
+
+
 export default function handler(req, res) {
-  upload.any()(req, {}, (err) => {
+  // Receive the file from front end
+  upload.any()(req, {}, async (err) => {
     const files = req.files;
     if (err) {
       throw err;
@@ -25,54 +46,134 @@ export default function handler(req, res) {
     let image;
     let dataObject;
 
+    const file = files[0];
     // Loop through files
-    files.forEach(async (file) => {
-      // Get the metadata of the file with it's buffer
-      const metadata = await mm.parseBuffer(file.buffer, file.mimetype, {
-        duration: true,
-      });
 
-      dataObject = {
-        title: metadata.common.title,
-        track_no: metadata.common.track.no,
-        album_track_no: metadata.common.track.of,
-        artist: metadata.common.artist,
-        album: metadata.common.album,
-        year: metadata.common.year,
-        duration: metadata.format.duration,
-      };
-      // console.log(metadata.common.picture[0].data)
+    // files.forEach(async (file) => {
 
-      // if (metadata.common.picture) {
-      //   image = compressBuffer(metadata.common.picture[0].data);
-      // }
-
-      // try {
-      //   await sql_query(
-      //     `INSERT INTO songs (title, artist, album)
-      //    VALUES ('${title}', '${artist}', '${album}')`
-      //   );
-      // } catch (e) {
-      //   console.log(e)
-      // }
-      await sql_insert("songs", dataObject);
+    // Get the metadata of the file with it's buffer
+    const {
+      common: { title, track, artist, album, year },
+      format: { duration },
+    } = await mm.parseBuffer(file.buffer, file.mimetype, {
+      duration: true,
     });
+    const fileres = await mm.parseBuffer(file.buffer, file.mimetype, {
+      duration: true,
+    });
+
+
+    dataObject = {
+      title: title,
+      track_no: track.no,
+      album_track_no: track.of,
+      artist: artist,
+      album: album,
+      year: year,
+      duration: duration,
+    };
+
+    const res = await uploadFile({
+      title,
+      mimeType: file.mimeType,
+      buffer: file.buffer,
+    });
+
+    // console.log(metadata.common.picture[0].data)
+
+    // if (metadata.common.picture) {
+    //   image = compressBuffer(metadata.common.picture[0].data);
+    // }
+
+    // try {
+    //   await sql_query(
+    //     `INSERT INTO songs (title, artist, album)
+    //    VALUES ('${title}', '${artist}', '${album}')`
+    //   );
+    // } catch (e) {
+    //   console.log(e)
+    // }
+
+    // await sql_insert("songs", dataObject);
+
+    // });
   });
   res.status(200).json({ message: "done" });
 }
+
+// Compress the image buffer to reduce the quality of the image
 async function compressBuffer(buffer) {
-  const compBuf = await imagemin
-    .buffer(buffer, {
+  try {
+    const compBuf = await imagemin.buffer(buffer, {
       plugins: [
         imageminMozjpeg(),
         imageminPngquant({
-          quality: [0.6, 0.8],
+          quality: [0.4, 0.6],
         }),
       ],
-    })
-    .then(() => {
-      console.log("worked");
-    })
-    .catch((err) => console.log(err));
+    });
+    console.log("worked");
+  } catch (err) {
+    console.log(err);
+  }
+
   return compBuf;
 }
+
+// Upload file to google Drive
+// https://www.npmjs.com/package/googleapis
+
+const uploadFile = async () => {
+  // Transform buffer in Iint8Array which is required by google drive
+
+
+  
+
+  const gd = google.drive({
+    version: 'v3',
+    auth: process.env.GOOGLE_API_KEY // specify your API key here
+  });
+  
+  
+  
+  const res = await gd.files.create({
+    requestBody: {
+      name: 'Test',
+      mimeType: 'text/plain'
+    },
+    media: {
+      mimeType: 'text/plain',
+      body: 'Hello World'
+    }
+  });
+  console.log(res)
+  
+
+
+
+
+
+
+
+
+
+
+
+  // const response = await googleDriveAPI.files.create({
+  //   // It is created in two steps, the requestBody, with name & mimeType
+  //   requestBody: {
+  //     name: "test",
+  //     // id,
+  //     mimeType:"text/plain"
+  //     // parents: ["1jyCNF_TSPiaCZRy2aAuN_vqcIQQ_LiW1"],
+  //   },
+
+  //   // And the media that contain the file
+  //   media: {
+  //     mimeType:"text/plain",
+  //     // body: readableStreamBuffer.put(buffer),
+  //     body:"tis is a test file"
+  //   },
+  // });
+  // return response;
+};
