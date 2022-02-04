@@ -133,7 +133,7 @@ const uploadFile = async ({title, mimeType, buffer}) => {
       body: createStreamFromBuffer(buffer),
       
     },
-    // fields:"id"
+    // fields:"download_url"
   });
   console.log(response.data)
   return response;

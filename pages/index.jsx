@@ -22,13 +22,10 @@ export default function Home({providers}) {
         <AudioPlayer
           title="This is a long long long long long skhfakajfh title"
           artist="Maxime Légaré"
-          fileUrl="http://u.pc.cd/VUgrtalK"
+          fileUrl="http://docs.google.com/uc?export=open&amp;id=1inXquYD6xgSNPqXEyvE9iLNnbaBebMKi" 
           imgUrl="https://upload.wikimedia.org/wikipedia/en/8/8e/World_Domination_%28Band-Maid_album%29.png"
         />
       </main>
     </div>
   );
 }
-
-
-

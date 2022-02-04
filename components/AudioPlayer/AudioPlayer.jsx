@@ -97,7 +97,9 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
                 ref={audioPlayer}
                 src={fileUrl}
                 preload="metadata"
-              />
+              >
+                <source src={fileUrl} type="audio/mp3"/>
+              </audio>
             }
           />
           <ProgressBar
