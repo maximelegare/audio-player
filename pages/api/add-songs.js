@@ -7,8 +7,7 @@ import imagemin from "imagemin";
 import imageminMozjpeg from "imagemin-mozjpeg";
 import imageminPngquant from "imagemin-pngquant";
 
-import { readableStreamBuffer } from "../../lib/utilities";
-
+import { createStreamFromBuffer } from "../../lib/utilities";
 
 // import { useGoogleDrive } from "../../hooks/useGoogleDrive";
 import { googleDriveAPI } from "../../lib/googledrive";
@@ -123,16 +122,19 @@ const uploadFile = async ({title, mimeType, buffer}) => {
     requestBody: {
       name: title,
       parents:["1jyCNF_TSPiaCZRy2aAuN_vqcIQQ_LiW1"],
-      mimeType:mimeType
+      mimeType:mimeType,
+      
       // parents: ["1jyCNF_TSPiaCZRy2aAuN_vqcIQQ_LiW1"],
     },
 
     // And the media that contain the file
     media: {
       mimeType:mimeType,
-      body: readableStreamBuffer.put(buffer),
+      body: createStreamFromBuffer(buffer),
+      
     },
+    // fields:"id"
   });
-  console.log(response)
+  console.log(response.data)
   return response;
 };

@@ -22,8 +22,7 @@
     "react-icons": "^4.3.1",
     "react-range": "^1.8.12",
     "sass": "^1.49.0",
-    "serverless-mysql": "^1.5.4",
-    "stream-buffers": "^3.0.2"
+    "serverless-mysql": "^1.5.4"
   },
   "devDependencies": {
     "eslint": "8.7.0",
