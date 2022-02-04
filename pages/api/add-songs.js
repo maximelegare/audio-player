@@ -11,7 +11,7 @@ import { readableStreamBuffer } from "../../lib/utilities";
 
 
 // import { useGoogleDrive } from "../../hooks/useGoogleDrive";
-// import { googleDriveAPI } from "../../lib/googledrive";
+import { googleDriveAPI } from "../../lib/googledrive";
 
 import { sql_insert } from "../../lib/db";
 
@@ -46,10 +46,9 @@ export default function handler(req, res) {
     let image;
     let dataObject;
 
-    const file = files[0];
-    // Loop through files
 
-    // files.forEach(async (file) => {
+    // Loop through files
+    files.forEach(async (file) => {
 
     // Get the metadata of the file with it's buffer
     const {
@@ -58,11 +57,7 @@ export default function handler(req, res) {
     } = await mm.parseBuffer(file.buffer, file.mimetype, {
       duration: true,
     });
-    const fileres = await mm.parseBuffer(file.buffer, file.mimetype, {
-      duration: true,
-    });
-
-
+   
     dataObject = {
       title: title,
       track_no: track.no,
@@ -78,6 +73,7 @@ export default function handler(req, res) {
       mimeType: file.mimeType,
       buffer: file.buffer,
     });
+    // const res = await uploadFile()
 
     // console.log(metadata.common.picture[0].data)
 
@@ -85,18 +81,10 @@ export default function handler(req, res) {
     //   image = compressBuffer(metadata.common.picture[0].data);
     // }
 
-    // try {
-    //   await sql_query(
-    //     `INSERT INTO songs (title, artist, album)
-    //    VALUES ('${title}', '${artist}', '${album}')`
-    //   );
-    // } catch (e) {
-    //   console.log(e)
-    // }
 
     // await sql_insert("songs", dataObject);
 
-    // });
+    });
   });
   res.status(200).json({ message: "done" });
 }
@@ -123,57 +111,28 @@ async function compressBuffer(buffer) {
 // Upload file to google Drive
 // https://www.npmjs.com/package/googleapis
 
-const uploadFile = async () => {
+const uploadFile = async ({title, mimeType, buffer}) => {
   // Transform buffer in Iint8Array which is required by google drive
+  
+  
 
+  const response = await googleDriveAPI.files.create({
 
-  
-
-  const gd = google.drive({
-    version: 'v3',
-    auth: process.env.GOOGLE_API_KEY // specify your API key here
-  });
-  
-  
-  
-  const res = await gd.files.create({
+    // It is created in two steps, the requestBody, with name & mimeType
+    // Parent is the Shared folder ID between my account & Service account
     requestBody: {
-      name: 'Test',
-      mimeType: 'text/plain'
+      name: title,
+      parents:["1jyCNF_TSPiaCZRy2aAuN_vqcIQQ_LiW1"],
+      mimeType:mimeType
+      // parents: ["1jyCNF_TSPiaCZRy2aAuN_vqcIQQ_LiW1"],
     },
+
+    // And the media that contain the file
     media: {
-      mimeType: 'text/plain',
-      body: 'Hello World'
-    }
+      mimeType:mimeType,
+      body: readableStreamBuffer.put(buffer),
+    },
   });
-  console.log(res)
-  
-
-
-
-
-
-
-
-
-
-
-
-  // const response = await googleDriveAPI.files.create({
-  //   // It is created in two steps, the requestBody, with name & mimeType
-  //   requestBody: {
-  //     name: "test",
-  //     // id,
-  //     mimeType:"text/plain"
-  //     // parents: ["1jyCNF_TSPiaCZRy2aAuN_vqcIQQ_LiW1"],
-  //   },
-
-  //   // And the media that contain the file
-  //   media: {
-  //     mimeType:"text/plain",
-  //     // body: readableStreamBuffer.put(buffer),
-  //     body:"tis is a test file"
-  //   },
-  // });
-  // return response;
+  console.log(response)
+  return response;
 };
