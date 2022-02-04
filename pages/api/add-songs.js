@@ -7,14 +7,14 @@ import imagemin from "imagemin";
 import imageminMozjpeg from "imagemin-mozjpeg";
 import imageminPngquant from "imagemin-pngquant";
 
-import { createStreamFromBuffer } from "../../lib/utilities";
 
-// import { useGoogleDrive } from "../../hooks/useGoogleDrive";
+
 import { googleDriveAPI } from "../../lib/googledrive";
 
 import { sql_insert } from "../../lib/db";
 
-import { google } from "googleapis";
+
+import { uploadFileToGoogleDrive } from "../../lib/googledrive";
 
 
 // To make mutler parse the file
@@ -26,12 +26,6 @@ export const config = {
 
 // Library that receive files
 const upload = multer();
-
-
-
-
-
-
 
 
 export default function handler(req, res) {
@@ -67,11 +61,12 @@ export default function handler(req, res) {
       duration: duration,
     };
 
-    const res = await uploadFile({
+    const fileUrl = await uploadFileToGoogleDrive({
       title,
       mimeType: file.mimeType,
       buffer: file.buffer,
     });
+    console.log(fileUrl)
     // const res = await uploadFile()
 
     // console.log(metadata.common.picture[0].data)
@@ -110,31 +105,4 @@ async function compressBuffer(buffer) {
 // Upload file to google Drive
 // https://www.npmjs.com/package/googleapis
 
-const uploadFile = async ({title, mimeType, buffer}) => {
-  // Transform buffer in Iint8Array which is required by google drive
-  
-  
 
-  const response = await googleDriveAPI.files.create({
-
-    // It is created in two steps, the requestBody, with name & mimeType
-    // Parent is the Shared folder ID between my account & Service account
-    requestBody: {
-      name: title,
-      parents:["1jyCNF_TSPiaCZRy2aAuN_vqcIQQ_LiW1"],
-      mimeType:mimeType,
-      
-      // parents: ["1jyCNF_TSPiaCZRy2aAuN_vqcIQQ_LiW1"],
-    },
-
-    // And the media that contain the file
-    media: {
-      mimeType:mimeType,
-      body: createStreamFromBuffer(buffer),
-      
-    },
-    // fields:"download_url"
-  });
-  console.log(response.data)
-  return response;
-};
