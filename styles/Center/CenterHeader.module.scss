@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  margin: 20px 20px;
+  //   justify-content: space-between;
+}
+
+.imageWrapper {
+  border-radius: 15px;
+}
+
+// Border-radius directly on the Image component
+.image {
+  border-radius: 12px !important;
+}
+
+.headerInfos {
+  margin-left: 20px;
+}   
+
+// .artist{
+//     font-size: ;
+// }
+
+.title {
+  font-size: 4rem;
+  line-height: 1;
+}
