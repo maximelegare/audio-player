@@ -1,4 +1,18 @@
-.container {
-    display: flex;
-  }
+@import "../variables.module.scss";
 
+.container {
+  display: flex;
+  margin-bottom: 8px;
+  color: $white;
+  opacity: 0.8;
+}
+.container:hover{
+    color: $hover-white;
+    opacity: 1;
+    transition: 200ms all ease-in-out;
+    cursor: pointer;
+}
+
+.icon {
+  margin-right: 10px;
+}

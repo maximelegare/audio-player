@@ -11,7 +11,7 @@ import { MdOutlinePlaylistAdd } from "react-icons/md";
 const SideBar = () => {
   return (
     <div className={styles.container}>
-      <div>
+      <div className={styles.linkContainer}>
         <SideBarLink
           icon={<BsSearch className={styles.icon} />}
           text="Search"
@@ -21,15 +21,15 @@ const SideBar = () => {
           text="New Playlists"
         />
       </div>
-      <div>
-        <SideBarLink
-          icon={<FaItunesNote className={styles.icon} />}
-          text="Artist"
-        />
-        <SideBarLink icon={<BsDisc className={styles.icon} />} text="Songs" />
+      <div className={styles.linkContainer}>
         <SideBarLink
           icon={<HiUserGroup className={styles.icon} />}
-          text="Albums"
+          text="Artist"
+        />
+        <SideBarLink icon={<BsDisc className={styles.icon} />} text="Albums" />
+        <SideBarLink
+          icon={<FaItunesNote className={styles.icon} />}
+          text="Songs"
         />
       </div>
       <div></div>

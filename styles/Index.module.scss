@@ -1,0 +1,19 @@
+.container {
+  // padding: 0 2rem;
+}
+
+.main {
+  
+  // padding: 4rem 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  // background-color: black;
+}
+
+.top{
+  display: flex;
+  flex-grow: 1;
+
+}

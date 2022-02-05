@@ -50,7 +50,8 @@ export default function handler(req, res) {
         mimeType: file.mimeType,
         buffer: file.buffer,
       });
-      
+
+      console.log(streamingUrl)
       dataObject = {
         title: title,
         track_no: track.no,
@@ -61,7 +62,6 @@ export default function handler(req, res) {
         duration: duration,
         streaming_url: streamingUrl,
       };
-      console.log(dataObject)
 
 
 
