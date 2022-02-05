@@ -2,7 +2,8 @@ import Head from "next/head";
 import { AudioPlayer } from "../components/AudioPlayer/AudioPlayer";
 import styles from "../styles/Home.module.scss";
 import { getProviders, signIn, signOut } from "next-auth/react";
-
+import SideBar from "../components/SideBar/SideBar";
+import Center from "../components/Center/Center";
 
 export default function Home({providers}) {
 
@@ -17,8 +18,10 @@ export default function Home({providers}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <button onClick={() => signIn("google")}>sign in</button>
-        <button onClick={() => signOut()}>sign out</button>
+        <div className={styles.top}>
+          <SideBar />
+          <Center />
+        </div>
         <AudioPlayer
           title="This is a long long long long long skhfakajfh title"
           artist="Maxime Légaré"

@@ -1,7 +1,7 @@
 import React from "react";
 import { getTrackBackground, Range } from "react-range";
 
-import styles from "../../styles/AudioPlayer.module.scss";
+import styles from "../../styles/AudioPlayer/AudioPlayer.module.scss"
 
 
 

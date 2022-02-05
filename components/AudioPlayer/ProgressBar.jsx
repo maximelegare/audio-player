@@ -1,7 +1,7 @@
 import React from "react";
 import RangeInput from "../_Core/RangeInput";
 
-import styles from "../../styles/AudioPlayer.module.scss"
+import styles from "../../styles/AudioPlayer/AudioPlayer.module.scss"
 
 import { calculateTime } from "../../lib/utilities";
 

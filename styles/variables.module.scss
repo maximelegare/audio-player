@@ -1,0 +1,27 @@
+$primary-color: linear-gradient(
+  90deg,
+  rgba(13, 231, 218, 1) 3%,
+  rgba(45, 226, 130, 1) 95%
+);
+
+$secondary-color: #ffd200;
+$bg-color: linear-gradient(
+  90deg,
+  rgba(41, 2, 64, 1) 0%,
+  rgba(34, 9, 98, 1) 100%
+);
+$white: #ffe3d4;
+$gray-100: #dbc5b9;
+$gray-200: #b9a69b;
+
+$bar-bg: #ffe3d4;
+$seek-before-width: 0;
+$seek-before-color: #ffc2a1;
+$knobby: #3452a5;
+$selected-knobby: #26c9c3;
+
+$gradiant-color: linear-gradient(
+  90deg,
+  rgba(13, 231, 218, 1) 3%,
+  rgb(18, 66, 41) 95%
+);

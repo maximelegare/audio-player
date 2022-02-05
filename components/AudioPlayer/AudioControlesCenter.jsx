@@ -4,7 +4,7 @@ import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { FaPlay } from "react-icons/fa";
 import { GiPauseButton } from "react-icons/gi";
 
-import styles from "../../styles/AudioPlayer.module.scss";
+import styles from "../../styles/AudioPlayer/AudioPlayer.module.scss";
 
 const AudioControlesCenter = ({
   isPlaying,

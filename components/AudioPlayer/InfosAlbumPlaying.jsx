@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect} from "react";
 import Image from "next/image";
 
-import styles from "../../styles/AudioPlayer.module.scss"
+import styles from "../../styles/AudioPlayer/AudioPlayer.module.scss"
 
 
 const InfosAlbumPlaying = ({title, artist, imgUrl}) => {
