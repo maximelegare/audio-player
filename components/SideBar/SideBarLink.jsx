@@ -1,10 +1,22 @@
 import React from "react";
 import styles from "../../styles/SideBar/SideBarLink.module.scss";
-const SideBarLink = ({ icon, text }) => {
+import Link from "next/link";
+const SideBarLink = ({ icon, text, link }) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.icon}>{icon}</div>
-      <div className={styles.text}>{text}</div>
+    <div>
+      {link ? (
+        <Link passHref href={link}>
+          <div className={styles.container}>
+            <div className={styles.icon}>{icon}</div>
+            <div className={styles.text}>{text}</div>
+          </div>
+        </Link>
+      ) : (
+        <div className={styles.container}>
+          <div className={styles.icon}>{icon}</div>
+          <div className={styles.text}>{text}</div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
-import CenterHeader from "./CenterHeader";
-import styles from "../../styles/Center/Center.module.scss"
+import CenterHeader from "../_Partials/Header";
+import styles from "../../styles/Header/Center.module.scss"
 
 
 const Center = () => {

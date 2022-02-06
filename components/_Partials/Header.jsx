@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "../../styles/Center/CenterHeader.module.scss";
+import styles from "../../styles/Header/Header.module.scss";
 import Image from "next/image";
 
-const CenterHeader = () => {
+const Header = () => {
   return (
     <div className={styles.container}>
       <div className={styles.imageWrapper}>
@@ -16,11 +16,11 @@ const CenterHeader = () => {
         />
       </div>
       <div className={styles.headerInfos}>
-          <h3 className={styles.artist}>Band Maid</h3>   
-          <h1 className={styles.title}>Title of the Song</h1>
+          <h3 className={styles.artist}>BAND MAID</h3>   
+          <h1 className={styles.title}>WORLD DOMINATION</h1>
       </div>
     </div>
   );
 };
 
-export default CenterHeader;
+export default Header;
