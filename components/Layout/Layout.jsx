@@ -1,8 +1,9 @@
 import React from "react";
-import styles from "../../styles/Index.module.scss"
+import styles from "../../styles/Layout.module.scss";
 
 import SideBar from "../SideBar/SideBar";
 import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
+import { Scrollbar } from "react-scrollbars-custom";
 
 const Layout = ({ children }) => {
   return (
@@ -10,7 +11,9 @@ const Layout = ({ children }) => {
       <main className={styles.main}>
         <div className={styles.top}>
           <SideBar />
-          {children}
+          <div className={styles.layout}>
+            <Scrollbar style={{width:"100%", height:"100%"}}>{children}</Scrollbar>
+          </div>
         </div>
         <AudioPlayer
           title="This is a long long long long long skhfakajfh title"

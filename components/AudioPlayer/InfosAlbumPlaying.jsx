@@ -1,6 +1,5 @@
 import React, {useRef, useState, useEffect} from "react";
-import Image from "next/image";
-
+import CustomImage from "../_Core/CustomImage";
 import styles from "../../styles/AudioPlayer/AudioPlayer.module.scss"
 
 
@@ -37,17 +36,12 @@ const InfosAlbumPlaying = ({title, artist, imgUrl}) => {
   return (
     <div className={styles.infosContainer}>
       <div className={styles.infosWrapper}>
-        <div className={styles.imageWrapper}>
-          <Image
-            src={imgUrl}
-            alt=""
-            width={95}
-            height={90}
-            objectFit="cover"
-            className={styles.image}
-          />
-        </div>
-
+      <CustomImage
+        src="https://upload.wikimedia.org/wikipedia/en/8/8e/World_Domination_%28Band-Maid_album%29.png"
+        alt=""
+        width={95}
+        height={90}
+      />
         <div className={styles.infos}>
           <h3 ref={titleRef} className={styles.titleAnimation}>
             {title}
