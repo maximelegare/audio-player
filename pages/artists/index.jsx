@@ -5,21 +5,25 @@ import List from "../../components/_Partials/List/GridList/GridList";
 
 import { sql_select_group } from "../../lib/db";
 
+
+// The itemTitle is used to differenciate between artists & albums bc they don't have the same data
+
 const index = ({ artists }) => {
-  console.log(artists);
   return (
     <div>
       <Header />
-      <List />
+      <List data={artists} itemTitle="artist"/>
     </div>
   );
 };
 
 export default index;
 
+
+
 export async function getServerSideProps(context) {
   const res = await sql_select_group(
-    "artist, picture_url",
+    "id, artist, picture_url",
     "songs",
     "artist",
     "artist"
@@ -27,3 +31,5 @@ export async function getServerSideProps(context) {
   const artists = JSON.parse(JSON.stringify(res));
   return { props: { artists } };
 }
+
+

@@ -1,20 +1,19 @@
-import React from 'react';
-import GridListElement from './GridListElement';
-import styles from "../../../../styles/List/GridList.module.scss"
+import React from "react";
+import GridListElement from "./GridListElement";
+import styles from "../../../../styles/List/GridList.module.scss";
 
-const GridList = () => {
-  return <div className={styles.gridListContainer}>
-      <GridListElement/>
-      <GridListElement/>
-      <GridListElement/>
-      <GridListElement/>
-      <GridListElement/>
-      <GridListElement/>
-      <GridListElement/>
-      <GridListElement/>
-      <GridListElement/>
-      <GridListElement/>
-  </div>;
+const GridList = ({ data, itemTitle }) => {
+  return (
+    <div className={styles.gridListContainer}>
+      {data.map((item) => (
+        <GridListElement
+          key={item.id}
+          src={item.picture_url}
+          title={item[itemTitle]}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default GridList;
