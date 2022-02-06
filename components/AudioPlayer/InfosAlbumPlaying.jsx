@@ -39,8 +39,8 @@ const InfosAlbumPlaying = ({title, artist, imgUrl}) => {
       <CustomImage
         src="https://upload.wikimedia.org/wikipedia/en/8/8e/World_Domination_%28Band-Maid_album%29.png"
         alt=""
-        width={95}
-        height={90}
+        width={70}
+        height={70}
       />
         <div className={styles.infos}>
           <h3 ref={titleRef} className={styles.titleAnimation}>

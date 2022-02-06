@@ -1,13 +1,21 @@
-@import "../variables.module.scss"; 
+@import "../variables.module.scss";
 
-.gridListContainer{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
-};
+.gridListContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 20px;
+}
 
-.gridListElementContainer{
-    height: 180px;
-    background: $bg-color-500;
-    border-radius: 10px;
-};
+.gridListElementContainer {
+  height: 130px;
+  background: $bg-color-500;
+  border-radius:10px;
+  cursor: pointer;
+
+  .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+  }
+}
