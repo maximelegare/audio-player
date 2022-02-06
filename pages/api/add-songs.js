@@ -1,10 +1,6 @@
 import mm from "music-metadata/";
 import multer from "multer";
 
-import imagemin from "imagemin";
-import imageminMozjpeg from "imagemin-mozjpeg";
-import imageminPngquant from "imagemin-pngquant";
-
 import { googleDriveAPI } from "../../lib/googledrive";
 
 import { sql_insert } from "../../lib/db";
@@ -21,6 +17,9 @@ export const config = {
 // Library that receive files
 const upload = multer();
 
+const musicFolder = "1jyCNF_TSPiaCZRy2aAuN_vqcIQQ_LiW1";
+const coverFolder = "16Nn2V24cKI1RoGcqMkvU_3IuyZBSzBI5";
+
 export default function handler(req, res) {
   // Receive the file from front end
   upload.any()(req, {}, async (err) => {
@@ -36,22 +35,38 @@ export default function handler(req, res) {
     files.forEach(async (file) => {
       // Get the metadata of the file with it's buffer
       const {
-        common: { title, track, artist, album, year },
+        common: { title, track, artist, album, year, picture },
         format: { duration },
-      } = await mm.parseBuffer(file.buffer, file.mimetype, {
-        duration: true,
-      });
-      const fileData = await mm.parseBuffer(file.buffer, file.mimetype, {
-        duration: true,
-      });
+      } = await mm
+        .parseBuffer(file.buffer, file.mimetype, {
+          duration: true,
+        })
+        .catch((err) => console.log(err));
+     
 
+      const gDriveFileName = `${artist} - ${album} - ${title}`;
+
+      // Upload music file to google drive
       const streamingUrl = await uploadFileToGoogleDrive({
-        title,
-        mimeType: file.mimeType,
+        title: gDriveFileName,
+        mimeType: file.mimetype,
         buffer: file.buffer,
-      });
+        parents: musicFolder,
+      }).catch((err) => console.log(err));
 
-      console.log(streamingUrl)
+
+      
+      // If there is a picture in the file, upload the picture to google drive
+      let pictureUrl;
+      if (picture) {
+         pictureUrl = await uploadFileToGoogleDrive({
+          title: `${artist} - ${album}`,
+          mimeType: picture[0].format,
+          buffer: picture[0].data,
+          parents: coverFolder,     
+        }).catch((err) => console.log(err));
+      }
+
       dataObject = {
         title: title,
         track_no: track.no,
@@ -60,39 +75,12 @@ export default function handler(req, res) {
         album: album,
         year: year,
         duration: duration,
+        picture_url:pictureUrl,
         streaming_url: streamingUrl,
       };
-
-
-
-      // console.log(metadata.common.picture[0].data)
-
-      // if (metadata.common.picture) {
-      //   image = compressBuffer(metadata.common.picture[0].data);
-      // }
 
       await sql_insert("songs", dataObject);
     });
   });
   res.status(200).json({ message: "done" });
 }
-
-// Compress the image buffer to reduce the quality of the image
-// async function compressBuffer(buffer) {
-//   try {
-//     const compBuf = await imagemin.buffer(buffer, {
-//       plugins: [
-//         imageminMozjpeg(),
-//         imageminPngquant({
-//           quality: [0.4, 0.6],
-//         }),
-//       ],
-//     });
-
-//     return compBuf;
-
-//   } catch (err) {
-//     console.log(err);
-//   }
-
-// }

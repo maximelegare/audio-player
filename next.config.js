@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   images:{
-    domains:["upload.wikimedia.org"]
+    domains:["upload.wikimedia.org", "docs.google.com"]
   },
   cookies: {
     csrfToken: {

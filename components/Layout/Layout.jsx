@@ -18,8 +18,8 @@ const Layout = ({ children }) => {
         <AudioPlayer
           title="This is a long long long long long skhfakajfh title"
           artist="Maxime Légaré"
-          fileUrl="https://docs.google.com/uc?export=open&amp;id=1Tso7ly-_FthVJC-lIdB38Z-6BcY6VeJW"
-          imgUrl="https://upload.wikimedia.org/wikipedia/en/8/8e/World_Domination_%28Band-Maid_album%29.png"
+          fileUrl="https://docs.google.com/uc?export=open&amp;id=1Da0t_0VZUPPk1B-7dM-vHGcZS1t_Iwcn"
+          imgUrl="https://docs.google.com/uc?export=open&amp;id=1E7w7-dJpyK_a7RstMZ-3EbqKZVuzlJlj"
         />
       </main>
     </div>

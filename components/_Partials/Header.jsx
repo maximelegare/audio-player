@@ -6,7 +6,7 @@ const Header = ({}) => {
   return (
     <div className={styles.container}>
       <CustomImage
-        src="https://upload.wikimedia.org/wikipedia/en/8/8e/World_Domination_%28Band-Maid_album%29.png"
+        src="https://docs.google.com/uc?id=1MdNgZgi72rDCK224yJehRAxe413atw--"
         alt=""
         width={180}
         height={160}
