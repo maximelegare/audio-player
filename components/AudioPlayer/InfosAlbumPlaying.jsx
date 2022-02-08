@@ -37,7 +37,7 @@ const InfosAlbumPlaying = ({title, artist, imgUrl}) => {
     <div className={styles.infosContainer}>
       <div className={styles.infosWrapper}>
       <CustomImage
-        src="https://upload.wikimedia.org/wikipedia/en/8/8e/World_Domination_%28Band-Maid_album%29.png"
+        src={imgUrl}
         alt=""
         width={70}
         height={70}

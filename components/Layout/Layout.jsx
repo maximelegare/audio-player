@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
           title="This is a long long long long long skhfakajfh title"
           artist="Maxime Légaré"
           fileUrl="https://docs.google.com/uc?export=open&amp;id=1Da0t_0VZUPPk1B-7dM-vHGcZS1t_Iwcn"
-          imgUrl="https://docs.google.com/uc?export=open&amp;id=1E7w7-dJpyK_a7RstMZ-3EbqKZVuzlJlj"
+          imgUrl="https://docs.google.com/uc?id=1NRCIz_EIMagmy4l9Io_pZnE2513EVEaG"
         />
       </main>
     </div>
