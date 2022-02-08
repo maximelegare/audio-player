@@ -1,5 +1,7 @@
 .imageWrapper {
   border-radius: 15px;
+  display: flex;
+  align-items: center;
 }
 
 // Border-radius directly on the Image component

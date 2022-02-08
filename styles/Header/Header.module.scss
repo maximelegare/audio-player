@@ -1,13 +1,12 @@
 .container {
   display: flex;
-  margin-bottom: 40px;
+  margin-bottom: 70px;
   
   //   justify-content: space-between;
 }
 
 
 .headerInfos {
-  margin-left: 20px;
   align-self: center;
 }   
 
@@ -19,4 +18,8 @@
 .title {
   font-size: 4rem;
   line-height: 1;
+}
+
+.image{
+  margin-right: 20px;
 }
