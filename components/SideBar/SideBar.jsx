@@ -26,7 +26,7 @@ const SideBar = () => {
           <SideBarLink
             icon={<AiOutlineHome className={styles.icon} />}
             text="Home"
-            link="/"
+            href="/"
           />
           <SideBarLink
             icon={<BsSearch className={styles.icon} />}
@@ -41,17 +41,17 @@ const SideBar = () => {
           <SideBarLink
             icon={<HiUserGroup className={styles.icon} />}
             text="Artists"
-            link="/artists"
+            href="/artists"
           />
           <SideBarLink
             icon={<BsDisc className={styles.icon} />}
             text="Albums"
-            link="/albums"
+            href="/albums"
           />
           <SideBarLink
             icon={<FaItunesNote className={styles.icon} />}
             text="Songs"
-            link="/songs"
+            href="/songs"
           />
         </div>
       </Scrollbar>

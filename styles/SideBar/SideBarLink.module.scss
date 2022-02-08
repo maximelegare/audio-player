@@ -4,13 +4,17 @@
   display: flex;
   margin-bottom: 8px;
   color: $white;
-  opacity: 0.8;
+  opacity: 0.7
 }
 .container:hover{
     color: $hover-white;
     opacity: 1;
     transition: 200ms all ease-in-out;
     cursor: pointer;
+}
+
+.active{
+  color:$hover-white;
 }
 
 .icon {
