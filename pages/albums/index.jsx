@@ -8,7 +8,7 @@ import { sql_select_group } from "../../lib/db";
 const index = ({ albums }) => {
   return (
     <div>
-      <Header />
+      <Header title="All Albums"/>
       <List data={albums} itemTitle="album" />
     </div>
   );
