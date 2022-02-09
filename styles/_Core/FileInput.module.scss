@@ -1,0 +1,27 @@
+@import "../variables.module.scss";
+
+// Container of file input relative
+.fileInputContainer {
+  position: relative;
+
+  //   File input ablsolute, opacity 0 & z-index of two to make it on top, transparent
+
+  .fileInput {
+    z-index: 2;
+    opacity: 0;
+  }
+}
+
+.icon {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+// Styling of the container
+.container {
+  display: flex;
+  margin-bottom: 8px;
+  color: $white;
+  opacity: 1;
+  position: absolute;     
+};

@@ -12,15 +12,16 @@ import { AiOutlineCloudUpload, AiOutlineHome } from "react-icons/ai";
 
 import { Scrollbar } from "react-scrollbars-custom";
 
+import FileInput from "../_Core/FileInput";
+
+
 const SideBar = () => {
+
   return (
     <div className={styles.container}>
       <Scrollbar style={{ width: "100%", height: "100%" }}>
         <div className={styles.linkContainer}>
-          <SideBarLink
-            icon={<AiOutlineCloudUpload className={styles.icon} />}
-            text="Upload Songs"
-          />
+          <FileInput />
         </div>
         <div className={styles.linkContainer}>
           <SideBarLink
