@@ -2,14 +2,14 @@ import React from "react";
 import GridListElement from "./GridListElement";
 import styles from "../../../../styles/List/GridList.module.scss";
 
-const GridList = ({ data, itemTitle }) => {
+const GridList = ({ data }) => {
   return (
     <div className={styles.gridListContainer}>
       {data.map((item) => (
         <GridListElement
           key={item.id}
           src={item.picture_url}
-          title={item[itemTitle]}
+          title={item.title}
         />
       ))}
     </div>

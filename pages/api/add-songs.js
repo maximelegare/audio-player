@@ -28,9 +28,6 @@ export default function handler(req, res) {
       throw err;
     }
 
-    let image;
-    let dataObject;
-
     // Loop through files
     files.forEach(async (file) => {
       // Get the metadata of the file with it's buffer
@@ -42,7 +39,6 @@ export default function handler(req, res) {
           duration: true,
         })
         .catch((err) => console.log(err));
-     
 
       const gDriveFileName = `${artist} - ${album} - ${title}`;
 
@@ -54,33 +50,41 @@ export default function handler(req, res) {
         parents: musicFolder,
       }).catch((err) => console.log(err));
 
-
-      
       // If there is a picture in the file, upload the picture to google drive
       let pictureUrl;
       if (picture) {
-         pictureUrl = await uploadFileToGoogleDrive({
+        pictureUrl = await uploadFileToGoogleDrive({
           title: `${artist} - ${album}`,
           mimeType: picture[0].format,
           buffer: picture[0].data,
-          parents: coverFolder,     
+          parents: coverFolder,
         }).catch((err) => console.log(err));
       }
 
-      dataObject = {
+      const albumData = {
+        title: album,
+        picture_url: pictureUrl,
+        year: year,
+        artist: artist,
+      };
+      const artistData = {
+        
+      }
+
+      const songData = {
         title: title,
         track_no: track.no,
         album_track_no: track.of,
-        artist: artist,
         album: album,
-        year: year,
         duration: duration,
-        picture_url:pictureUrl,
         streaming_url: streamingUrl,
       };
-
-      await sql_insert("songs", dataObject);
+ 
+      await sql_insert("songs", songData);
+      await sql_insert("albums", albumData);
     });
   });
   res.status(200).json({ message: "done" });
 }
+
+
