@@ -10,7 +10,7 @@ const RowListElement = ({id, title, artist, picture_url, album, duration, songNu
 
 
   return (
-    <div className={styles.rowListContainer}>
+    <div className={`${styles.rowListContainer} ${styles.listElement}`}>
       <div className={`${styles.firstThird} ${styles.section}`}>
         <p className={styles.number}>{songNumber}</p>
         <div className={styles.image}>
@@ -22,7 +22,7 @@ const RowListElement = ({id, title, artist, picture_url, album, duration, songNu
           />
         </div>
         <div className={styles.infosContainer}>
-          <h4 className={styles.title}>{title}</h4>
+          <h5 className={styles.title}>{title}</h5>
           <p>{artist}</p>
         </div>
       </div>
