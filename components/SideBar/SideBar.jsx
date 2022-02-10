@@ -8,7 +8,7 @@ import { HiUserGroup } from "react-icons/hi";
 
 import { MdOutlinePlaylistAdd } from "react-icons/md";
 
-import { AiOutlineCloudUpload, AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
 
 import { Scrollbar } from "react-scrollbars-custom";
 

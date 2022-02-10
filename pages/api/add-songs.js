@@ -1,11 +1,13 @@
 import mm from "music-metadata/";
 import multer from "multer";
 
-import { googleDriveAPI } from "../../lib/googledrive";
-
-import { sql_insert } from "../../lib/db";
+import { sql_insert_transation } from "../../lib/db";
 
 import { uploadFileToGoogleDrive } from "../../lib/googledrive";
+
+import { createUrlRouteWithTitle } from "../../lib/utilities";
+
+import { db } from "../../lib/db";
 
 // To make mutler parse the file
 export const config = {
@@ -63,13 +65,12 @@ export default function handler(req, res) {
 
       const albumData = {
         title: album,
+        title_route: createUrlRouteWithTitle(artist),
         picture_url: pictureUrl,
         year: year,
         artist: artist,
+        artist_route: createUrlRouteWithTitle(artist),
       };
-      const artistData = {
-        
-      }
 
       const songData = {
         title: title,
@@ -79,12 +80,26 @@ export default function handler(req, res) {
         duration: duration,
         streaming_url: streamingUrl,
       };
- 
-      await sql_insert("songs", songData);
-      await sql_insert("albums", albumData);
+
+      const albumColumns = Object.keys(albumData);
+      const albumValues = Object.values(albumData);
+
+      const songColumns = Object.keys(songData);
+      const songValues = Object.values(songData);
+
+      await sql_insert_transation({
+        album: {
+          columns: albumColumns,
+          values: albumValues,
+          table: "albums",
+        },
+        song: {
+          columns: songColumns,
+          values: songValues,
+          table: "songs",
+        },
+      });
     });
   });
   res.status(200).json({ message: "done" });
 }
-
-

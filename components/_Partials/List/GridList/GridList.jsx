@@ -7,9 +7,10 @@ const GridList = ({ data }) => {
     <div className={styles.gridListContainer}>
       {data.map((item) => (
         <GridListElement
-          key={item.id}
+          key={item.title}
           src={item.picture_url}
           title={item.title}
+          route={item.route}
         />
       ))}
     </div>

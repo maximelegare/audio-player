@@ -10,9 +10,9 @@ const RowList = ({ data }) => {
     <div>
       <RowHeader />
       
-      {data.map(({ id, ...otherProps }) => {
+      {data.map(({ title, ...otherProps }) => {
         songNumber++
-        return <ListElement key={id} id={id} songNumber={songNumber} {...otherProps} />;
+        return <ListElement key={title} title={title} songNumber={songNumber} {...otherProps} />;
       })}
     </div>
   );

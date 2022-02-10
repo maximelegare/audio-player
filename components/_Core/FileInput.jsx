@@ -12,7 +12,6 @@ const FileInput = ({ children }) => {
     }
 
     // Post to backend with formData containing the files
-
     fetch("http://localhost:3000/api/add-songs", {
       method: "POST",
       body: formData,
