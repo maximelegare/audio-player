@@ -65,7 +65,7 @@ export default function handler(req, res) {
 
       const albumData = {
         title: album,
-        title_route: createUrlRouteWithTitle(artist),
+        title_route: createUrlRouteWithTitle(artist, album),
         picture_url: pictureUrl,
         year: year,
         artist: artist,
