@@ -18,6 +18,9 @@ const index = ({ albums }) => {
 export default index;
 
 export async function getServerSideProps(context) {
+
+  const {artist} = context.query
+
   const res = await sql_select({
     rows: "title, picture_url, title_route as route",
     table: "albums",
