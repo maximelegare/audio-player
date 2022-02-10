@@ -1,4 +1,5 @@
 import React from "react";
+import PageLayout from "../components/Layout/PageLayout";
 import Header from "../components/_Partials/Header";
 import RowList from "../components/_Partials/List/RowList/RowList";
 
@@ -9,7 +10,10 @@ const songs = ({ songs }) => {
   return (
     <div>
       <Header title="All Songs" />
-      <RowList data={songs} />
+      <PageLayout>
+        <RowList data={songs} />
+      </PageLayout>
+      
     </div>
   );
 };

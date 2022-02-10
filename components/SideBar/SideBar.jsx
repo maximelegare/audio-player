@@ -19,7 +19,7 @@ const SideBar = () => {
 
   return (
     <div className={styles.container}>
-      <Scrollbar style={{ width: "100%", height: "100%" }}>
+      <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>
         <div className={styles.linkContainer}>
           <FileInput />
         </div>

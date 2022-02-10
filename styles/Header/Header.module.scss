@@ -1,10 +1,13 @@
+@import "../variables.module.scss";
+
 .container {
   display: flex;
   margin-bottom: 70px;
+  background: rgba($color: $bg-color-500, $alpha: 0.5);
+  padding: 20px;
   
   //   justify-content: space-between;
 }
-
 
 .headerInfos {
   align-self: center;

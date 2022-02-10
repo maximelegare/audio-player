@@ -10,7 +10,7 @@ import { sql_select } from "../../lib/db";
 const index = ({ artists }) => {
   return (
     <div>
-      <Header title="All Artists"/>
+      <Header title="All Artists"/>   
       <List data={artists}/>
     </div>
   );

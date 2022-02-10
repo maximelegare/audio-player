@@ -11,9 +11,10 @@ const Layout = ({ children }) => {
       <main className={styles.main}>
         <div className={styles.top}>
           <SideBar />
-          <div className={styles.layout}>
-            <Scrollbar style={{width:"100%", height:"100%"}}>{children}</Scrollbar>
-          </div>
+
+          <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>
+            {children}
+          </Scrollbar>
         </div>
         <AudioPlayer
           title="This is a long long long long long skhfakajfh title"

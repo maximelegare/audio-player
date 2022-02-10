@@ -13,7 +13,7 @@ const GridListElement = ({ src, title, route }) => {
       className={styles.gridListElementContainer}
       onClick={() => router.push(`/${route}`)}
     >
-      <CustomImage height={50} width={50} src={src} alt="" />
+      <CustomImage height={80} width={80} src={src} alt="" />
       <h5 className={styles.title}>{title}</h5>
     </div>
   );
