@@ -7,7 +7,7 @@ const Header = ({ title, smallTitle, src }) => {
     <div className={styles.container}>
       {src && (
         <div className={styles.image}>
-          <CustomImage src={src} alt="" width={180} height={180} />
+          <CustomImage round src={src} alt="" width={190} height={190} />
         </div>
       )}
 

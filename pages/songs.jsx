@@ -1,18 +1,15 @@
 import React from "react";
-import PageLayout from "../components/Layout/PageLayout";
 import Header from "../components/_Partials/Header";
 import RowList from "../components/_Partials/List/RowList/RowList";
 
 import { sql_select } from "../lib/db";
 
 const songs = ({ songs }) => {
-  console.log(songs);
   return (
     <div>
       <Header title="All Songs" />
-      <PageLayout>
+      
         <RowList data={songs} />
-      </PageLayout>
       
     </div>
   );

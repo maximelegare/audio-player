@@ -20,7 +20,7 @@ export default index;
 
 
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const res = await sql_select({
     rows: "artist as title, picture_url, artist_route as route",
     table: "albums",

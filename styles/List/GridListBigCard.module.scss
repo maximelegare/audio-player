@@ -5,15 +5,29 @@
   align-items: center;
   cursor: pointer;
   padding: 20px 0;
-  border-radius: 10px;
+  border-radius: 15px;
   background-color: $bg-color-transparent;
   color: $white;
-  text-align: center;
 
+  h5{
+      opacity: 0.8;
+  } 
+  
+  p {
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+  
   &:hover {
     transform: scale(1.02);
     transition: 200ms scale ease-in-out;
     animation-delay: 2000ms;
+
+    h5, p{
+        opacity: 1;
+    } 
+    
+
   }
 
   .infos {
