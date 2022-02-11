@@ -3,12 +3,16 @@
 .gridListContainer {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 20px;
+  column-gap: 30px;
+  row-gap: 40px;
 }
 
+.large {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+
 .gridListElementContainer {
-  // background: $bg-color-500;
-  border-radius: 10px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -18,10 +22,9 @@
     transform: scale(1.02);
     transition: 200ms scale ease-in-out;
     animation-delay: 2000ms;
-    
 
     // Change opacity of title on hover
-    .title{
+    .title {
       opacity: 1;
     }
   }

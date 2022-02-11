@@ -5,8 +5,10 @@
 }
 
 // Border-radius directly on the Image component
-.image {
-  border-radius:50% !important;
-  // border-radius: 12px !important;
+.square {
+  border-radius:5px !important;
+}
 
+.round{
+  border-radius:50% !important; 
 }

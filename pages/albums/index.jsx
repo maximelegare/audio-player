@@ -5,12 +5,16 @@ import List from "../../components/_Partials/List/GridList/GridList";
 
 import { sql_select } from "../../lib/db";
 
+import PageLayout from "../../components/Layout/PageLayout";
+
 const index = ({ albums }) => {
-  console.log(albums)
+  console.log(albums);
   return (
     <div>
       <Header title="All Albums" />
-      <List data={albums} />
+      <PageLayout>
+        <List data={albums} variant="bigCard" />
+      </PageLayout>
     </div>
   );
 };
@@ -18,8 +22,7 @@ const index = ({ albums }) => {
 export default index;
 
 export async function getServerSideProps(context) {
-
-  const {artist} = context.query
+  const { artist } = context.query;
 
   const res = await sql_select({
     rows: "title, picture_url, title_route as route",
@@ -28,7 +31,4 @@ export async function getServerSideProps(context) {
   });
   const albums = JSON.parse(JSON.stringify(res));
   return { props: { albums } };
-
 }
-
-

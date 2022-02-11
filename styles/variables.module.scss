@@ -4,15 +4,17 @@ $primary-color: linear-gradient(
   rgba(45, 226, 130, 1) 95%
 );
 
-$bg-color: linear-gradient(
+$bg-color-gradiant: linear-gradient(
   90deg,
   rgba(41, 2, 64, 1) 0%,
   rgba(34, 9, 98, 1) 100%
 );
 
+
 $bg-dark:rgb(13, 2, 24);
 $bg-color-500:rgb(35, 5, 65);
-$bg-color-transparent:rgba(41, 2, 64, 0.404);
+$bg-color-transparent:rgba(41, 2, 64, 0.4);
+$bg-color-transparent:rgba(41, 2, 64, 0.2);
 
 
 $white: #ffe3d4;

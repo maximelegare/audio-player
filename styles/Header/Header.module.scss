@@ -3,8 +3,8 @@
 .container {
   display: flex;
   margin-bottom: 70px;
-  background: rgba($color: $bg-color-500, $alpha: 0.5);
-  padding: 20px;
+  background: $bg-color-transparent;
+  padding:40px 20px  ;
   
   //   justify-content: space-between;
 }

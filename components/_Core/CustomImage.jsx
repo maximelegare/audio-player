@@ -5,7 +5,7 @@ import styles from "../../styles/_Core/Image.module.scss";
 
 import fallbackImage from "../../public/assets/SVG/musicNote.svg";
 
-const CustomImage = ({ src, width, height, alt }) => {
+const CustomImage = ({ src, width, height, alt, round }) => {
   return (
     <div className={styles.imageWrapper}>
       <Image
@@ -14,7 +14,7 @@ const CustomImage = ({ src, width, height, alt }) => {
         width={width}
         height={height}
         objectFit="cover"
-        className={styles.image}
+        className={round ? styles.round : styles.square}
       />
     </div>
   );
