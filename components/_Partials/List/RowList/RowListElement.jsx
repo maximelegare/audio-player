@@ -5,21 +5,37 @@ import CustomImage from "../../../_Core/CustomImage";
 
 import { calculateTime } from "../../../../lib/utilities";
 
-const RowListElement = ({id, title, artist, picture_url, album, duration, songNumber}) => {
+import { currentSongState } from "../../../../atoms/audioAtom";
+import { useSetRecoilState } from "recoil";
 
+const RowListElement = ({
+  id,
+  title,
+  artist,
+  picture_url,
+  album,
+  duration,
+  songNumber,
+  streaming_url,
+}) => {
+  const setCurrentSong = useSetRecoilState(currentSongState);
 
+  const currentSongData = {
+    title,
+    artist,
+    picture_url,
+    album,
+    artist,
+    duration,
+    streaming_url,
+  };
 
   return (
-    <div className={`${styles.rowListContainer} ${styles.listElement}`}>
+    <div className={`${styles.rowListContainer} ${styles.listElement}`} onClick={() => setCurrentSong(currentSongData)}>
       <div className={`${styles.firstThird} ${styles.section}`}>
         <p className={styles.number}>{songNumber}</p>
         <div className={styles.image}>
-          <CustomImage
-            width={50}
-            height={50}
-            src={picture_url}
-            alt=""
-          />
+          <CustomImage width={50} height={50} src={picture_url} alt="" />
         </div>
         <div className={styles.infosContainer}>
           <h5 className={styles.title}>{title}</h5>

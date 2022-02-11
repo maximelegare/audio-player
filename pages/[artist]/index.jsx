@@ -9,7 +9,7 @@ const index = ({ albums }) => {
 
   return (
     <>
-      <Header title={albums[0].artist} src={albums[0].picture_url} />
+      <Header title={albums[0]?.artist} src={albums[0]?.picture_url} />
         <GridList data={albums} variant="bigCard" />
     </>
   );

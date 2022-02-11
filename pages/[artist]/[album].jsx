@@ -10,7 +10,7 @@ import List from "../../components/_Partials/List/RowList/RowList"
 
 const album = ({ album }) => {
   return (<div>
-    <Header title={album[0].album} src={album[0].picture_url} smallTitle={album[0].artist}/>
+    <Header title={album[0]?.album} src={album[0]?.picture_url} smallTitle={album[0]?.artist}/>
     <List data={album}/>
   </div>);
 };

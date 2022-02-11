@@ -15,7 +15,7 @@ const GridList = ({ data, variant, ...otherProps }) => {
         return (
           <GridListBigCardElement
             key={item.title}
-            src={item.picture_url}
+            picture_url={item.picture_url}
             title={item.title}
             route={item.route}
             year={item.year}
@@ -27,7 +27,7 @@ const GridList = ({ data, variant, ...otherProps }) => {
         return (
           <GridListElement
             key={item.title}
-            src={item.picture_url}
+            picture_url={item.picture_url}
             title={item.title}
             route={item.route}
             {...otherProps}

@@ -9,7 +9,7 @@ import AudioControlesCenter from "./AudioControlesCenter";
 
 import VolumeControles from "./VolumeControles";
 
-const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
+const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
   // State
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -31,9 +31,9 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl }) => {
   useEffect(() => {
 
     // set the max duration
-    const seconds = Math.floor(audioPlayer.current.duration);
+    const seconds = Math.floor(duration);
     setRangeInput((rangeInput) => ({ ...rangeInput, max: seconds }));
-  }, [audioPlayer.current?.loadedmetadata]);
+  }, [duration]);
 
 
   // need to get the previous value bc use state is asynchronous and wont have time to do conditionnal before it's done running

@@ -5,12 +5,12 @@ import CustomImage from "../../../_Core/CustomImage";
 
 import { useRouter } from "next/router";
 
-const GridListBigCardElement = ({ src, title, route, year, round, artist }) => {
+const GridListBigCardElement = ({ picture_url, title, route, year, round, artist }) => {
   const router = useRouter();
 
   return (
     <div className={styles.container} onClick={() => router.push(`/${route}`)}>
-      <CustomImage width={150} height={150} src={src} alt="" round={round} />
+      <CustomImage width={150} height={150} src={picture_url} alt="" round={round} />
       <div className={styles.infos}>
         <h5>{title.length < 11 ? title : `${title.slice(0, 11)}...`}</h5>
         <p>

@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../../styles/Layout.module.scss";
 
 import SideBar from "../SideBar/SideBar";
 import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
 import { Scrollbar } from "react-scrollbars-custom";
 
+import { useRecoilValue } from "recoil";
+import { currentSongState } from "../../atoms/audioAtom";
+
+
 const Layout = ({ children }) => {
+  const currentSong = useRecoilValue(currentSongState)
+
+  useEffect(() => {
+      console.log(currentSong.streaming_url)
+      console.log(currentSong.title)
+  },[currentSong])
+
   return (
     <div>
       <main className={styles.main}>
@@ -17,14 +28,25 @@ const Layout = ({ children }) => {
           </Scrollbar>
         </div>
         <AudioPlayer
-          title="This is a long long long long long skhfakajfh title"
-          artist="Maxime Légaré"
-          fileUrl="https://docs.google.com/uc?export=open&amp;id=1Da0t_0VZUPPk1B-7dM-vHGcZS1t_Iwcn"
-          imgUrl="https://docs.google.com/uc?id=1NRCIz_EIMagmy4l9Io_pZnE2513EVEaG"
+          title={currentSong.title}
+          artist={currentSong.artist}
+          fileUrl="https://docs.google.com/uc?export=open&id=1kax8SwNLDKXFgMiSZDtw9V_JlRlt8XWF"
+          imgUrl={currentSong.picture_url}
+          duration={currentSong.duration}
         />
       </main>
     </div>
   );
 };
+"https://docs.google.com/uc?export=open&amp;id=1kax8SwNLDKXFgMiSZDtw9V_JlRlt8XWF"
+
+
+
+"http://docs.google.com/uc?export=open&id=1kax8SwNLDKXFgMiSZDtw9V_JlRlt8XWF"
+
 
 export default Layout;
+
+
+
+"1hrR3q631UqMM7mV-NeYTxymjPCsHUrdC"

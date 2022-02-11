@@ -4,7 +4,7 @@ import CustomImage from "../../../_Core/CustomImage";
 
 import { useRouter } from "next/router";
 
-const GridListElement = ({ src, title, route, round }) => {
+const GridListElement = ({ picture_url, title, route, round }) => {
   const router = useRouter();
 
   return (
@@ -12,7 +12,7 @@ const GridListElement = ({ src, title, route, round }) => {
       className={styles.gridListElementContainer}
       onClick={() => router.push(`/${route}`)}
     >
-      <CustomImage height={80} width={80} src={src} alt="" round={round}/>
+      <CustomImage height={80} width={80} src={picture_url} alt="" round={round}/>
       <h5 className={styles.title}>{title}</h5>
     </div>
   );
