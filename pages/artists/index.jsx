@@ -21,12 +21,7 @@ export default index;
 
 
 export async function getServerSideProps() {
-  const res = await sql_select({
-    rows: "artist as title, picture_url, artist_route as route",
-    table: "albums",
-    orderBy: "artist",
-    groupBy: "artist",
-  });
+  const res = await sql_select("SELECT artist as title, picture_url, artist_route as route FROM albums GROUP BY artist ORDER BY artist");
   const artists = JSON.parse(JSON.stringify(res));
 
   return { props: { artists } };
