@@ -27,3 +27,5 @@ export async function getServerSideProps(context) {
   const albums = JSON.parse(JSON.stringify(res));
   return { props: { albums } };
 }
+
+

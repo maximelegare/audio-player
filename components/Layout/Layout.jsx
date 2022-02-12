@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
         <AudioPlayer
           title={currentSong.title}
           artist={currentSong.artist}
-          fileUrl="https://docs.google.com/uc?export=open&id=1kax8SwNLDKXFgMiSZDtw9V_JlRlt8XWF"
+          fileUrl={currentSong.streaming_url}
           imgUrl={currentSong.picture_url}
           duration={currentSong.duration}
         />
@@ -50,3 +50,7 @@ export default Layout;
 
 
 "1hrR3q631UqMM7mV-NeYTxymjPCsHUrdC"
+
+
+
+"http://docs.google.com/uc?export=open&id=1kax8SwNLDKXFgMiSZDtw9V_JlRlt8XWF"

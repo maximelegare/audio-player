@@ -33,7 +33,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
     // set the max duration
     const seconds = Math.floor(duration);
     setRangeInput((rangeInput) => ({ ...rangeInput, max: seconds }));
-  }, [duration]);
+  }, [audioPlayer.current?.loadedmetadata, duration]);
 
 
   // need to get the previous value bc use state is asynchronous and wont have time to do conditionnal before it's done running
@@ -42,6 +42,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
 
     setIsPlaying(!prevValue);
     if (!prevValue) {
+      audioPlayer.current.load()
       audioPlayer.current.play();
 
       //   start the range animation when pressed play
