@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import styles from "../../styles/AudioPlayer/AudioPlayer.module.scss";
-
 
 import ProgressBar from "../AudioPlayer/ProgressBar";
 
@@ -8,6 +7,7 @@ import InfosAlbumPlaying from "./InfosAlbumPlaying";
 import AudioControlesCenter from "./AudioControlesCenter";
 
 import VolumeControles from "./VolumeControles";
+
 
 const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
   // State
@@ -27,12 +27,13 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
 
 
 
-
   useEffect(() => {
-
     // set the max duration
     const seconds = Math.floor(duration);
     setRangeInput((rangeInput) => ({ ...rangeInput, max: seconds }));
+
+    // setAdioRefGlobal(audioPlayer);
+    // console.log(audioPlayer);
   }, [audioPlayer.current?.loadedmetadata, duration]);
 
 
@@ -42,7 +43,6 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
 
     setIsPlaying(!prevValue);
     if (!prevValue) {
-      audioPlayer.current.load()
       audioPlayer.current.play();
 
       //   start the range animation when pressed play
@@ -64,6 +64,19 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
     // call itself to always do the animation
     animationRef.current = requestAnimationFrame(whilePlaying);
   };
+
+
+  // Listen to the fileUrl changes to start the player when a song is clicked
+  useEffect(() => {
+    if (fileUrl) {
+      setIsPlaying(true);
+      audioPlayer.current.play().catch((e) => console.log(e));
+    }
+
+    // animationRef.current = requestAnimationFrame(whilePlaying);
+  }, [fileUrl]);
+
+
 
   //   when a user drag the knob, it updates the progress-bar
   const changeRange = (values) => {
@@ -94,11 +107,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
             handleBackFive={backFive}
             handleForwardFive={forwardFive}
             audioElement={
-              <audio
-                ref={audioPlayer}
-                src={fileUrl}
-                preload="metadata"
-              >
+              <audio ref={audioPlayer} src={fileUrl} preload="metadata">
                 <source src={fileUrl} />
               </audio>
             }
@@ -112,7 +121,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
             width="max(30vw, 300px)"
           />
         </div>
-        <VolumeControles audioRef={audioPlayer}/>
+        <VolumeControles audioRef={audioPlayer} />
       </div>
     </div>
   );

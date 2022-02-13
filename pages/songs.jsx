@@ -19,7 +19,7 @@ export default songs;
 
 export async function getServerSideProps(context) {
   const res = await sql_select(
-    "SELECT DISTINCT (a.title), s.duration, s.title, s.streaming_url, a.artist FROM songs s JOIN albums a ON a.title = s.album"
+    "SELECT DISTINCT (a.title), s.duration, s.title, s.album,  s.streaming_url, a.picture_url, a.artist FROM songs s JOIN albums a ON a.title = s.album"
   );
   const songs = JSON.parse(JSON.stringify(res));
   return { props: { songs } };
