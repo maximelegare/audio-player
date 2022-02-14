@@ -50,101 +50,98 @@ export default async function handler(req, res) {
         .catch((err) => console.log(err));
 
       // Create fileName for cloudinary
-      const fileName = `${artist}-${album}-${title}`;
+      const songName = `${artist}-${album}-${title}`;
+      const coverName = `${artist}-${album}`;
 
-    
-
-      // const existsQuery = `EXISTS(SELECT title, album_id FROM albums WHERE title = '${album}')`;
+      // Upload music file to Cloudinary
+      const streamingUrl = await cloudinaryUpload(
+        file.path,
+        songName,
+        "_music"
+      );
       
-      // const res = await sql_select(`SELECT ${existsQuery}`)
-      // const albumExists = res[0][existsQuery]
-      
-
       // Checks if the album exists in the Albums table
-      // const res = await sql_select(
-      //   `SELECT picture_url FROM albums WHERE title = '${album}' LIMIT 1`
-      // );
-      // const albumLink = res[0]?.picture_url;
+      const sql = `EXISTS(SELECT 1 FROM albums WHERE title = '${album}')`
+      const res = await sql_select(
+        `SELECT ${sql}`
+      );
 
-      // // Upload music file to google drive
-      // const streamingUrl = await cloudinaryUpload(
-      //   file.path,
-      //   fileName,
-      //   "_music"
-      // );
+      
+      const albumLink = await res[0][sql];
+      console.log(albumLink);
 
-
-       const coverPath = await  cloudinaryBufferUpload(picture[0].data, fileName, "_cover")
-       console.log(coverPath)
 
       // If there is a picture in the file, upload the picture to google drive & the album does not exist in db
       // If the album does not exists in the db
+      if (!albumLink) {
+        console.log("albumLink", albumLink);
+        console.log("add-album & song");
+        let pictureUrl;
 
-      // if (!albumLink) {
-      //   let pictureUrl;
-      //   if (picture) {
-      //     // Upload to google Drive
-      //     // pictureUrl = await uploadFileToGoogleDrive({
-      //     //   title: `${artist} - ${album}`,
-      //     //   mimeType: picture[0].format,
-      //     //   buffer: picture[0].data,
-      //     //   parents: coverFolder,
-      //     // }).catch((err) => console.log(err));
-      //   }
+        if (picture) {
+          // Upload to cloudinary
+          pictureUrl = await cloudinaryBufferUpload(
+            picture[0].data,
+            coverName,
+            "_cover"
+          );
+        }
 
-      //   // Create data for the db
-      //   const albumData = {
-      //     title: album,
-      //     title_route: createUrlRouteWithTitle(artist, album),
-      //     picture_url: pictureUrl,
-      //     year: year,
-      //     artist: artist,
-      //     artist_route: createUrlRouteWithTitle(artist),
-      //   };
+        // Create data for the db
+        const albumData = {
+          title: album,
+          title_route: createUrlRouteWithTitle(artist, album),
+          picture_url: pictureUrl,
+          year: year,
+          artist: artist,
+          artist_route: createUrlRouteWithTitle(artist),
+        };
 
-      //   const songData = {
-      //     title: title,
-      //     track_no: track.no,
-      //     album_track_no: track.of,
-      //     album: album,
-      //     duration: duration,
-      //     streaming_url: streamingUrl,
-      //   };
+        const songData = {
+          title: title,
+          track_no: track.no,
+          album_track_no: track.of,
+          album: album,
+          duration: duration,
+          streaming_url: streamingUrl,
+        };
 
-      //   // Creates colomns and values to upload to db
-      //   const albumColumns = Object.keys(albumData);
-      //   const albumValues = Object.values(albumData);
+        // Creates colomns and values to upload to db
+        const albumColumns = Object.keys(albumData);
+        const albumValues = Object.values(albumData);
 
-      //   const songColumns = Object.keys(songData);
-      //   const songValues = Object.values(songData);
+        const songColumns = Object.keys(songData);
+        const songValues = Object.values(songData);
 
-      //   // Makes a transation to insert into songs & albums
-      //   await sql_insert_transation({
-      //     album: {
-      //       columns: albumColumns,
-      //       values: albumValues,
-      //       table: "albums",
-      //     },
-      //     song: {
-      //       columns: songColumns,
-      //       values: songValues,
-      //       table: "songs",
-      //     },
-      //   });
+        // Makes a transation to insert into songs & albums
 
-      //   // If the album already exists
-      // } else {
-      //   const songData = {
-      //     title: title,
-      //     track_no: track.no,
-      //     album_track_no: track.of,
-      //     album: album,
-      //     duration: duration,
-      //     streaming_url: streamingUrl,
-      //   };
+        await sql_insert_transation({
+          album: {
+            columns: albumColumns,
+            values: albumValues,
+            table: "albums",
+          },
+          song: {
+            columns: songColumns,
+            values: songValues,
+            table: "songs",
+          },
+        });
 
-      //   await sql_insert("songs", songData);
-      // }
+        // If the album already exists
+      } else {
+        console.log("add song");
+        const songData = {
+          title: title,
+          track_no: track.no,
+          album_track_no: track.of,
+          album: album,
+          duration: duration,
+          streaming_url: streamingUrl,
+        };
+
+        await sql_insert("songs", songData);
+      }
     });
     return res.json(files);
   });
