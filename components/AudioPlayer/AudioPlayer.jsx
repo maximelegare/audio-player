@@ -67,14 +67,14 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
 
 
   // Listen to the fileUrl changes to start the player when a song is clicked
-  useEffect(() => {
-    if (fileUrl) {
-      setIsPlaying(true);
-      audioPlayer.current.play().catch((e) => console.log(e));
-    }
+  // useEffect(() => {
+  //   if (fileUrl) {
+  //     setIsPlaying(true);
+  //     audioPlayer.current.play().catch((e) => console.log(e));
+  //   }
 
-    // animationRef.current = requestAnimationFrame(whilePlaying);
-  }, [fileUrl]);
+  //   // animationRef.current = requestAnimationFrame(whilePlaying);
+  // }, [fileUrl]);
 
 
 

@@ -52,7 +52,19 @@ export default async function handler(req, res) {
       // Create fileName for cloudinary
       const songName = `${artist}-${album}-${title}`;
       const coverName = `${artist}-${album}`;
+      
 
+
+      // Checks if the album exists in the Albums table
+      const sql = `EXISTS(SELECT 1 FROM albums WHERE title = '${album}')`
+      const res = await sql_select(
+        `SELECT ${sql}`
+      );
+      
+      const albumLink = await res[0][sql];
+      console.log(albumLink);
+
+      
       // Upload music file to Cloudinary
       const streamingUrl = await cloudinaryUpload(
         file.path,
@@ -60,15 +72,7 @@ export default async function handler(req, res) {
         "_music"
       );
       
-      // Checks if the album exists in the Albums table
-      const sql = `EXISTS(SELECT 1 FROM albums WHERE title = '${album}')`
-      const res = await sql_select(
-        `SELECT ${sql}`
-      );
 
-      
-      const albumLink = await res[0][sql];
-      console.log(albumLink);
 
 
       // If there is a picture in the file, upload the picture to google drive & the album does not exist in db

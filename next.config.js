@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   images:{
-    domains:["upload.wikimedia.org", "docs.google.com", "drive.google.com"]
+    domains:["res.cloudinary.com"]
   },
   cookies: {
     csrfToken: {
