@@ -12,10 +12,7 @@ import { currentSongState } from "../../atoms/audioAtom";
 const Layout = ({ children }) => {
   const currentSong = useRecoilValue(currentSongState)
 
-  useEffect(() => {
-      console.log(currentSong.streaming_url)
-      console.log(currentSong.title)
-  },[currentSong])
+
 
   return (
     <div>

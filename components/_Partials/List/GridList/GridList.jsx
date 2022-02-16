@@ -44,6 +44,7 @@ const GridList = ({ data, variant, ...otherProps }) => {
         }`}
       >
         {data.map((item) => selectCard(item))}
+       
       </div>
     </PageLayout>
   );

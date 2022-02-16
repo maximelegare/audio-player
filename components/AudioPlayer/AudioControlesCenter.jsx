@@ -11,7 +11,6 @@ const AudioControlesCenter = ({
   handlePlayPause,
   handleBackFive,
   handleForwardFive,
-//   forwardedRef,
   audioElement
 }) => {
   return (

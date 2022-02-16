@@ -8,34 +8,28 @@ import AudioControlesCenter from "./AudioControlesCenter";
 
 import VolumeControles from "./VolumeControles";
 
-
 const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
   // State
   const [isPlaying, setIsPlaying] = useState(false);
 
   const [progressInput, setRangeInput] = useState({
     values: [0],
-    max: 100,
     min: 0,
     step: 1,
   });
+
+  const [max, setMax] = useState(100);
 
   // references
   const animationRef = useRef(null); // Animation of the Range input
 
   const audioPlayer = useRef(null); // AudioPlayer which is in child component
 
-
-
   useEffect(() => {
     // set the max duration
     const seconds = Math.floor(duration);
-    setRangeInput((rangeInput) => ({ ...rangeInput, max: seconds }));
-
-    // setAdioRefGlobal(audioPlayer);
-    // console.log(audioPlayer);
+    setMax(seconds);
   }, [audioPlayer.current?.loadedmetadata, duration]);
-
 
   // need to get the previous value bc use state is asynchronous and wont have time to do conditionnal before it's done running
   function handleClickPlayPause() {
@@ -65,20 +59,17 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
     animationRef.current = requestAnimationFrame(whilePlaying);
   };
 
-
   // Listen to the fileUrl changes to start the player when a song is clicked
-  // useEffect(() => {
-  //   if (fileUrl) {
-  //     setIsPlaying(true);
-  //     audioPlayer.current.play().catch((e) => console.log(e));
-  //   }
+  useEffect(() => {
+    if (fileUrl) {
+      setIsPlaying(true);
+      audioPlayer.current.play();
 
-  //   // animationRef.current = requestAnimationFrame(whilePlaying);
-  // }, [fileUrl]);
+      animationRef.current = requestAnimationFrame(whilePlaying);
+    }
+  }, [fileUrl]);
 
-
-
-  //   when a user drag the knob, it updates the progress-bar
+  // when a user drag the knob, it updates the progress-bar
   const changeRange = (values) => {
     setRangeInput({ ...progressInput, values: [values] });
     audioPlayer.current.currentTime = values;
@@ -115,7 +106,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
           <ProgressBar
             values={progressInput.values}
             min={progressInput.min}
-            max={progressInput.max}
+            max={max}
             step={progressInput.step}
             updateValues={(values) => changeRange(values)}
             width="max(30vw, 300px)"

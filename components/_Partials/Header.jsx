@@ -3,6 +3,7 @@ import styles from "../../styles/Header/Header.module.scss";
 import CustomImage from "../_Core/CustomImage";
 
 const Header = ({ title, smallTitle, src }) => {
+
   return (
     <div className={styles.container}>
       {src && (
