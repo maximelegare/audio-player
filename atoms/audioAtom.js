@@ -6,8 +6,18 @@ export const audioRefState = atom({
     default:null
 })
 
+export const isPlayinState = atom({
+    key:"isPlayinState",
+    default:false
+})    
+
 
 export const currentSongState = atom({
     key:"currentSongState",
+    default:{}
+})
+
+export const currentPlaylistState = atom({
+    key:"currentPlaylistState",
     default:{}
 })

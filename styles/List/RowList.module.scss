@@ -1,13 +1,10 @@
 @import "../variables.module.scss";
 
-
-
 // Styling Specific to Header
 .header {
-    font-size: 1.1rem;
-    opacity: 0.8;
-  }
-
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
 
 // Styling specific to element in a Row list
 .listElement {
@@ -23,15 +20,14 @@
   &:hover {
     background-color: $bg-color-transparent;
 
-    .title{
+    .title {
       opacity: 1;
     }
-    p{
+    p {
       opacity: 1;
     }
   }
 }
-
 
 // Styling used in both
 .rowListContainer {
@@ -46,16 +42,24 @@
     margin-right: 15px;
   }
 
-  
   .title {
     font-weight: 600;
     opacity: 0.8;
   }
 
-  .number {
+  .currentSong {
+    color:$primary-color;
+    opacity: 1;
+  }
+
+  .numberContainer {
     margin-right: 20px;
+  }
+
+  .number {
     width: 15px;
   }
+
   .time {
     justify-self: flex-end;
   }

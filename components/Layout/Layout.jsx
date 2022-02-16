@@ -10,8 +10,8 @@ import { currentSongState } from "../../atoms/audioAtom";
 
 
 const Layout = ({ children }) => {
-  const currentSong = useRecoilValue(currentSongState)
 
+  const currentSong = useRecoilValue(currentSongState)
 
 
   return (
@@ -35,19 +35,8 @@ const Layout = ({ children }) => {
     </div>
   );
 };
-"https://docs.google.com/uc?export=open&amp;id=1kax8SwNLDKXFgMiSZDtw9V_JlRlt8XWF"
-
-
-
-"http://docs.google.com/uc?export=open&id=1kax8SwNLDKXFgMiSZDtw9V_JlRlt8XWF"
-
 
 export default Layout;
 
 
 
-"1hrR3q631UqMM7mV-NeYTxymjPCsHUrdC"
-
-
-
-"http://docs.google.com/uc?export=open&id=1kax8SwNLDKXFgMiSZDtw9V_JlRlt8XWF"

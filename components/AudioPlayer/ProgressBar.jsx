@@ -20,7 +20,7 @@ const ProgressBar = ({values, min, max, step, updateValues, width}) => {
         updateValues={updateValues}
         width={width}
       />
-      <div className={styles.duration}>{calculateTime(max)}</div>
+      <div className={styles.duration}>{calculateTime(max | 0)}</div>
     </div>
   );
 };

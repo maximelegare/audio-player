@@ -4,7 +4,7 @@ import { sql_insert_transation } from "../../lib/db";
 
 import { uploadFileToGoogleDrive } from "../../lib/googledrive";
 
-import { createUrlRouteWithTitle } from "../../lib/utilities";
+import { createUrlRoute } from "../../lib/utilities";
 
 import { sql_select } from "../../lib/db";
 import { sql_insert } from "../../lib/db";
@@ -78,8 +78,6 @@ export default async function handler(req, res) {
       // If there is a picture in the file, upload the picture to google drive & the album does not exist in db
       // If the album does not exists in the db
       if (!albumLink) {
-        console.log("albumLink", albumLink);
-        console.log("add-album & song");
         let pictureUrl;
 
         if (picture) {
@@ -94,11 +92,11 @@ export default async function handler(req, res) {
         // Create data for the db
         const albumData = {
           title: album,
-          title_route: createUrlRouteWithTitle(artist, album),
+          title_route: createUrlRoute([artist, album]),
           picture_url: pictureUrl,
           year: year,
           artist: artist,
-          artist_route: createUrlRouteWithTitle(artist),
+          artist_route: createUrlRoute([artist]),
         };
 
         const songData = {
@@ -108,6 +106,7 @@ export default async function handler(req, res) {
           album: album,
           duration: duration,
           streaming_url: streamingUrl,
+          title_route:createUrlRoute([artist, album, title])
         };
 
         // Creates colomns and values to upload to db

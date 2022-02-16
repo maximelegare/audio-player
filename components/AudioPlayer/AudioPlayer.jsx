@@ -7,10 +7,17 @@ import InfosAlbumPlaying from "./InfosAlbumPlaying";
 import AudioControlesCenter from "./AudioControlesCenter";
 
 import VolumeControles from "./VolumeControles";
+import { useRecoilState } from "recoil";
+import { isPlayinState } from "../../atoms/audioAtom";
+
+
 
 const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
+  
   // State
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useRecoilState(isPlayinState);
+  
+
 
   const [progressInput, setRangeInput] = useState({
     values: [0],

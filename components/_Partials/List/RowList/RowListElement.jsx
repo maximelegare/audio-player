@@ -4,9 +4,10 @@ import styles from "../../../../styles/List/RowList.module.scss";
 import CustomImage from "../../../_Core/CustomImage";
 
 import { calculateTime } from "../../../../lib/utilities";
+import PlayingIcon from "../../../_Core/PlayingIcon";
 
 import { currentSongState } from "../../../../atoms/audioAtom";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 
 const RowListElement = ({
   id,
@@ -16,29 +17,36 @@ const RowListElement = ({
   album,
   duration,
   songNumber,
-  streaming_url,
+  setPlaylistBasedOnSongSelected,
+  song_route,
+  track_no
 }) => {
-  const setCurrentSong = useSetRecoilState(currentSongState);
+  const currentSong = useRecoilValue(currentSongState);
 
-  const currentSongData = {
-    title,
-    artist,
-    picture_url,
-    album,
-    artist,
-    duration,
-    streaming_url,
+  // Pass the song clicked to the parent for it to set the song & playlist
+  const handleSongClicked = () => {
+    setPlaylistBasedOnSongSelected(songNumber);
   };
 
+
   return (
-    <div className={`${styles.rowListContainer} ${styles.listElement}`} onClick={() => setCurrentSong(currentSongData)}>
+    <div
+      className={`${styles.rowListContainer} ${styles.listElement}`}
+      onClick={() => handleSongClicked()}
+    >
       <div className={`${styles.firstThird} ${styles.section}`}>
-        <p className={styles.number}>{songNumber}</p>
+        <div className={styles.numberContainer}>
+          {currentSong.song_route === song_route ? (
+            <PlayingIcon />
+          ) : (
+            <p className={styles.number}>{songNumber}</p>
+          )}
+        </div>
         <div className={styles.image}>
           <CustomImage width={50} height={50} src={picture_url} alt="" />
         </div>
         <div className={styles.infosContainer}>
-          <h5 className={styles.title}>{title}</h5>
+          <h5 className={`${styles.title} ${currentSong.song_route === song_route && styles.currentSong}`}>{title}</h5>
           <p>{artist}</p>
         </div>
       </div>
