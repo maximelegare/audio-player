@@ -38,7 +38,7 @@ const RangeInput = ({ values, step, min, max, updateValues, width }) => {
               cursor: "pointer",
               background: getTrackBackground({
                 values: values,
-                colors: ["#26c9c3", "#ffe3d4"],
+                colors: ["rgb(90, 20, 160)", "#ffe3d4"],
                 min: min,
                 max: max,
               }),
@@ -55,9 +55,9 @@ const RangeInput = ({ values, step, min, max, updateValues, width }) => {
           // className={}
           style={{
             ...props.style,
-            height: "20px",
-            width: "20px",
-            backgroundColor: "#26c9c3",
+            height: "15px",
+            width: "15px",
+            backgroundColor: "rgb(63, 16, 110)",
             visibility: isDragged ? "visible" : "hidden",
             borderRadius: "50%",
             justifyContent: "center",

@@ -23,7 +23,6 @@ const RowList = ({ data }) => {
     
   }
   
-  console.log(data)
 
   let songNumber = 0;
   return (

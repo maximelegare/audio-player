@@ -62,7 +62,6 @@ export default async function handler(req, res) {
       );
       
       const albumLink = await res[0][sql];
-      console.log(albumLink);
 
       
       // Upload music file to Cloudinary
@@ -133,7 +132,6 @@ export default async function handler(req, res) {
 
         // If the album already exists
       } else {
-        console.log("add song");
         const songData = {
           title: title,
           track_no: track.no,
