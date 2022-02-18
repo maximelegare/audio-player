@@ -8,54 +8,37 @@ import AudioControlesCenter from "./AudioControlesCenter";
 
 import VolumeControles from "./VolumeControles";
 import { useRecoilState } from "recoil";
-import { isPlayinState } from "../../atoms/audioAtom";
-
-
+import { isPlayingState } from "../../atoms/audioAtom";
 
 const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
-  
-  // State
-  const [isPlaying, setIsPlaying] = useRecoilState(isPlayinState);
-  
 
+  // Global state
+  const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
 
+  // Progress input vales
   const [progressInput, setRangeInput] = useState({
     values: [0],
     min: 0,
     step: 1,
   });
-
-  const [max, setMax] = useState(100);
+  
+  const [max, setMax] = useState(100); // maximum time of the range input (duration of the song)
 
   // references
   const animationRef = useRef(null); // Animation of the Range input
 
   const audioPlayer = useRef(null); // AudioPlayer which is in child component
 
+
+  
+  // set the max duration when metadata are loaded
   useEffect(() => {
-    // set the max duration
     const seconds = Math.floor(duration);
     setMax(seconds);
   }, [audioPlayer.current?.loadedmetadata, duration]);
 
-  // need to get the previous value bc use state is asynchronous and wont have time to do conditionnal before it's done running
-  function handleClickPlayPause() {
-    const prevValue = isPlaying;
 
-    setIsPlaying(!prevValue);
-    if (!prevValue) {
-      audioPlayer.current.play();
-
-      //   start the range animation when pressed play
-      animationRef.current = requestAnimationFrame(whilePlaying);
-    } else {
-      audioPlayer.current.pause();
-      // pause the range animation when pressed play
-      cancelAnimationFrame(animationRef.current);
-    }
-  }
-
-  //   animation that updates the range while it's playing
+  // animation that updates the range while it's playing
   const whilePlaying = () => {
     setRangeInput({
       ...progressInput,
@@ -66,15 +49,17 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
     animationRef.current = requestAnimationFrame(whilePlaying);
   };
 
-  // Listen to the fileUrl changes to start the player when a song is clicked
+  // Set play/pause based on isPlaying value 
   useEffect(() => {
-    if (fileUrl) {
-      setIsPlaying(true);
+    if (isPlaying) {
       audioPlayer.current.play();
-
-      animationRef.current = requestAnimationFrame(whilePlaying);
+      animationRef.current = requestAnimationFrame(whilePlaying); // Start range input animation
+    } else {
+      audioPlayer.current.pause();
+      cancelAnimationFrame(animationRef.current); // Stop range input animation
     }
-  }, [fileUrl]);
+  }, [isPlaying]);
+
 
   // when a user drag the knob, it updates the progress-bar
   const changeRange = (values) => {
@@ -101,7 +86,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
         <div className={styles.controles}>
           <AudioControlesCenter
             isPlaying={isPlaying}
-            handlePlayPause={handleClickPlayPause}
+            handlePlayPause={() => setIsPlaying(!isPlaying)}
             handleBackFive={backFive}
             handleForwardFive={forwardFive}
             audioElement={

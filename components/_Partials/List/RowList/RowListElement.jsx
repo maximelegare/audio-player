@@ -8,6 +8,8 @@ import PlayingIcon from "../../../_Core/PlayingIcon";
 
 import { currentSongState } from "../../../../atoms/audioAtom";
 import { useRecoilValue } from "recoil";
+import { useSetRecoilState } from "recoil";
+import { isPlayingState } from "../../../../atoms/audioAtom";
 
 const RowListElement = ({
   id,
@@ -21,11 +23,17 @@ const RowListElement = ({
   song_route,
   track_no
 }) => {
+
+  // To change styling of the song playing 
   const currentSong = useRecoilValue(currentSongState);
 
-  // Pass the song clicked to the parent for it to set the song & playlist
+  const setIsPlaying = useSetRecoilState(isPlayingState)
+
+
+  // Pass the song clicked to the parent for it to set the song & playlist when clicked
   const handleSongClicked = () => {
     setPlaylistBasedOnSongSelected(songNumber);
+    setIsPlaying(true)
   };
 
 
@@ -36,6 +44,7 @@ const RowListElement = ({
     >
       <div className={`${styles.firstThird} ${styles.section}`}>
         <div className={styles.numberContainer}>
+
           {currentSong.song_route === song_route ? (
             <PlayingIcon />
           ) : (
