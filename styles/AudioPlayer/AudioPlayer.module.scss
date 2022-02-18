@@ -152,7 +152,7 @@
 
 // Play pause button
 .playPause {
-  background: $primary-gradiant;
+  background: linear-gradient($primary-gradiant-colors);
   border: none;
   border-radius: 50%;
   width: 60px;
