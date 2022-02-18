@@ -14,12 +14,17 @@ import { Scrollbar } from "react-scrollbars-custom";
 
 import FileInput from "../_Core/FileInput";
 
+import logo from "../../public/assets/SVG/hodei-logo-white.svg";
+
+import Image from "next/image";
 
 const SideBar = () => {
-
   return (
     <div className={styles.container}>
       <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>
+        <div className={styles.linkContainer}>
+          <Image src={logo} width={90} height={40} alt="" />
+        </div>
         <div className={styles.linkContainer}>
           <FileInput />
         </div>
