@@ -3,14 +3,18 @@
     background-color: black;
     display: flex;
     flex-direction: column; 
+    padding: 0 10px;
 }
+
 // Size of the scrollbar
 .scollbarContainer{
     flex-grow: 1;
+    padding-bottom: 15px;
 }
 
 .linkContainer{
-    margin:10px 10px 20px 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 

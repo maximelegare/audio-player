@@ -6,7 +6,7 @@ import { FaItunesNote } from "react-icons/fa";
 import { BsDisc, BsSearch } from "react-icons/bs";
 import { HiUserGroup } from "react-icons/hi";
 
-import { MdOutlinePlaylistAdd } from "react-icons/md";
+import { MdOutlinePlaylistAdd, MdPlaylistPlay } from "react-icons/md";
 
 import { AiOutlineHome } from "react-icons/ai";
 
@@ -40,10 +40,6 @@ const SideBar = () => {
             icon={<BsSearch className={styles.icon} />}
             text="Search"
           />
-          <SideBarLink
-            icon={<MdOutlinePlaylistAdd className={styles.icon} />}
-            text="New Playlist"
-          />
         </div>
         <div className={styles.linkContainer}>
           <SideBarLink
@@ -62,9 +58,20 @@ const SideBar = () => {
             href="/songs"
           />
         </div>
+        <hr />
       </div>
       <div className={styles.scollbarContainer}>
-        <Scrollbar noScrollX style={{ width: "100%", height: "100%"  }}>
+        <div className={styles.linkContainer}>
+          <SideBarLink
+            icon={<MdOutlinePlaylistAdd className={styles.icon} />}
+            text="New Playlist"
+          />
+          <SideBarLink
+            icon={<MdPlaylistPlay className={styles.icon} />}
+            text="Current Playlist"
+          />
+        </div>
+        <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>
           <div className={styles.linkContainer}>
             <SideBarLink text="Artists" href="/artists" />
             <SideBarLink text="Albums" href="/albums" />
