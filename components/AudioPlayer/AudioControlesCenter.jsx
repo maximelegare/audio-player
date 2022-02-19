@@ -1,33 +1,56 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { FaPlay } from "react-icons/fa";
-import { GiPauseButton } from "react-icons/gi";
+import { GiConsoleController, GiPauseButton } from "react-icons/gi";
+
+import { BsFillSkipBackwardFill, BsFillSkipForwardFill } from "react-icons/bs";
 
 import styles from "../../styles/AudioPlayer/AudioPlayer.module.scss";
 
-const AudioControlesCenter = ({
-  isPlaying,
-  handlePlayPause,
-  handleBackFive,
-  handleForwardFive,
-  audioElement
-}) => {
+import { currentPlaylistState, currentSongState } from "../../atoms/audioAtom";
+
+import { useRecoilValue, useRecoilState } from "recoil";
+
+const AudioControlesCenter = ({ isPlaying, handlePlayPause, audioElement }) => {
+  const currentPlaylist = useRecoilValue(currentPlaylistState);
+  const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
+
+  // Set the next or previous song
+  const setNextSong = (song) => {
+    if (song === "previous") {
+      
+      setCurrentSong({
+        // Check the current song in the playlist based on it's index
+        ...currentPlaylist[currentSong.songIdx - 1],
+        songIdx: currentSong.songIdx - 1,
+      });
+    } else {
+      setCurrentSong({
+        ...currentPlaylist[currentSong.songIdx + 1],
+        songIdx: currentSong.songIdx + 1,
+      });
+    }
+  };
+
   return (
     <div className={styles.controlesButtons}>
-      {
-          audioElement
-      }  
-      <button className={styles.forwardBackward} onClick={handleBackFive}>
-        <GoArrowLeft className={styles.arrow} />
+      {audioElement}
+      <button
+        className={styles.forwardBackward}
+        onClick={() => setNextSong("previous")}
+      >
+        <BsFillSkipBackwardFill className={styles.arrow} />
       </button>
 
-      <button onClick={handlePlayPause} className={styles.playPause} >
+      <button onClick={handlePlayPause} className={styles.playPause}>
         {isPlaying ? <GiPauseButton /> : <FaPlay className={styles.play} />}
       </button>
 
-      <button className={styles.forwardBackward} onClick={handleForwardFive}>
-        <GoArrowRight className={styles.arrow} />
+      <button
+        className={styles.forwardBackward}
+        onClick={() => setNextSong("next")}
+      >
+        <BsFillSkipForwardFill className={styles.arrow} />
       </button>
     </div>
   );

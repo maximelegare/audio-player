@@ -49,7 +49,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
     animationRef.current = requestAnimationFrame(whilePlaying);
   };
 
-  // Set play/pause based on isPlaying value 
+  // Set play/pause based on isPlaying value & when file changes
   useEffect(() => {
     if (isPlaying) {
       audioPlayer.current.play();
@@ -58,7 +58,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
       audioPlayer.current.pause();
       cancelAnimationFrame(animationRef.current); // Stop range input animation
     }
-  }, [isPlaying]);
+  }, [isPlaying, fileUrl]);
 
 
   // when a user drag the knob, it updates the progress-bar

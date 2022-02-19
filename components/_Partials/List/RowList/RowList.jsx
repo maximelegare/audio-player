@@ -14,12 +14,12 @@ const RowList = ({ data }) => {
   const setCurrentSong = useSetRecoilState(currentSongState)  
 
   // Set the current playlist based on the song clicked on child component
-  const setPlaylistBasedOnSong = (songNumber) => {
+  const setPlaylistBasedOnSong = (songIdx) => {
 
     setPlaylist(data)
 
     // Set the current Song based on the song number (start at 1)
-    setCurrentSong(data[songNumber-1])
+    setCurrentSong({...data[songIdx], songIdx})
     
   }
   
@@ -29,13 +29,14 @@ const RowList = ({ data }) => {
     <PageLayout>
       <RowHeader />
 
-      {data.map(({ title, ...otherProps }) => {
+      {data.map(({ title, ...otherProps }, idx) => {
         songNumber++;
         return (
           <ListElement
             key={title}
             title={title}
             songNumber={songNumber}
+            idx={idx}
             {...otherProps}
             setPlaylistBasedOnSongSelected={setPlaylistBasedOnSong}
           />

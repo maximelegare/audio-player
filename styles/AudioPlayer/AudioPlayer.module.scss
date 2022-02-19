@@ -130,7 +130,7 @@
 
 // Forward and backward buttons
 .forwardBackward {
-  color: $gray-200;
+  color: $white;
   background: none;
   border: none;
   display: flex;
@@ -143,10 +143,12 @@
   margin: 0 10px;
   border-radius: 5px;
 
-  font-size: 38px;
+  font-size: 30px;
 
   &:hover {
-    color: $white;
+    color: $hover-white;
+    transform: scale(1.05);
+    transition: 200ms all ease-in-out;
   }
 }
 

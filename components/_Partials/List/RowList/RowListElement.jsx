@@ -21,7 +21,8 @@ const RowListElement = ({
   songNumber,
   setPlaylistBasedOnSongSelected,
   song_route,
-  track_no
+  track_no,
+  idx
 }) => {
 
   // To change styling of the song playing 
@@ -32,7 +33,7 @@ const RowListElement = ({
 
   // Pass the song clicked to the parent for it to set the song & playlist when clicked
   const handleSongClicked = () => {
-    setPlaylistBasedOnSongSelected(songNumber);
+    setPlaylistBasedOnSongSelected(idx);
     setIsPlaying(true)
   };
 
