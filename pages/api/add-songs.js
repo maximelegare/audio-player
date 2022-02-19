@@ -103,7 +103,7 @@ export default async function handler(req, res) {
           track_no: track.no,
           album_track_no: track.of,
           album: album,
-          duration: duration,
+          duration: Math.round(duration),
           streaming_url: streamingUrl,
           title_route:createUrlRoute([artist, album, title])
         };

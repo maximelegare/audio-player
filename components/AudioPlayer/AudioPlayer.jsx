@@ -7,13 +7,16 @@ import InfosAlbumPlaying from "./InfosAlbumPlaying";
 import AudioControlesCenter from "./AudioControlesCenter";
 
 import VolumeControles from "./VolumeControles";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { isPlayingState } from "../../atoms/audioAtom";
 
-const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
+import { currentSongState, currentPlaylistState } from "../../atoms/audioAtom";
 
+const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
   // Global state
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
+  const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
+  const currentPlaylist = useRecoilValue(currentPlaylistState);
 
   // Progress input vales
   const [progressInput, setRangeInput] = useState({
@@ -21,7 +24,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
     min: 0,
     step: 1,
   });
-  
+
   const [max, setMax] = useState(100); // maximum time of the range input (duration of the song)
 
   // references
@@ -29,14 +32,11 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
 
   const audioPlayer = useRef(null); // AudioPlayer which is in child component
 
-
-  
   // set the max duration when metadata are loaded
   useEffect(() => {
     const seconds = Math.floor(duration);
     setMax(seconds);
   }, [audioPlayer.current?.loadedmetadata, duration]);
-
 
   // animation that updates the range while it's playing
   const whilePlaying = () => {
@@ -60,23 +60,23 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
     }
   }, [isPlaying, fileUrl]);
 
+  useEffect(() => {
+ 
+    if (Math.round(audioPlayer.current.currentTime) === duration) {
+      setCurrentSong({
+        ...currentPlaylist[currentSong.songIdx + 1],
+        songIdx: currentSong.songIdx + 1,
+      });
+    }
+  }, [audioPlayer.current?.currentTime, duration]);
+
+
+
 
   // when a user drag the knob, it updates the progress-bar
   const changeRange = (values) => {
     setRangeInput({ ...progressInput, values: [values] });
     audioPlayer.current.currentTime = values;
-  };
-
-  const backFive = () => {
-    const values = Number(audioPlayer.current.currentTime - 5);
-    setRangeInput({ ...progressInput, values: [values] });
-    changeRange(values);
-  };
-
-  const forwardFive = () => {
-    const values = Number(audioPlayer.current.currentTime + 5);
-    setRangeInput({ ...progressInput, values: [values] });
-    changeRange(values);
   };
 
   return (
@@ -87,8 +87,6 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
           <AudioControlesCenter
             isPlaying={isPlaying}
             handlePlayPause={() => setIsPlaying(!isPlaying)}
-            handleBackFive={backFive}
-            handleForwardFive={forwardFive}
             audioElement={
               <audio ref={audioPlayer} src={fileUrl} preload="metadata">
                 <source src={fileUrl} />

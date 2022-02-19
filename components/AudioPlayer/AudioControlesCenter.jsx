@@ -18,7 +18,7 @@ const AudioControlesCenter = ({ isPlaying, handlePlayPause, audioElement }) => {
   // Set the next or previous song
   const setNextSong = (song) => {
     if (song === "previous") {
-      
+
       setCurrentSong({
         // Check the current song in the playlist based on it's index
         ...currentPlaylist[currentSong.songIdx - 1],
@@ -32,6 +32,7 @@ const AudioControlesCenter = ({ isPlaying, handlePlayPause, audioElement }) => {
     }
   };
 
+  
   return (
     <div className={styles.controlesButtons}>
       {audioElement}
