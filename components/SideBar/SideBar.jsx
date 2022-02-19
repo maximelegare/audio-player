@@ -21,7 +21,7 @@ import Image from "next/image";
 const SideBar = () => {
   return (
     <div className={styles.container}>
-      <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>
+      <div>
         <div className={styles.linkContainer}>
           <Image src={logo} width={100} height={50} alt="" />
           <hr />
@@ -62,7 +62,31 @@ const SideBar = () => {
             href="/songs"
           />
         </div>
-      </Scrollbar>
+      </div>
+      <div className={styles.scollbarContainer}>
+        <Scrollbar noScrollX style={{ width: "100%", height: "100%"  }}>
+          <div className={styles.linkContainer}>
+            <SideBarLink text="Artists" href="/artists" />
+            <SideBarLink text="Albums" href="/albums" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+            <SideBarLink text="Songs" href="/songs" />
+          </div>
+        </Scrollbar>
+      </div>
     </div>
   );
 };

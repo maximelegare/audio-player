@@ -18,13 +18,13 @@ const SideBarLink = ({ icon, text, href }) => {
       {href ? (
         <Link passHref href={href} >
             <div className={styles.container} style={style} >
-              <div className={styles.icon}>{icon}</div>
+              {icon && <div className={styles.icon}>{icon}</div>}
               <div className={styles.text}>{text}</div>
             </div>
         </Link>
       ) : (
         <div className={styles.container}>
-          <div className={styles.icon}>{icon}</div>
+          {icon && <div className={styles.icon}>{icon}</div>}
           <div className={styles.text}>{text}</div>
         </div>
       )}

@@ -3,13 +3,10 @@ import ListElement from "./RowListElement";
 import RowHeader from "./RowHeader";
 import PageLayout from "../../../Layout/PageLayout";
 
-import { currentPlaylistState } from "../../../../atoms/audioAtom";
-
-
 import { useAudioPlayer } from "../../../../hooks/AudioHooks";
 
 const RowList = ({ data }) => {
-  
+
   const { setPlaylistAndSong } = useAudioPlayer();
 
   let songNumber = 0;

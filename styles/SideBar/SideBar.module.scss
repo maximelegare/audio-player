@@ -1,9 +1,12 @@
 
 .container{
-    height: 100%;
-    // flex-grow: 1;
-    width: max(15%, 150px);
     background-color: black;
+    display: flex;
+    flex-direction: column; 
+}
+// Size of the scrollbar
+.scollbarContainer{
+    flex-grow: 1;
 }
 
 .linkContainer{
@@ -17,11 +20,6 @@
 }
 
 .text {
-}
-
-
-.thumb-vertical{
-
 }
 
 
