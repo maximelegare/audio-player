@@ -5,13 +5,13 @@ import SideBar from "../SideBar/SideBar";
 import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
 import { Scrollbar } from "react-scrollbars-custom";
 
-import { useRecoilValue } from "recoil";
-import { currentSongState } from "../../atoms/audioAtom";
+import { useAudioPlayer } from "../../hooks/AudioHooks";
+
 
 
 const Layout = ({ children }) => {
 
-  const currentSong = useRecoilValue(currentSongState)
+  const {currentSong} = useAudioPlayer()
 
 
   return (

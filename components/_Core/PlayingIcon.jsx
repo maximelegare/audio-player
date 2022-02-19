@@ -2,11 +2,12 @@ import React from "react";
 
 import styles from "../../styles/_Core/PlayingIcon.module.scss";
 
-import { isPlayingState } from "../../atoms/audioAtom";
-import { useRecoilValue } from "recoil";
+import { useAudioPlayer } from "../../hooks/AudioHooks";
+
+
 const PlayingIcon = () => {
 
-  const isPlaying = useRecoilValue(isPlayingState)  
+  const {isPlaying} = useAudioPlayer()  
 
   return (
     <div className={styles.container}>

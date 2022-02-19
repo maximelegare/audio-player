@@ -7,9 +7,10 @@ import { calculateTime } from "../../../../lib/utilities";
 import PlayingIcon from "../../../_Core/PlayingIcon";
 
 import { currentSongState } from "../../../../atoms/audioAtom";
-import { useRecoilValue } from "recoil";
 import { useSetRecoilState } from "recoil";
 import { isPlayingState } from "../../../../atoms/audioAtom";
+import { useAudioPlayer } from "../../../../hooks/AudioHooks";
+
 
 const RowListElement = ({
   id,
@@ -25,10 +26,7 @@ const RowListElement = ({
   idx
 }) => {
 
-  // To change styling of the song playing 
-  const currentSong = useRecoilValue(currentSongState);
-
-  const setIsPlaying = useSetRecoilState(isPlayingState)
+  const { currentSong, setIsPlaying } = useAudioPlayer()
 
 
   // Pass the song clicked to the parent for it to set the song & playlist when clicked

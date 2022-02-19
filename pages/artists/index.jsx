@@ -5,14 +5,12 @@ import List from "../../components/_Partials/List/GridList/GridList";
 
 import { sql_select } from "../../lib/db";
 
-// import { useRecoilValue } from "recoil";
 // import { audioRefState } from "../../atoms/audioAtom";
 
 // The itemTitle is used to differenciate between artists & albums bc they don't have the same data
 
 const Index = ({ artists }) => {
 
-  // const audioRefGlobal = useRecoilValue(audioRefState) 
 
   return (
     <div>
