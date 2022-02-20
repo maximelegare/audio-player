@@ -1,23 +1,29 @@
 import { atom } from "recoil";
 
+import { recoilPersist } from "recoil-persist";
 
-export const audioRefState = atom({
-    key:"audioRefState",
-    default:null
-})
+const { persistAtom } = recoilPersist();
+
 
 export const isPlayingState = atom({
-    key:"isPlayinState",
-    default:false
-})    
-
+  key: "isPlayinState",
+  default: false,
+});
 
 export const currentSongState = atom({
-    key:"currentSongState",
-    default:{}
-})
+  key: "currentSongState",
+  default: {},
+  effects_UNSTABLE: [persistAtom],
+});
 
 export const currentPlaylistState = atom({
-    key:"currentPlaylistState",
-    default:{}
-})
+  key: "currentPlaylistState",
+  default: {},
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const customPlaylistsState = atom({
+  key: "playlistsState",
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});

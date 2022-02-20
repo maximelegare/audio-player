@@ -8,6 +8,8 @@ import Head from "next/head";
 
 import { useRouter } from "next/router";
 
+
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter()
 
@@ -47,3 +49,4 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 }
 
 export default MyApp;
+

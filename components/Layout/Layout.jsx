@@ -9,10 +9,11 @@ import { useAudioPlayer } from "../../hooks/AudioHooks";
 
 
 
+
 const Layout = ({ children }) => {
 
   const {currentSong} = useAudioPlayer()
-
+ 
 
   return (
     <div>

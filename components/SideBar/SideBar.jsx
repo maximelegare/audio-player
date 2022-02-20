@@ -18,7 +18,12 @@ import logo from "../../public/assets/SVG/hodei-logo-white.svg";
 
 import Image from "next/image";
 
+import { useRecoilValue } from "recoil";
+import { customPlaylistsState } from "../../atoms/audioAtom";
+
 const SideBar = () => {
+  const playlists = useRecoilValue(customPlaylistsState);
+
   return (
     <div className={styles.container}>
       <div>
@@ -74,24 +79,9 @@ const SideBar = () => {
         </div>
         <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>
           <div className={styles.linkContainer}>
-            <SideBarLink text="Artists" href="/artists" />
-            <SideBarLink text="Albums" href="/albums" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
-            <SideBarLink text="Songs" href="/songs" />
+            {playlists.map(({ id, title, route }) => (
+              <SideBarLink key={id} text={title} href={route} />
+            ))}
           </div>
         </Scrollbar>
       </div>
