@@ -21,6 +21,8 @@ import Image from "next/image";
 import { useRecoilValue } from "recoil";
 import { customPlaylistsState } from "../../atoms/audioAtom";
 
+import CustomModal from "../_Core/CustomModal";
+
 const SideBar = () => {
   const playlists = useRecoilValue(customPlaylistsState);
 
@@ -67,10 +69,13 @@ const SideBar = () => {
       </div>
       <div className={styles.scollbarContainer}>
         <div className={styles.linkContainer}>
-          <SideBarLink
-            icon={<MdOutlinePlaylistAdd className={styles.icon} />}
-            text="New Playlist"
-          />
+          <div>
+            <SideBarLink
+              icon={<MdOutlinePlaylistAdd className={styles.icon} />}
+              text="New Playlist"
+            />
+            
+          </div>
           <SideBarLink
             icon={<MdPlaylistPlay className={styles.icon} />}
             text="Current Playlist"
@@ -84,6 +89,7 @@ const SideBar = () => {
             ))}
           </div>
         </Scrollbar>
+        
       </div>
     </div>
   );

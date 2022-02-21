@@ -10,7 +10,7 @@ import {useSetRecoilState} from "recoil"
 import { customPlaylistsState } from "../atoms/audioAtom";
 import { useEffect } from "react";
 
-
+import SideDropdownMenu from "../components/_Core/CustomModal";
 
 export default function Home({ playlists }) {
 

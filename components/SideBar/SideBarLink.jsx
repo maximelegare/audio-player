@@ -4,6 +4,10 @@ import Link from "next/link";
 
 import { useRouter } from "next/router";
 
+import SideDropdownMenu from "../_Core/CustomModal";
+
+import { BiDotsVerticalRounded } from "react-icons/bi";
+
 const SideBarLink = ({ icon, text, href }) => {
   const router = useRouter();
 
@@ -23,8 +27,13 @@ const SideBarLink = ({ icon, text, href }) => {
         </Link>
       ) : (
         <div className={styles.container}>
-          {icon && <div className={styles.icon}>{icon}</div>}
-          <div className={styles.text}>{text}</div>
+          <SideDropdownMenu>
+            {icon && <div className={styles.icon}>{icon}</div>}
+            <div className={styles.text}>{text}</div>
+            <div className={styles.menuIconContainer}>
+              <BiDotsVerticalRounded className={styles.icon} />
+            </div>
+          </SideDropdownMenu>
         </div>
       )}
     </div>
