@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { useRouter } from "next/router";
 
-
 const SideBarLink = ({ icon, text, href }) => {
   const router = useRouter();
 
@@ -16,11 +15,11 @@ const SideBarLink = ({ icon, text, href }) => {
   return (
     <div>
       {href ? (
-        <Link passHref href={href} >
-            <div className={styles.container} style={style} >
-              {icon && <div className={styles.icon}>{icon}</div>}
-              <div className={styles.text}>{text}</div>
-            </div>
+        <Link passHref href={href}>
+          <div className={styles.container} style={style}>
+            {icon && <div className={styles.icon}>{icon}</div>}
+            <div className={styles.text}>{text}</div>
+          </div>
         </Link>
       ) : (
         <div className={styles.container}>

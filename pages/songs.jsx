@@ -7,7 +7,7 @@ import { sql_select } from "../lib/db";
 
 
 const Songs = ({ songs }) => {
-  
+  console.log(songs)
 
   return (
     <div>
