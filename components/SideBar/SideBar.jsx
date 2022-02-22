@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../../styles/SideBar/SideBar.module.scss";
 import SideBarLink from "./SideBarLink";
 
@@ -20,10 +20,20 @@ import Image from "next/image";
 
 import { useRecoilValue } from "recoil";
 import { customPlaylistsState } from "../../atoms/audioAtom";
+
+import { useState } from "react";
 import CustomInput from "../_Core/CustomInput";
 
 const SideBar = () => {
-  const playlists = useRecoilValue(customPlaylistsState);
+  
+  // Use useState & useEffect to make sure the data is there, otherwise there's an error 
+  const playlistsRecoil = useRecoilValue(customPlaylistsState);
+  const [playlists, setPlaylists] = useState(null) 
+
+
+  useEffect(() => {
+    setPlaylists(playlistsRecoil)
+  }, [playlistsRecoil])
 
   return (
     <div className={styles.container}>
@@ -91,7 +101,7 @@ const SideBar = () => {
         </div>
         <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>
           <div className={styles.linkContainer}>
-            {playlists.map(({ id, title, route }) => (
+            {playlists?.map(({ id, title, route }) => (
               <SideBarLink key={id} text={title} href={route} />
             ))}
           </div>
