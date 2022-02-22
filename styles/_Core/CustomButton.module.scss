@@ -46,7 +46,6 @@
   }
 }
 
-
 // Button for the volume
 .volume {
     border: none;
@@ -56,3 +55,21 @@
     cursor: pointer;
     font-size: 25px;
   }
+
+
+.text{
+  padding: 5px 15px;
+  border-radius: 99999px;
+  background: linear-gradient($primary-gradiant-colors);
+  border: none;
+  outline: none;
+  font-size: 12px;
+  color: white;
+  cursor: pointer;
+  // margin-bottom: 20px;
+
+  &:hover{
+    transform: scale(1.05);
+    transition: 200ms all ease-in-out;
+  }
+}  

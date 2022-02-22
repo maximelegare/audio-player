@@ -15,6 +15,9 @@ const CustomButton = ({variant,handleClick, children}) => {
         case "volume":{
             return styles.volume
         }
+        case "text":{
+          return styles.text
+        }
     }
   }  
 

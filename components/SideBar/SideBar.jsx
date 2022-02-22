@@ -23,17 +23,16 @@ import { customPlaylistsState } from "../../atoms/audioAtom";
 
 import { useState } from "react";
 import CustomInput from "../_Core/CustomInput";
+import CustomButton from "../_Core/CustomButton";
 
 const SideBar = () => {
-  
-  // Use useState & useEffect to make sure the data is there, otherwise there's an error 
+  // Use useState & useEffect to make sure the data is there, otherwise there's an error
   const playlistsRecoil = useRecoilValue(customPlaylistsState);
-  const [playlists, setPlaylists] = useState(null) 
-
+  const [playlists, setPlaylists] = useState(null);
 
   useEffect(() => {
-    setPlaylists(playlistsRecoil)
-  }, [playlistsRecoil])
+    setPlaylists(playlistsRecoil);
+  }, [playlistsRecoil]);
 
   return (
     <div className={styles.container}>
@@ -56,9 +55,7 @@ const SideBar = () => {
             icon={<BsSearch className={styles.icon} />}
             text="Search"
             wholeButtonTrigger
-            menuItem={
-              <CustomInput placeHolder="Search Anything"/>
-            }
+            menuItem={<CustomInput placeHolder="Search Anything" />}
           />
         </div>
         <div className={styles.linkContainer}>
@@ -86,12 +83,23 @@ const SideBar = () => {
             <SideBarLink
               icon={<MdOutlinePlaylistAdd className={styles.icon} />}
               text="New Playlist"
-              // wholeButtonTrigger
+              wholeButtonTrigger
               menuItem={
-                <CustomInput placeHolder="Playlist Name"/>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <div style={{ height: "10px" }} />
+                  <CustomInput placeHolder="Playlist Name" />
+                  <div style={{ height: "20px" }} />
+                  <CustomButton variant="text">Create</CustomButton>
+                  <div style={{ height: "10px" }} />
+                </div>
               }
             />
-            
           </div>
           <SideBarLink
             icon={<MdPlaylistPlay className={styles.icon} />}
@@ -106,7 +114,6 @@ const SideBar = () => {
             ))}
           </div>
         </Scrollbar>
-        
       </div>
     </div>
   );
