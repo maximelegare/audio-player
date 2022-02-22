@@ -17,7 +17,7 @@ const RowHeader = () => {
           </div>
         </div>
         <h4>Album</h4>
-        <FiClock className={styles.time} />
+        <FiClock className={styles.time} style={{marginRight:"45px"}} />
       </div>
       <hr style={{ marginBottom: "30px" }} />
     </>
