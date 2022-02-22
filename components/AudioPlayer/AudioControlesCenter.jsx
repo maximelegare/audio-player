@@ -7,6 +7,7 @@ import { BsFillSkipBackwardFill, BsFillSkipForwardFill } from "react-icons/bs";
 
 import styles from "../../styles/AudioPlayer/AudioPlayer.module.scss";
 
+import CustomButton from "../_Core/CustomButton";
 
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 
@@ -18,23 +19,23 @@ const AudioControlesCenter = ({ isPlaying, handlePlayPause, audioElement }) => {
   return (
     <div className={styles.controlesButtons}>
       {audioElement}
-      <button
-        className={styles.forwardBackward}
-        onClick={() => setNextSong("previous")}
+      <CustomButton
+        variant="forwardBackward"
+        handleClick={() => setNextSong("previous")}
       >
         <BsFillSkipBackwardFill className={styles.arrow} />
-      </button>
+      </CustomButton>
 
-      <button onClick={handlePlayPause} className={styles.playPause}>
-        {isPlaying ? <GiPauseButton /> : <FaPlay className={styles.play} />}
-      </button>
+      <CustomButton handleClick={handlePlayPause} variant="play">
+        {isPlaying ? <GiPauseButton /> : <FaPlay className={styles.playIcon} />}
+      </CustomButton>
 
-      <button
-        className={styles.forwardBackward}
-        onClick={() => setNextSong("next")}
+      <CustomButton
+        variant="forwardBackward"
+        handleClick={() => setNextSong("next")}
       >
         <BsFillSkipForwardFill className={styles.arrow} />
-      </button>
+      </CustomButton>
     </div>
   );
 };

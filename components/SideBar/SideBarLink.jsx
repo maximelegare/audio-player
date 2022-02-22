@@ -19,7 +19,7 @@ const SideBarLink = ({ icon, text, href, wholeButtonTrigger, menuItem }) => {
       {href ? (
         <Link passHref href={href}>
           <div className={styles.container} style={style}>
-            {icon && <div className={styles.icon}>{icon}</div>}
+            {icon && <div className={styles.sideBarIcon}>{icon}</div>}
 
             <h4 className={styles.text}>{text}</h4>
           </div>
@@ -33,7 +33,7 @@ const SideBarLink = ({ icon, text, href, wholeButtonTrigger, menuItem }) => {
               wholeButtonTrigger={wholeButtonTrigger}
               trigger={
                 <>
-                  <div>{icon && <div className={styles.icon}>{icon}</div>}</div>
+                  <div>{icon && <div className={styles.sideBarIcon}>{icon}</div>}</div>
                   <h4 className={styles.text}>{text}</h4>
                 </>
               }
@@ -42,7 +42,7 @@ const SideBarLink = ({ icon, text, href, wholeButtonTrigger, menuItem }) => {
           ) : (
             // Top container set display flex to these elements
             <>
-              {icon && <div className={styles.icon}>{icon}</div>}
+              {icon && <div className={styles.sideBarIcon}>{icon}</div>}
               <h4 className={styles.text}>{text}</h4>
               <SidePopOver
                 wholeButtonTrigger={wholeButtonTrigger}

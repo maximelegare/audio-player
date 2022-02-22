@@ -1,5 +1,5 @@
 @import "../variables.module.scss";
-
+@import "../iconStyling.module.scss";
 
 // Containr of the whole trigger section
 .container {
@@ -23,15 +23,6 @@
 .active{
   color:$hover-white;
 }
-
-// Separate the icon from text
-.icon {
-  font-size: 20px;
-  color: $white;
-  margin-right: 10px;
-}
-
-
 
 .text{
   margin-right: auto;

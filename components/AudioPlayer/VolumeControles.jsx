@@ -4,6 +4,8 @@ import RangeInput from "../_Core/RangeInput";
 
 import styles from "../../styles/AudioPlayer/AudioPlayer.module.scss";
 
+import CustomButton from "../_Core/CustomButton";
+
 import {
   BsFillVolumeUpFill,
   BsFillVolumeMuteFill,
@@ -60,24 +62,24 @@ const VolumeControles = ({ audioRef }) => {
     const volume = audioRef?.current?.volume;
 
     if (volume >= 0.7) {
-      return <BsFillVolumeUpFill className={styles.icon} />;
+      return <BsFillVolumeUpFill className={styles.volumeIcon} />;
     }
     if (volume >= 0.4) {
-      return <BsFillVolumeDownFill className={styles.icon} />;
+      return <BsFillVolumeDownFill className={styles.volumeIcon} />;
     }
     if (volume >= 0.05) {
-      return <BsFillVolumeOffFill className={styles.icon} />;
+      return <BsFillVolumeOffFill className={styles.volumeIcon} />;
     }
     if (volume === 0) {
-      return <BsFillVolumeMuteFill className={styles.icon} />;
+      return <BsFillVolumeMuteFill className={styles.volumeIcon} />;
     }
   };
 
   return (
     <div className={styles.volumeContainer}>
-      <button className={styles.iconButton} onClick={mute}>
+      <CustomButton variant="volume" handleClick={mute}>
         {setIcon()}
-      </button>
+      </CustomButton>
       <RangeInput
         values={values}
         min={min}

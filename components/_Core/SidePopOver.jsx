@@ -17,14 +17,14 @@ const SidePopOver = ({ trigger, menuItem, wholeButtonTrigger }) => {
         // Trigger when the whole button can be clicked
         <Popover.Trigger className={styles.trigger}>
           {trigger}
-          <BiDotsVerticalRounded className={styles.icon} />
+          <BiDotsVerticalRounded className={styles.sidePopOverDotsIcon} />
         </Popover.Trigger>
       ) : (
 
         // Trigger when only dots can be clicked
         <div>
           <Popover.Trigger className={styles.trigger}>
-            <BiDotsVerticalRounded className={styles.icon}  />
+            <BiDotsVerticalRounded className={styles.sidePopOverDotsIcon}  />
           </Popover.Trigger>
         </div>
       )}

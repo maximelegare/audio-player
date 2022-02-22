@@ -1,4 +1,6 @@
 @import"../../styles/variables.module.scss";
+@import "../iconStyling.module.scss";
+
 
 // Title Animation
 .titleAnimation {
@@ -128,54 +130,8 @@
   }
 }
 
-// Forward and backward buttons
-.forwardBackward {
-  color: $white;
-  background: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  font-family: monospace;
-  cursor: pointer;
-  height: 100%;
-  height: 100%;
-  padding: 4px 11px;
-  margin: 0 10px;
-  border-radius: 5px;
 
-  font-size: 30px;
 
-  &:hover {
-    color: $hover-white;
-    transform: scale(1.05);
-    transition: 200ms all ease-in-out;
-  }
-}
-
-// Play pause button
-.playPause {
-  background: linear-gradient($primary-gradiant-colors);
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 32px;
-  color: $white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  &:hover {
-    transform: scale(1.05);
-    transition: 200ms all ease-in-out;
-  }
-}
-
-//  Position only the play button
-.play {
-  position: relative;
-  margin-left: 5px;
-}
 
 .currentTime,
 .duration {
@@ -199,18 +155,4 @@
   align-items: center;
 }
 
-// Icon for the volume
-.iconButton {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  margin-right: 10px;
-  cursor: pointer;
 
-  .icon {
-    margin-top: 3px;
-    width: 25px;
-    height: 25px;
-    color: white;
-  }
-}

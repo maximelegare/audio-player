@@ -1,0 +1,58 @@
+@import "../../styles/variables.module.scss";
+
+// Play pause button
+.playPause {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  width: 60px;
+
+  background: linear-gradient($primary-gradiant-colors);
+  border: none;
+  border-radius: 50%;
+  font-size: 32px;
+  color: $white;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: 200ms all ease-in-out;
+  }
+}
+
+// Forward and backward buttons
+.forwardBackward {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  height: 100%;
+  padding: 4px 11px;
+  margin: 0 10px;
+
+  color: $white;
+  background: none;
+  border: none;
+  font-family: monospace;
+  cursor: pointer;
+  border-radius: 5px;
+
+  
+
+  &:hover {
+    color: $hover-white;
+    transform: scale(1.05);
+    transition: 200ms all ease-in-out;
+  }
+}
+
+
+// Button for the volume
+.volume {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 25px;
+  }

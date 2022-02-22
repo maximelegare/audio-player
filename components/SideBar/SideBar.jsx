@@ -86,7 +86,7 @@ const SideBar = () => {
             <SideBarLink
               icon={<MdOutlinePlaylistAdd className={styles.icon} />}
               text="New Playlist"
-              wholeButtonTrigger
+              // wholeButtonTrigger
               menuItem={
                 <CustomInput placeHolder="Playlist Name"/>
               }
