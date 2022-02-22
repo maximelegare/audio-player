@@ -4,9 +4,9 @@ import Link from "next/link";
 
 import { useRouter } from "next/router";
 
-import SideDropdownMenu from "../_Core/SideDropdownMenu";
+import SidePopOver from "../_Core/SidePopOver";
 
-const SideBarLink = ({ icon, text, href, wholeButtonTrigger }) => {
+const SideBarLink = ({ icon, text, href, wholeButtonTrigger, menuItem }) => {
   const router = useRouter();
 
   const style = {
@@ -27,20 +27,27 @@ const SideBarLink = ({ icon, text, href, wholeButtonTrigger }) => {
       ) : (
         <div className={styles.container}>
           {wholeButtonTrigger ? (
-            
             //When the whole button is a trigger
-            // Everything is in SideDropdownMenu (display flex) 
-            <SideDropdownMenu wholeButtonTrigger={wholeButtonTrigger}>
-              <div>{icon && <div className={styles.icon}>{icon}</div>}</div>
-              <h4 className={styles.text}>{text}</h4>
-            </SideDropdownMenu>
+            // Everything is in SideDropdownMenu (display flex)
+            <SidePopOver
+              wholeButtonTrigger={wholeButtonTrigger}
+              trigger={
+                <>
+                  <div>{icon && <div className={styles.icon}>{icon}</div>}</div>
+                  <h4 className={styles.text}>{text}</h4>
+                </>
+              }
+              menuItem={menuItem}
+            />
           ) : (
-
             // Top container set display flex to these elements
             <>
               {icon && <div className={styles.icon}>{icon}</div>}
               <h4 className={styles.text}>{text}</h4>
-              <SideDropdownMenu wholeButtonTrigger={wholeButtonTrigger} />
+              <SidePopOver
+                wholeButtonTrigger={wholeButtonTrigger}
+                menuItem={menuItem}
+              />
             </>
           )}
         </div>

@@ -20,7 +20,7 @@ import Image from "next/image";
 
 import { useRecoilValue } from "recoil";
 import { customPlaylistsState } from "../../atoms/audioAtom";
-
+import CustomInput from "../_Core/CustomInput";
 
 const SideBar = () => {
   const playlists = useRecoilValue(customPlaylistsState);
@@ -46,6 +46,9 @@ const SideBar = () => {
             icon={<BsSearch className={styles.icon} />}
             text="Search"
             wholeButtonTrigger
+            menuItem={
+              <CustomInput placeHolder="Search Anything"/>
+            }
           />
         </div>
         <div className={styles.linkContainer}>
@@ -74,6 +77,9 @@ const SideBar = () => {
               icon={<MdOutlinePlaylistAdd className={styles.icon} />}
               text="New Playlist"
               wholeButtonTrigger
+              menuItem={
+                <CustomInput placeHolder="Playlist Name"/>
+              }
             />
             
           </div>
