@@ -1,29 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/SideBar/SideBar.module.scss";
-import SideBarLink from "./SideBarLink";
-
-import { FaItunesNote } from "react-icons/fa";
-import { BsDisc, BsSearch } from "react-icons/bs";
-import { HiUserGroup } from "react-icons/hi";
-
-import { MdOutlinePlaylistAdd, MdPlaylistPlay } from "react-icons/md";
-
-import { AiOutlineHome } from "react-icons/ai";
-
-import { Scrollbar } from "react-scrollbars-custom";
-
-import FileInput from "../_Core/FileInput";
-
-import logo from "../../public/assets/SVG/hodei-logo-white.svg";
-
-import Image from "next/image";
 
 import { useRecoilValue } from "recoil";
 import { customPlaylistsState } from "../../atoms/audioAtom";
 
-import { useState } from "react";
-import CustomInput from "../_Core/CustomInput";
-import CustomButton from "../_Core/CustomButton";
+import SideBarLink from "./SideBarLink";
+import { Scrollbar } from "react-scrollbars-custom";
+import FileInput from "../_Core/FileInput";
+import NewPlaylist from "./SideBarPopoverMenuItems/NewPlaylist";
+import CustomInput from "../_Core/CustomInput"
+
+import Image from "next/image";
+
+import logo from "../../public/assets/SVG/hodei-logo-white.svg";
+
+import { FaItunesNote } from "react-icons/fa";
+import { BsDisc, BsSearch } from "react-icons/bs";
+import { HiUserGroup } from "react-icons/hi";
+import { MdOutlinePlaylistAdd, MdPlaylistPlay } from "react-icons/md";
+import { AiOutlineHome } from "react-icons/ai";
+
+
 
 const SideBar = () => {
   // Use useState & useEffect to make sure the data is there, otherwise there's an error
@@ -85,19 +82,7 @@ const SideBar = () => {
               text="New Playlist"
               wholeButtonTrigger
               menuItem={
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <div style={{ height: "10px" }} />
-                  <CustomInput placeHolder="Playlist Name" />
-                  <div style={{ height: "20px" }} />
-                  <CustomButton variant="text">Create</CustomButton>
-                  <div style={{ height: "10px" }} />
-                </div>
+                <NewPlaylist />
               }
             />
           </div>

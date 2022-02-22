@@ -25,5 +25,5 @@ export const currentPlaylistState = atom({
 export const customPlaylistsState = atom({
   key: "playlistsState",
   default: [],
-  effects_UNSTABLE: [persistAtom],
+  // effects_UNSTABLE: [persistAtom],
 });
