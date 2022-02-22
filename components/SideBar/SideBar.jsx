@@ -21,7 +21,6 @@ import Image from "next/image";
 import { useRecoilValue } from "recoil";
 import { customPlaylistsState } from "../../atoms/audioAtom";
 
-import CustomModal from "../_Core/CustomModal";
 
 const SideBar = () => {
   const playlists = useRecoilValue(customPlaylistsState);
@@ -46,6 +45,7 @@ const SideBar = () => {
           <SideBarLink
             icon={<BsSearch className={styles.icon} />}
             text="Search"
+            wholeButtonTrigger
           />
         </div>
         <div className={styles.linkContainer}>
@@ -73,6 +73,7 @@ const SideBar = () => {
             <SideBarLink
               icon={<MdOutlinePlaylistAdd className={styles.icon} />}
               text="New Playlist"
+              wholeButtonTrigger
             />
             
           </div>

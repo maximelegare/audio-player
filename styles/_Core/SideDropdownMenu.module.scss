@@ -1,18 +1,28 @@
 @import "../variables.module.scss";
 
+// The trigger is display flex for when all elements can be clicked
+// They are set as chlidren directly
 .trigger {
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
   outline: none;
   background-color: transparent;
   border: none;
   cursor: pointer;
-  display: flex;
-  height: 100%;
-  width: 100%;
-  margin-bottom: 8px;
   color: $white;
-  margin: 0;
-  padding: 0;
   font-size: 16px;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
+  .icon {
+    font-size: 20px;
+    margin: 2px 5px;
+    
+  }
 }

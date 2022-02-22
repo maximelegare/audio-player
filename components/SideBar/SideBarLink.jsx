@@ -4,11 +4,9 @@ import Link from "next/link";
 
 import { useRouter } from "next/router";
 
-import SideDropdownMenu from "../_Core/CustomModal";
+import SideDropdownMenu from "../_Core/SideDropdownMenu";
 
-import { BiDotsVerticalRounded } from "react-icons/bi";
-
-const SideBarLink = ({ icon, text, href }) => {
+const SideBarLink = ({ icon, text, href, wholeButtonTrigger }) => {
   const router = useRouter();
 
   const style = {
@@ -22,18 +20,29 @@ const SideBarLink = ({ icon, text, href }) => {
         <Link passHref href={href}>
           <div className={styles.container} style={style}>
             {icon && <div className={styles.icon}>{icon}</div>}
-            <div className={styles.text}>{text}</div>
+
+            <h4 className={styles.text}>{text}</h4>
           </div>
         </Link>
       ) : (
         <div className={styles.container}>
-          <SideDropdownMenu>
-            {icon && <div className={styles.icon}>{icon}</div>}
-            <div className={styles.text}>{text}</div>
-            <div className={styles.menuIconContainer}>
-              <BiDotsVerticalRounded className={styles.icon} />
-            </div>
-          </SideDropdownMenu>
+          {wholeButtonTrigger ? (
+            
+            //When the whole button is a trigger
+            // Everything is in SideDropdownMenu (display flex) 
+            <SideDropdownMenu wholeButtonTrigger={wholeButtonTrigger}>
+              <div>{icon && <div className={styles.icon}>{icon}</div>}</div>
+              <h4 className={styles.text}>{text}</h4>
+            </SideDropdownMenu>
+          ) : (
+
+            // Top container set display flex to these elements
+            <>
+              {icon && <div className={styles.icon}>{icon}</div>}
+              <h4 className={styles.text}>{text}</h4>
+              <SideDropdownMenu wholeButtonTrigger={wholeButtonTrigger} />
+            </>
+          )}
         </div>
       )}
     </div>

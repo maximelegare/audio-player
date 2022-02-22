@@ -1,39 +1,39 @@
 @import "../variables.module.scss";
 
+
+// Containr of the whole trigger section
 .container {
   display: flex;
+  align-items: center;
   margin-bottom: 8px;
+
   color: $white;
   opacity: 0.7;
-  
-}
-.container:hover{
+
+  &:hover{
     color: $hover-white;
     opacity: 1;
-    transition: 200ms all ease-in-out;
     cursor: pointer;
+    transition: 200ms all ease-in-out;
+
+  }
 }
 
+// Color when a link is selected
 .active{
   color:$hover-white;
 }
 
+// Separate the icon from text
 .icon {
+  font-size: 20px;
+  color: $white;
   margin-right: 10px;
 }
 
-.dropdownButton{
-  margin-left: auto;
+
+
+.text{
+  margin-right: auto;
+  font-weight: 100;
 }
-
-.menuIconContainer{
-  display: flex;
-  align-items: center;
-  margin-left: auto;    
-
-  .icon {
-    font-size: 20px;
-    color: $white;
-  }
-}
-
