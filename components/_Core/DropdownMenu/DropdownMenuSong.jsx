@@ -6,8 +6,11 @@ import styles from "../../../styles/_Core/PopOver.module.scss";
 import { IoIosArrowForward } from "react-icons/io";
 
 import DropdownItemWithIcon from "./DropdownItemWithIcon";
+import { usePlaylists } from "../../../hooks/PlaylistHooks";
 
 const DropdownMenuSong = () => {
+  const { playlists } = usePlaylists();
+
   return (
     <>
       <DropdownMenu.Item className={styles.menuItem}>
@@ -37,34 +40,17 @@ const DropdownMenuSong = () => {
           <DropdownItemWithIcon text="Add to Playlist">
             <IoIosArrowForward className={styles.rightArrow} />
           </DropdownItemWithIcon>
-
         </DropdownMenu.TriggerItem>
         <DropdownMenu.Content
           sideOffset={5}
           alignOffset={-7}
           className={styles.menuContent}
         >
-          <DropdownMenu.Item className={styles.menuItem}>
-            Add to Liked Songs
-          </DropdownMenu.Item>
-          <DropdownMenu.Item className={styles.menuItem}>
-            Add to Liked Songs
-          </DropdownMenu.Item>
-          <DropdownMenu.Item className={styles.menuItem}>
-            Add to Liked Songs
-          </DropdownMenu.Item>
-          <DropdownMenu.Item className={styles.menuItem}>
-            Add to Liked Songs
-          </DropdownMenu.Item>
-          <DropdownMenu.Item className={styles.menuItem}>
-            Add to Liked Songs
-          </DropdownMenu.Item>
-          <DropdownMenu.Item className={styles.menuItem}>
-            Add to Liked Songs
-          </DropdownMenu.Item>
-          <DropdownMenu.Item className={styles.menuItem}>
-            Add to Liked Songs
-          </DropdownMenu.Item>
+          {playlists?.map(({id, title, route }) => (
+            <DropdownMenu.Item key={id} className={styles.menuItem}>
+              {title}
+            </DropdownMenu.Item>
+          ))}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </>

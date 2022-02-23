@@ -1,4 +1,4 @@
-import usePlaylists from "./PlaylistHooks";
+import {usePlaylists} from "./PlaylistHooks";
 const useFetch = () => {
   const { setPlaylistsDataGlobally } = usePlaylists();
 

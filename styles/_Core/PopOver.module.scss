@@ -28,7 +28,7 @@
   background-color: rgb(17, 17, 17);
   border-radius: 5px;
   padding: 5px;
-
+  outline: none;
   border: 2px solid $bg-dark;
 
   &[data-state="open"] {
@@ -41,6 +41,7 @@
 }
 
 .menuItem {
+  outline: none;
   color: $white;
   padding: 5px 15px;
   margin-bottom: 8px;

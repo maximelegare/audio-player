@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CustomButton from "../CustomButton";
 import CustomInput from "../CustomInput";
-import usePlaylists from "../../../hooks/PlaylistHooks";
+import {usePlaylists} from "../../../hooks/PlaylistHooks";
 import { PopoverClose } from "@radix-ui/react-popover";
 
 const NewPlaylist = () => {

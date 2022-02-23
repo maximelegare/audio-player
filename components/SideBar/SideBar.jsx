@@ -20,15 +20,10 @@ import { HiUserGroup } from "react-icons/hi";
 import { MdOutlinePlaylistAdd, MdPlaylistPlay } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsSuitHeart } from "react-icons/bs";
+import {usePlaylists} from "../../hooks/PlaylistHooks";
 
 const SideBar = () => {
-  // Use useState & useEffect to make sure the data is there, otherwise there's an error
-  const playlistsRecoil = useRecoilValue(customPlaylistsState);
-  const [playlists, setPlaylists] = useState(null);
-
-  useEffect(() => {
-    setPlaylists(playlistsRecoil);
-  }, [playlistsRecoil]);
+  const { playlists } = usePlaylists()
 
   return (
     <div className={styles.container}>
