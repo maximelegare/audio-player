@@ -1,10 +1,11 @@
 import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import Box from "../Box";
 
 import styles from "../../../styles/_Core/PopOver.module.scss";
 
 import { IoIosArrowForward } from "react-icons/io";
+
+import DropdownItemWithIcon from "./DropdownItemWithIcon";
 
 const DropdownMenuSong = () => {
   return (
@@ -25,17 +26,22 @@ const DropdownMenuSong = () => {
         <hr />
       </DropdownMenu.Separator>
       <DropdownMenu.Item className={styles.menuItem}>
-        Add to Liked Songs
+        Add To liked Songs
       </DropdownMenu.Item>
 
       <DropdownMenu.Root>
-        <DropdownMenu.TriggerItem className={styles.menuItem}>
-          Add to Playlist
+        <DropdownMenu.TriggerItem
+          className={styles.menuItem}
+          style={{ display: "flex" }}
+        >
+          <DropdownItemWithIcon text="Add to Playlist">
             <IoIosArrowForward className={styles.rightArrow} />
+          </DropdownItemWithIcon>
+
         </DropdownMenu.TriggerItem>
         <DropdownMenu.Content
           sideOffset={5}
-          alignOffset={-5}
+          alignOffset={-7}
           className={styles.menuContent}
         >
           <DropdownMenu.Item className={styles.menuItem}>

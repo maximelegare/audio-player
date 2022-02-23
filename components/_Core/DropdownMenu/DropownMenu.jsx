@@ -5,12 +5,12 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 import styles from "../../../styles/_Core/PopOver.module.scss";
 
-const Dropdown = ({ trigger, menuItem, wholeButtonTrigger }) => {
+const Dropdown = ({ trigger, menuItem, wholeButtonTrigger, open, onOpenChange }) => {
 
 
   return (
     
-    <DropdownMenu.Root modal={false}>
+    <DropdownMenu.Root modal={false} onOpenChange={onOpenChange} open={open}>
       {wholeButtonTrigger ? (
 
         // Trigger when the whole button can be clicked

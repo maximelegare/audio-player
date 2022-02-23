@@ -78,6 +78,7 @@ const RowListElement = ({
       >
         <p className={styles.time}>{calculateTime(duration)}</p>
         <div
+        // To prevent the song from starting when clicked
           onClick={(e) => {
             e.stopPropagation();
           }}
