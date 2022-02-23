@@ -1,17 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import {
-  currentPlaylistState,
+  queueState,
   currentSongState,
   isPlayingState,
 } from "../atoms/audioAtom";
+
+import { useRouter } from "next/router";
 
 const useAudioPlayer = (fileUrl, duration) => {
   // Global state
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
-  const [currentPlaylist, setCurrentPlaylist] =
-    useRecoilState(currentPlaylistState);
+  const [queue, setQueue] = useRecoilState(queueState);
 
   // Progress input vales
   const [progressInput, setRangeInput] = useState({
@@ -27,15 +28,13 @@ const useAudioPlayer = (fileUrl, duration) => {
 
   const audioPlayer = useRef(null); // AudioPlayer which is in child component
 
-
+  const { route } = useRouter();
 
   // set the max duration when metadata are loaded
   useEffect(() => {
     const seconds = Math.floor(duration);
     setMax(seconds);
   }, [audioPlayer?.current?.loadedmetadata, duration]);
-
-
 
   // animation that updates the range while it's playing
   const whilePlaying = () => {
@@ -48,8 +47,6 @@ const useAudioPlayer = (fileUrl, duration) => {
     animationRef.current = requestAnimationFrame(whilePlaying);
   };
 
-
-
   // Set play/pause based on isPlaying value & when file changes
   useEffect(() => {
     if (isPlaying) {
@@ -61,52 +58,42 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   }, [isPlaying, fileUrl]);
 
-
-
   // Sets the next song when the previous song finished
   useEffect(() => {
     if (Math.round(audioPlayer?.current?.currentTime) === duration) {
       setCurrentSong({
-        ...currentPlaylist[currentSong.songIdx + 1],
+        ...queue.songs[currentSong.songIdx + 1],
         songIdx: currentSong.songIdx + 1,
       });
     }
   }, [audioPlayer?.current?.currentTime, duration]);
-
-
 
   // Set the next or previous song
   const setNextSong = (status) => {
     if (status === "previous") {
       setCurrentSong({
         // Check the current song in the playlist based on it's index
-        ...currentPlaylist[currentSong.songIdx - 1],
+        ...queue.songs[currentSong.songIdx - 1],
         songIdx: currentSong.songIdx - 1,
       });
     } else {
       setCurrentSong({
-        ...currentPlaylist[currentSong.songIdx + 1],
+        ...queue.songs[currentSong.songIdx + 1],
         songIdx: currentSong.songIdx + 1,
       });
     }
   };
 
-
-
   // Set the current Song based & playlist based on the song clicked
-  const setPlaylistAndSong = (songIdx, playlistSongs) => {
-    setCurrentPlaylist(playlistSongs);
+  const setPlaylistAndSong = (songIdx, playlistSongs, title) => {
+    setQueue({ songs: playlistSongs, title: title });
 
     setCurrentSong({ ...playlistSongs[songIdx], songIdx });
   };
 
-
-  const addSongToLikedPlaylist = () => {}
-  const addSongToPlaylist = () => {}
-  const addSongToQueue = () => {}
-
-
-  
+  const addSongToLikedPlaylist = () => {};
+  const addSongToPlaylist = () => {};
+  const addSongToQueue = () => {};
 
   // when a user drag the knob, it updates the progress-bar
   const changeRange = (values) => {
@@ -119,7 +106,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     currentSong,
     progressInput,
     max,
-    currentPlaylist,
+    queue,
     audioPlayer,
     animationRef,
     setIsPlaying,
@@ -129,7 +116,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     setPlaylistAndSong,
     addSongToLikedPlaylist,
     addSongToPlaylist,
-    addSongToQueue
+    addSongToQueue,
   };
 };
 

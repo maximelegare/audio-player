@@ -88,8 +88,8 @@ const SideBar = () => {
           />
           <SideBarLink
             icon={<MdPlaylistPlay className={styles.icon} />}
-            text="Current Playlist"
-            href="/current-playlist"
+            text="Queue"
+            href="/queue"
           />
         </div>
         <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>
