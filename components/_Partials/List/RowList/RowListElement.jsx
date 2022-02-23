@@ -10,8 +10,8 @@ import { useAudioPlayer } from "../../../../hooks/AudioHooks";
 
 import Dropdown from "../../../_Core/DropdownMenu/DropownMenu";
 
-import SidePopOver from "../../../_Core/PopOver/PopOver";
-import NewPlaylist from "../../../_Core/PopOver/PopoverPlaylist";
+import DropdownMenuSong from "../../../_Core/DropdownMenu/DropdownMenuSong";
+
 const RowListElement = ({
   id,
   title,
@@ -82,7 +82,13 @@ const RowListElement = ({
             e.stopPropagation();
           }}
         >
-          {optionsVisibility && <Dropdown />}
+          {optionsVisibility && (
+            <Dropdown
+              menuItem={
+                <DropdownMenuSong />
+              }
+            />
+          )}
         </div>
       </div>
     </div>

@@ -27,9 +27,13 @@
 
 .menuContent{
   max-width: 200px;
-  background-color: rgb(17, 17, 17);
+  // background-color: rgb(17, 17, 17);
+  background: $bg-color-800;
   border-radius: 5px;
+  padding: 5px;
 
+  border-left: 2px solid $bg-dark;
+  border-right: 2px solid $bg-dark;
 
   &[data-state='open'] {
     animation: enter 200ms ease-out;
@@ -38,11 +42,38 @@
   &[data-state='closed'] {
     animation: leave 100ms ease-in;
   }
-  .container{
-    margin: 0 10px;
-
-  }  
+  
 }
+
+.menuItem{
+  color:$white;
+  padding: 5px 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  opacity: 0.7;
+  border-radius: 3px;
+  &:hover{
+    opacity: 1;
+    background-color: $white-transparent;
+    transition: all 200ms ease-in-out;
+
+  }
+
+  &:nth-last-child(-n+1){
+    margin-bottom: 0;
+  }
+}
+
+.container{
+  margin: 0 6px;
+  padding: 6px 0;
+}
+
+
+
+
+
+
 
 
 @keyframes enter {
@@ -70,3 +101,6 @@
     
 }
 }
+
+
+

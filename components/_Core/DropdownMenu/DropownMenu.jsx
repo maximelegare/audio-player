@@ -29,9 +29,7 @@ const Dropdown = ({ trigger, menuItem, wholeButtonTrigger }) => {
       )}
 
       <DropdownMenu.Content className={styles.menuContent} align="end">
-        <DropdownMenu.Item>item</DropdownMenu.Item>
-        <DropdownMenu.Item>another</DropdownMenu.Item>
-        <DropdownMenu.Item>another one</DropdownMenu.Item>
+        {menuItem}  
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );

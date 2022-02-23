@@ -8,7 +8,7 @@ import SideBarLink from "./SideBarLink";
 import { Scrollbar } from "react-scrollbars-custom";
 import FileInput from "../_Core/FileInput";
 import NewPlaylist from "../_Core/PopOver/PopoverPlaylist";
-import CustomInput from "../_Core/CustomInput"
+import CustomInput from "../_Core/CustomInput";
 
 import Image from "next/image";
 
@@ -19,8 +19,7 @@ import { BsDisc, BsSearch } from "react-icons/bs";
 import { HiUserGroup } from "react-icons/hi";
 import { MdOutlinePlaylistAdd, MdPlaylistPlay } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
-
-
+import { BsSuitHeart } from "react-icons/bs";
 
 const SideBar = () => {
   // Use useState & useEffect to make sure the data is there, otherwise there's an error
@@ -51,7 +50,7 @@ const SideBar = () => {
           <SideBarLink
             icon={<BsSearch className={styles.icon} />}
             text="Search"
-            // wholeButtonTrigger
+            wholeButtonTrigger
             menuItem={<CustomInput placeHolder="Search Anything" />}
           />
         </div>
@@ -76,16 +75,17 @@ const SideBar = () => {
       </div>
       <div className={styles.scollbarContainer}>
         <div className={styles.linkContainer}>
-          <div>
-            <SideBarLink
-              icon={<MdOutlinePlaylistAdd className={styles.icon} />}
-              text="New Playlist"
-              // wholeButtonTrigger
-              menuItem={
-                <NewPlaylist />
-              }
-            />
-          </div>
+          <SideBarLink
+            icon={<BsSuitHeart className={styles.icon} />}
+            text="Liked Songs"
+            href="/liked-songs"
+          />
+          <SideBarLink
+            icon={<MdOutlinePlaylistAdd className={styles.icon} />}
+            text="New Playlist"
+            wholeButtonTrigger
+            menuItem={<NewPlaylist />}
+          />
           <SideBarLink
             icon={<MdPlaylistPlay className={styles.icon} />}
             text="Current Playlist"
