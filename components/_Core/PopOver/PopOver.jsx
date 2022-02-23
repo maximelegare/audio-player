@@ -3,10 +3,9 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 
 import * as Popover from '@radix-ui/react-popover';
 
-import styles from "../../styles/_Core/SidePopOver.module.scss";
+import styles from "../../../styles/_Core/PopOver.module.scss";
 
 const SidePopOver = ({ trigger, menuItem, wholeButtonTrigger }) => {
-
 
 
   return (

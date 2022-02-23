@@ -7,7 +7,7 @@ import { customPlaylistsState } from "../../atoms/audioAtom";
 import SideBarLink from "./SideBarLink";
 import { Scrollbar } from "react-scrollbars-custom";
 import FileInput from "../_Core/FileInput";
-import NewPlaylist from "./SideBarPopoverMenuItems/NewPlaylist";
+import NewPlaylist from "../_Core/PopOver/PopoverPlaylist";
 import CustomInput from "../_Core/CustomInput"
 
 import Image from "next/image";
@@ -51,7 +51,7 @@ const SideBar = () => {
           <SideBarLink
             icon={<BsSearch className={styles.icon} />}
             text="Search"
-            wholeButtonTrigger
+            // wholeButtonTrigger
             menuItem={<CustomInput placeHolder="Search Anything" />}
           />
         </div>
@@ -80,7 +80,7 @@ const SideBar = () => {
             <SideBarLink
               icon={<MdOutlinePlaylistAdd className={styles.icon} />}
               text="New Playlist"
-              wholeButtonTrigger
+              // wholeButtonTrigger
               menuItem={
                 <NewPlaylist />
               }

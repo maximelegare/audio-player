@@ -4,8 +4,7 @@ import Link from "next/link";
 
 import { useRouter } from "next/router";
 
-import SidePopOver from "../_Core/SidePopOver";
-
+import SidePopOver from "../_Core/PopOver/PopOver";
 const SideBarLink = ({ icon, text, href, wholeButtonTrigger, menuItem }) => {
   const router = useRouter();
 

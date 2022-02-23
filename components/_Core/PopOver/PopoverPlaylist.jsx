@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import CustomButton from "../../_Core/CustomButton";
-import CustomInput from "../../_Core/CustomInput";
+import CustomButton from "../CustomButton";
+import CustomInput from "../CustomInput";
 import usePlaylists from "../../../hooks/PlaylistHooks";
 import { PopoverClose } from "@radix-ui/react-popover";
 
@@ -44,6 +44,8 @@ const NewPlaylist = () => {
           background: "transparent",
           border: "none",
           borderRadius: "99999px",
+          padding: 0,
+          margin: 0,
         }}
         
       >

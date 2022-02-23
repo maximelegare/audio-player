@@ -8,8 +8,10 @@ import PlayingIcon from "../../../_Core/PlayingIcon";
 
 import { useAudioPlayer } from "../../../../hooks/AudioHooks";
 
-import SidePopOver from "../../../_Core/SidePopOver";
-import NewPlaylist from "../../../SideBar/SideBarPopoverMenuItems/NewPlaylist";
+import Dropdown from "../../../_Core/DropdownMenu/DropownMenu";
+
+import SidePopOver from "../../../_Core/PopOver/PopOver";
+import NewPlaylist from "../../../_Core/PopOver/PopoverPlaylist";
 const RowListElement = ({
   id,
   title,
@@ -35,9 +37,9 @@ const RowListElement = ({
 
   return (
     <div
-      className={`${styles.rowListContainer} ${styles.listElement} ${
-        optionsVisibility && styles.optionsActive
-      }`}
+      className={`${styles.rowListContainer} ${styles.listElement}
+       ${optionsVisibility && styles.optionsActive}
+       `}
       onClick={handleSongClicked}
       onMouseEnter={() => setOptionsVisibility(true)}
       onMouseLeave={() => setOptionsVisibility(false)}
@@ -80,7 +82,7 @@ const RowListElement = ({
             e.stopPropagation();
           }}
         >
-          {optionsVisibility && <SidePopOver menuItem={<NewPlaylist />} />}
+          {optionsVisibility && <Dropdown />}
         </div>
       </div>
     </div>
