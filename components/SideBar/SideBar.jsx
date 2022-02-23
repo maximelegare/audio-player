@@ -81,15 +81,15 @@ const SideBar = () => {
             href="/liked-songs"
           />
           <SideBarLink
+            icon={<MdPlaylistPlay className={styles.icon} />}
+            text="Queue"
+            href="/queue"
+          />
+          <SideBarLink
             icon={<MdOutlinePlaylistAdd className={styles.icon} />}
             text="New Playlist"
             wholeButtonTrigger
             menuItem={<NewPlaylist />}
-          />
-          <SideBarLink
-            icon={<MdPlaylistPlay className={styles.icon} />}
-            text="Queue"
-            href="/queue"
           />
         </div>
         <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>

@@ -17,7 +17,7 @@ const index = ({ albums }) => {
 
 export default index;
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
 
   const res = await sql_select("SELECT title, picture_url, title_route as route, artist, year FROM albums ORDER BY title");
   const albums = JSON.parse(JSON.stringify(res));

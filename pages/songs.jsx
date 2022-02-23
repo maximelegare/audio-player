@@ -21,7 +21,7 @@ const Songs = ({ songs }) => {
 
 export default Songs;
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const res = await sql_select(
     "SELECT DISTINCT (a.title), s.duration, s.title, s.album, s.title_route as song_route,  s.streaming_url, a.picture_url, a.artist FROM songs s JOIN albums a ON a.title = s.album"
   );

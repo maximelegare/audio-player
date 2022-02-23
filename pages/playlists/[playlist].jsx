@@ -26,9 +26,8 @@ export async function getServerSideProps(context) {
   ON s.title_route = sp.song_route 
   JOIN albums a 
   ON s.album = a.title 
-    JOIN playlists p ON p.title = sp.playlist 
-    WHERE p.route = '/playlists/${playlist}'`);
-  // const res =  await sql_select("SELECT * FROM songs")
+  JOIN playlists p ON p.title = sp.playlist 
+  WHERE p.route = '/playlists/${playlist}'`);
 
   const playlistSongs = JSON.parse(JSON.stringify(res));
 

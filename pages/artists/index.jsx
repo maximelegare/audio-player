@@ -24,7 +24,7 @@ export default Index;
 
 
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const res = await sql_select("SELECT artist as title, picture_url, artist_route as route FROM albums GROUP BY artist ORDER BY artist");
   const artists = JSON.parse(JSON.stringify(res));
 
