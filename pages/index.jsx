@@ -29,9 +29,10 @@ export default function Home({ playlists }) {
 }
 
 export async function getServerSideProps(context) {
-  const res = await sql_select(
-    "SELECT title, route, id from playlists"
-  );
+  const res = await sql_select(`
+  SELECT title, route, id 
+  FROM playlists
+  `);
   const playlists = JSON.parse(JSON.stringify(res));
 
   return { props: { playlists  } };

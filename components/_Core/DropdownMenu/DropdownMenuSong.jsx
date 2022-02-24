@@ -7,9 +7,11 @@ import { IoIosArrowForward } from "react-icons/io";
 
 import DropdownItemWithIcon from "./DropdownItemWithIcon";
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
+import { useRouter } from "next/router";
 
 const DropdownMenuSong = ({ song }) => {
   const { playlists, addSongToQueue } = useAudioPlayer();
+  const router = useRouter();
 
   return (
     <>
@@ -22,10 +24,16 @@ const DropdownMenuSong = ({ song }) => {
       <DropdownMenu.Separator>
         <hr />
       </DropdownMenu.Separator>
-      <DropdownMenu.Item className={styles.menuItem}>
+      <DropdownMenu.Item
+        className={styles.menuItem}
+        onClick={() => router.push(`/${song.artist_route}`)}
+      >
         Go to Artist
       </DropdownMenu.Item>
-      <DropdownMenu.Item className={styles.menuItem}>
+      <DropdownMenu.Item
+        className={styles.menuItem}
+        onClick={() => router.push(`/${song.album_route}`)}
+      >
         Go to Album
       </DropdownMenu.Item>
       <DropdownMenu.Separator>

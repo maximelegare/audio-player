@@ -18,8 +18,9 @@ export default index;
 export async function getServerSideProps(context) {
   const { artist } = context.query;
 
-  const res = await sql_select(
-    `SELECT title, picture_url, artist, title_route as route, year FROM albums WHERE artist_route = '${artist}'`
+  const res = await sql_select(`
+    SELECT title, picture_url, artist, title_route as route, year FROM albums 
+    WHERE artist_route = '${artist}'`
   );
   const albums = JSON.parse(JSON.stringify(res));
   return { props: { albums } };

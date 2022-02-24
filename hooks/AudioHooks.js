@@ -116,10 +116,6 @@ const useAudioPlayer = (fileUrl, duration) => {
     setQueue({...queue, songs:[...queue.songs, song] })
   };
 
-  useEffect(() => {
-    console.log(queue)
-  },[queue])
-  
   // Set the current Song based & playlist based on the song clicked
   const setPlaylistAndSong = (songIdx, playlistSongs, title) => {
     setQueue({ songs: playlistSongs, title: title });

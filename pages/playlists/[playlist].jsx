@@ -24,14 +24,17 @@ export async function getServerSideProps(context) {
   SELECT s.title, s.title_route as song_route, s.duration,  s.album, s.track_no,
   a.picture_url, a.artist,
   s.streaming_url,
-  p.title as playlist_title
+  p.title as playlist_title,
+  a.title_route as album_route,
+  a.artist_route
   FROM songs s 
   JOIN song_playlist sp 
   ON s.title_route = sp.song_route 
   JOIN albums a 
   ON s.album = a.title 
   JOIN playlists p ON p.title = sp.playlist 
-  WHERE p.route = '/playlists/${playlist}'`);
+  WHERE p.route = '/playlists/${playlist}'
+  `);
 
   const playlistSongs = JSON.parse(JSON.stringify(res));
 

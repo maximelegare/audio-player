@@ -25,8 +25,13 @@ export default album;
 export async function getServerSideProps({ params }) {
   const albumUrl = `${params.artist}/${params.album}`;
 
-  const res = await sql_select(
-    `SELECT songs.title, songs.title_route as song_route,  songs.album, songs.track_no, songs.streaming_url, albums.picture_url, albums.artist, songs.duration FROM songs JOIN albums ON songs.album = albums.title WHERE albums.title_route = '${albumUrl}' ORDER BY songs.track_no`
+  const res = await sql_select(`
+    SELECT s.title, s.title_route as song_route,  s.album, s.track_no, s.streaming_url, a.picture_url, a.artist, s.duration, a.title_route as album_route, a.artist_route 
+    FROM songs s
+    JOIN albums a
+    ON s.album = a.title 
+    WHERE a.title_route = '${albumUrl}' 
+    ORDER BY s.track_no`
   );
   const album = JSON.parse(JSON.stringify(res));
   return { props: { album: album } };
