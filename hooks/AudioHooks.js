@@ -4,13 +4,10 @@ import {
   queueState,
   currentSongState,
   isPlayingState,
+  customPlaylistsState
 } from "../atoms/audioAtom";
 import axios from "axios";
 
-
-import { useRouter } from "next/router";
-
-import { customPlaylistsState } from "../atoms/audioAtom";
 
 const useAudioPlayer = (fileUrl, duration) => {
   // Global state
@@ -18,12 +15,17 @@ const useAudioPlayer = (fileUrl, duration) => {
   const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
   const [queue, setQueue] = useRecoilState(queueState);
 
-  // Progress input vales
+  // Playlists state
+  const [recoilPlaylists, setRecoilPlaylists] =
+    useRecoilState(customPlaylistsState);
+
+  const [playlists, setPlaylists] = useState(null);
+
   const [progressInput, setRangeInput] = useState({
     values: [0],
     min: 0,
     step: 1,
-  });
+  }); // Progress input values
 
   const [max, setMax] = useState(100); // maximum time of the range input (duration of the song)
 
@@ -31,8 +33,6 @@ const useAudioPlayer = (fileUrl, duration) => {
   const animationRef = useRef(null); // Animation of the Range input
 
   const audioPlayer = useRef(null); // AudioPlayer which is in child component
-
-  const { route } = useRouter();
 
   // set the max duration when metadata are loaded
   useEffect(() => {
@@ -47,9 +47,21 @@ const useAudioPlayer = (fileUrl, duration) => {
       values: [audioPlayer?.current?.currentTime],
     });
 
-    // call itself to always do the animation
     animationRef.current = requestAnimationFrame(whilePlaying);
   };
+
+  // when a user drag the knob, it updates the progress-bar
+  const changeRange = (values) => {
+    setRangeInput({ ...progressInput, values: [values] });
+    audioPlayer.current.currentTime = values;
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  ///////////////
+  //   SONGS   //
+  ///////////////
+
 
   // Set play/pause based on isPlaying value & when file changes
   useEffect(() => {
@@ -62,7 +74,8 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   }, [isPlaying, fileUrl]);
 
-  // Sets the next song when the previous song finished
+  
+  // Sets the next song Automatically when the previous song finished
   useEffect(() => {
     if (Math.round(audioPlayer?.current?.currentTime) === duration) {
       setCurrentSong({
@@ -72,7 +85,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   }, [audioPlayer?.current?.currentTime, duration]);
 
-  // Set the next or previous song
+  // Set the next or previous song when button cliked
   const setNextSong = (status) => {
     if (status === "previous") {
       setCurrentSong({
@@ -88,32 +101,31 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
+  
+  const addSongToLikedPlaylist = () => {};
+  const addSongToPlaylist = () => {};
+  
+  ///////////////////////////////////////////////////////////////////////////////////
+  
+  ///////////////
+  // PLAYLISTS //
+  ///////////////
+
+
+  const addSongToQueue = (song) => {
+    setQueue({...queue, songs:[...queue.songs, song] })
+  };
+
+  useEffect(() => {
+    console.log(queue)
+  },[queue])
+  
   // Set the current Song based & playlist based on the song clicked
   const setPlaylistAndSong = (songIdx, playlistSongs, title) => {
     setQueue({ songs: playlistSongs, title: title });
-
+    
     setCurrentSong({ ...playlistSongs[songIdx], songIdx });
   };
-
-  const addSongToLikedPlaylist = () => {};
-  const addSongToPlaylist = () => {};
-  const addSongToQueue = () => {};
-
-  // when a user drag the knob, it updates the progress-bar
-  const changeRange = (values) => {
-    setRangeInput({ ...progressInput, values: [values] });
-    audioPlayer.current.currentTime = values;
-  };
-
-  ///////////////
-  // Playlists //
-  ///////////////
-
-  // Playlists state
-  const [recoilPlaylists, setRecoilPlaylists] =
-    useRecoilState(customPlaylistsState);
-
-  const [playlists, setPlaylists] = useState(null);
 
 
   // Set the local state the same as recoil state when loaded

@@ -8,13 +8,15 @@ import { IoIosArrowForward } from "react-icons/io";
 import DropdownItemWithIcon from "./DropdownItemWithIcon";
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
 
-
-const DropdownMenuSong = () => {
-  const { playlists } = useAudioPlayer();
+const DropdownMenuSong = ({ song }) => {
+  const { playlists, addSongToQueue } = useAudioPlayer();
 
   return (
     <>
-      <DropdownMenu.Item className={styles.menuItem}>
+      <DropdownMenu.Item
+        className={styles.menuItem}
+        onClick={() => addSongToQueue(song)}
+      >
         Add to Queue
       </DropdownMenu.Item>
       <DropdownMenu.Separator>
@@ -47,7 +49,7 @@ const DropdownMenuSong = () => {
           alignOffset={-7}
           className={styles.menuContent}
         >
-          {playlists?.map(({id, title, route }) => (
+          {playlists?.map(({ id, title, route }) => (
             <DropdownMenu.Item key={id} className={styles.menuItem}>
               {title}
             </DropdownMenu.Item>

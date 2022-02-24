@@ -14,15 +14,13 @@ const RowList = ({ data }) => {
     <PageLayout>
       <RowHeader />
 
-      {data.map(({ title, ...otherProps }, idx) => {
+      {data.map((song, idx) => {
         songNumber++;
         return (
           <ListElement
-            key={title}
-            title={title}
-            songNumber={songNumber}
+            key={song.title}
+            song={song}
             idx={idx}
-            {...otherProps}
             setPlaylistBasedOnSongSelected={(songIdx) =>
               setPlaylistAndSong(songIdx, data)
             }
