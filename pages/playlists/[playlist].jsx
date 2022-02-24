@@ -2,17 +2,21 @@ import React from "react";
 import { sql_select } from "../../lib/db";
 import Header from "../../components/_Partials/Header";
 import RowList from "../../components/_Partials/List/RowList/RowList";
+import {useRouter} from "next/router";
 
-const playlist = ({ playlistSongs }) => {
+
+const Playlist = ({ playlistSongs }) => {
+  const {query} = useRouter()
+
   return (
     <div>
-      <Header title={playlistSongs[0]?.playlist_title} />
+      <Header title={query.playlist} />
       <RowList data={playlistSongs} />
     </div>
   );
 };
 
-export default playlist;
+export default Playlist;
 
 export async function getServerSideProps(context) {
   const { playlist } = context.query;

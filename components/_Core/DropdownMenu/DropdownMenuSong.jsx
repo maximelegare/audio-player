@@ -6,10 +6,11 @@ import styles from "../../../styles/_Core/PopOver.module.scss";
 import { IoIosArrowForward } from "react-icons/io";
 
 import DropdownItemWithIcon from "./DropdownItemWithIcon";
-import { usePlaylists } from "../../../hooks/PlaylistHooks";
+import { useAudioPlayer } from "../../../hooks/AudioHooks";
+
 
 const DropdownMenuSong = () => {
-  const { playlists } = usePlaylists();
+  const { playlists } = useAudioPlayer();
 
   return (
     <>

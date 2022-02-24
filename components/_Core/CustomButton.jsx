@@ -2,7 +2,13 @@ import React from "react";
 
 import styles from "../../styles/_Core/CustomButton.module.scss";
 
-const CustomButton = ({ variant, handleClick, type, children }) => {
+const CustomButton = ({
+  falseButton,
+  variant,
+  handleClick,
+  type,
+  children,
+}) => {
   const getStyles = (variant) => {
     switch (variant) {
       case "play": {
@@ -21,13 +27,25 @@ const CustomButton = ({ variant, handleClick, type, children }) => {
   };
 
   return (
-    <button
-      type={type ? type : "button"}
-      onClick={handleClick}
-      className={getStyles(variant)}
-    >
-      {children}
-    </button>
+    <>
+      {falseButton ? (
+        <div
+          type={type ? type : ""}
+          onClick={handleClick}
+          className={getStyles(variant)}
+        >
+          {children}
+        </div>
+      ) : (
+        <button
+          type={type ? type : ""}
+          onClick={handleClick}
+          className={getStyles(variant)}
+        >
+          {children}
+        </button>
+      )}
+    </>
   );
 };
 

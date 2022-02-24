@@ -1,6 +1,7 @@
-import {usePlaylists} from "./PlaylistHooks";
+import { useAudioPlayer } from "./AudioHooks";
+
 const useFetch = () => {
-  const { setPlaylistsDataGlobally } = usePlaylists();
+  const { setPlaylistsDataGlobally } = useAudioPlayer();
 
   const fetchPlaylists = async (url) => {
     try {

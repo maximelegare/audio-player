@@ -5,8 +5,12 @@ import {
   currentSongState,
   isPlayingState,
 } from "../atoms/audioAtom";
+import axios from "axios";
+
 
 import { useRouter } from "next/router";
+
+import { customPlaylistsState } from "../atoms/audioAtom";
 
 const useAudioPlayer = (fileUrl, duration) => {
   // Global state
@@ -101,6 +105,36 @@ const useAudioPlayer = (fileUrl, duration) => {
     audioPlayer.current.currentTime = values;
   };
 
+  ///////////////
+  // Playlists //
+  ///////////////
+
+  // Playlists state
+  const [recoilPlaylists, setRecoilPlaylists] =
+    useRecoilState(customPlaylistsState);
+
+  const [playlists, setPlaylists] = useState(null);
+
+
+  // Set the local state the same as recoil state when loaded
+  useEffect(() => {
+    setPlaylists(recoilPlaylists);
+  }, [recoilPlaylists]);
+
+  // Send data to backend for it to create playlist in mysql
+  const createPlaylist = async (name) => {
+    try {
+      await axios.post("http://localhost:3000/api/create-playlist", { name });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Sets playlists to local storage
+  const setPlaylistsDataGlobally = (data) => {
+    setRecoilPlaylists(data);
+  };
+
   return {
     isPlaying,
     currentSong,
@@ -109,6 +143,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     queue,
     audioPlayer,
     animationRef,
+    playlists,
     setIsPlaying,
     setCurrentSong,
     changeRange,
@@ -117,7 +152,8 @@ const useAudioPlayer = (fileUrl, duration) => {
     addSongToLikedPlaylist,
     addSongToPlaylist,
     addSongToQueue,
+    createPlaylist,
+    setPlaylistsDataGlobally,
   };
 };
-
 export { useAudioPlayer };

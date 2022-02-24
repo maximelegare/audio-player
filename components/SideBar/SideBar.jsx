@@ -20,10 +20,10 @@ import { HiUserGroup } from "react-icons/hi";
 import { MdOutlinePlaylistAdd, MdPlaylistPlay } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsSuitHeart } from "react-icons/bs";
-import {usePlaylists} from "../../hooks/PlaylistHooks";
+import { useAudioPlayer } from "../../hooks/AudioHooks";
 
 const SideBar = () => {
-  const { playlists } = usePlaylists()
+  const { playlists } = useAudioPlayer()
 
   return (
     <div className={styles.container}>

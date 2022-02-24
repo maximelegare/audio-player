@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import CustomButton from "../CustomButton";
 import CustomInput from "../CustomInput";
-import {usePlaylists} from "../../../hooks/PlaylistHooks";
 import { PopoverClose } from "@radix-ui/react-popover";
+import { useAudioPlayer } from "../../../hooks/AudioHooks";
 
 const NewPlaylist = () => {
   const [inputValue, setInputValue] = useState("");
-  const { createPlaylist } = usePlaylists();
+  const { createPlaylist } = useAudioPlayer();
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -16,10 +16,11 @@ const NewPlaylist = () => {
     e.preventDefault();
 
     if (inputValue) {
+      console.log(inputValue);
       createPlaylist(inputValue);
       setInputValue("");
-    }else{
-        console.log("error")
+    } else {
+      console.log("error");
     }
   };
 
@@ -47,11 +48,12 @@ const NewPlaylist = () => {
           padding: 0,
           margin: 0,
         }}
-        
       >
-        <CustomButton variant="text" type="submit">
-          Create
-        </CustomButton>
+        <div onClick={handleSubmit}>
+          <CustomButton falseButton variant="text">
+            Create
+          </CustomButton>
+        </div>
       </PopoverClose>
       <div style={{ height: "10px" }} />
     </form>
