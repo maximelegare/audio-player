@@ -3,7 +3,7 @@ import Header from "../components/_Partials/Header";
 import RowList from "../components/_Partials/List/RowList/RowList";
 
 
-import { sql_select } from "../lib/db";
+import { sql_query_string } from "../lib/db";
 
 
 const songs = ({ songs }) => {
@@ -22,8 +22,8 @@ const songs = ({ songs }) => {
 export default songs;
 
 export async function getServerSideProps(context) {
-  const res = await sql_select(`
-    SELECT DISTINCT (a.title), s.duration, s.title, s.album, s.title_route as song_route, a.title_route as album_route, s.streaming_url, a.artist_route, a.picture_url, a.artist
+  const res = await sql_query_string(`
+    SELECT DISTINCT (a.title), s.duration, s.liked, s.title, s.album, s.title_route as song_route, a.title_route as album_route, s.streaming_url, a.artist_route, a.picture_url, a.artist
     FROM songs s
     JOIN albums a 
     ON a.title = s.album

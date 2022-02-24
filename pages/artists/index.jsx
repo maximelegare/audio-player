@@ -3,7 +3,7 @@ import React from "react";
 import Header from "../../components/_Partials/Header";
 import List from "../../components/_Partials/List/GridList/GridList";
 
-import { sql_select } from "../../lib/db";
+import { sql_query_string } from "../../lib/db";
 
 // import { audioRefState } from "../../atoms/audioAtom";
 
@@ -25,7 +25,7 @@ export default index;
 
 
 export async function getServerSideProps() {
-  const res = await sql_select(`
+  const res = await sql_query_string(`
   SELECT artist as title, picture_url, artist_route as route 
   FROM albums 
   GROUP BY artist 

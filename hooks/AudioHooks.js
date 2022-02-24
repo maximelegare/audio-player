@@ -99,7 +99,18 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
-  const addSongToLikedPlaylist = () => {};
+  const toggleLikedSong = async (songRoute, liked) => {
+    
+    try {
+      await axios.post("http://localhost:3000/api/playlist", {
+        type: type.TOGGLE_LIKED_SONG,
+        liked:!liked,
+        songRoute
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   ///////////////////////////////////////////////////////////////////////////////////
 
@@ -167,7 +178,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     changeRange,
     setNextSong,
     setPlaylistAndSong,
-    addSongToLikedPlaylist,
+    toggleLikedSong,
     addSongToPlaylist,
     addSongToQueue,
     createPlaylist,

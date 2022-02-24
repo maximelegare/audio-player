@@ -4,7 +4,7 @@ import { sql_insert_transation } from "../../lib/db";
 
 import { createUrlRoute } from "../../lib/utilities";
 
-import { sql_select } from "../../lib/db";
+import { sql_query_string } from "../../lib/db";
 import { sql_insert } from "../../lib/db";
 
 import { cloudinaryUpload, cloudinaryBufferUpload } from "../../lib/cloudinary";
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
 
       // Checks if the album exists in the Albums table
       const sql = `EXISTS(SELECT 1 FROM albums WHERE title = '${album}')`
-      const res = await sql_select(
+      const res = await sql_query_string(
         `SELECT ${sql}`
       );
       

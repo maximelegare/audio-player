@@ -1,17 +1,15 @@
-import { sql_insert } from "../../lib/db";
+import { sql_insert, sql_query_string } from "../../lib/db";
 import { createUrlRoute } from "../../lib/utilities";
 import { playlistRouteTypes as routeType } from "../../lib/route_types/playlist.types";
 
-
 const handler = async (req, res) => {
-  const { type, name, songRoute, playlistName } = req.body;
+  const { type, name, songRoute, playlistName, liked } = req.body;
 
   switch (type) {
-
     // If create a playlist
     case routeType.CREATE_PLAYLIST: {
       const route = createUrlRoute(["playlists", req.body.name]);
-      console.log(name)
+      console.log(name);
       try {
         const response = await sql_insert("playlists", {
           title: name,
@@ -23,13 +21,12 @@ const handler = async (req, res) => {
       }
     }
 
-    case routeType.ADD_SONG_TO_PLAYLIST:{
-
-      // If insert to playlist
+    // If insert to playlist
+    case routeType.ADD_SONG_TO_PLAYLIST: {
       try {
         const response = await sql_insert("song_playlist", {
           song_route: songRoute,
-          playlist: playlistName
+          playlist: playlistName,
         });
         return res.json(response);
       } catch (e) {
@@ -37,6 +34,16 @@ const handler = async (req, res) => {
       }
     }
 
+    case routeType.TOGGLE_LIKED_SONG: {
+      try {
+        const response = await sql_query_string(
+          `UPDATE songs SET liked = ${liked} WHERE title_route = '${songRoute}'`
+        );
+        return res.json(response);
+      } catch (e) {
+        res.status(500).json({ message: e.message });
+      }
+    }
   }
 };
 

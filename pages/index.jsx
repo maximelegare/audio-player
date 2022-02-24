@@ -5,7 +5,7 @@ import { getProviders, signIn, signOut } from "next-auth/react";
 import SideBar from "../components/SideBar/SideBar";
 // import Center from "../components/Artist/Center";
 
-import { sql_select } from "../lib/db";
+import { sql_query_string } from "../lib/db";
 import {useSetRecoilState} from "recoil"
 import { customPlaylistsState } from "../atoms/audioAtom";
 import { useEffect } from "react";
@@ -29,7 +29,7 @@ export default function Home({ playlists }) {
 }
 
 export async function getServerSideProps(context) {
-  const res = await sql_select(`
+  const res = await sql_query_string(`
   SELECT title, route, id 
   FROM playlists
   `);
