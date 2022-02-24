@@ -6,7 +6,7 @@ import RowList from "../components/_Partials/List/RowList/RowList";
 import { sql_select } from "../lib/db";
 
 
-const Songs = ({ songs }) => {
+const songs = ({ songs }) => {
 
   return (
     <div>
@@ -19,9 +19,9 @@ const Songs = ({ songs }) => {
 };
 
 
-export default Songs;
+export default songs;
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const res = await sql_select(`
     SELECT DISTINCT (a.title), s.duration, s.title, s.album, s.title_route as song_route, a.title_route as album_route, s.streaming_url, a.artist_route, a.picture_url, a.artist
     FROM songs s

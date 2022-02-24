@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import RowList from "../components/_Partials/List/RowList/RowList"
 import Header from '../components/_Partials/Header'
 
 import { useAudioPlayer } from '../hooks/AudioHooks' 
 
-const Queue = () => {
+function Queue() {
+
 
   const { queue } = useAudioPlayer()  
 
@@ -17,7 +18,12 @@ const Queue = () => {
   )
 }
 
-
-
-
 export default Queue
+
+
+
+export async function getServerSideProps() {
+  return {props:{}};
+}
+
+

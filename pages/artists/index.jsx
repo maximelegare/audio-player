@@ -9,7 +9,7 @@ import { sql_select } from "../../lib/db";
 
 // The itemTitle is used to differenciate between artists & albums bc they don't have the same data
 
-const Index = ({ artists }) => {
+const index = ({ artists }) => {
 
 
   return (
@@ -20,11 +20,11 @@ const Index = ({ artists }) => {
   );
 };
 
-export default Index;
+export default index;
 
 
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await sql_select(`
   SELECT artist as title, picture_url, artist_route as route 
   FROM albums 

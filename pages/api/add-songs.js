@@ -2,8 +2,6 @@ import mm from "music-metadata/";
 
 import { sql_insert_transation } from "../../lib/db";
 
-import { uploadFileToGoogleDrive } from "../../lib/googledrive";
-
 import { createUrlRoute } from "../../lib/utilities";
 
 import { sql_select } from "../../lib/db";
