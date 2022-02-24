@@ -8,6 +8,7 @@ import {
   customPlaylistsState,
 } from "../atoms/audioAtom";
 import axios from "axios";
+import { GiConsoleController } from "react-icons/gi";
 
 const useAudioPlayer = (fileUrl, duration) => {
   // Global state
@@ -100,7 +101,7 @@ const useAudioPlayer = (fileUrl, duration) => {
   };
 
   const toggleLikedSong = async (songRoute, liked) => {
-    
+
     try {
       await axios.post("http://localhost:3000/api/playlist", {
         type: type.TOGGLE_LIKED_SONG,
@@ -118,9 +119,17 @@ const useAudioPlayer = (fileUrl, duration) => {
   // PLAYLISTS //
   ///////////////
 
-  const addSongToQueue = (song) => {
-    setQueue({ ...queue, songs: [...queue.songs, song] });
+  const toggleSongFromQueue = (song, route) => {
+    if(route === "/queue"){
+      const newQueue = queue.songs.filter((listSong) => song.song_route !== listSong.song_route)
+      setQueue({...queue, songs:newQueue})
+
+    }else{
+      setQueue({ ...queue, songs: [...queue.songs, song] });
+    }
   };
+
+
 
   // Set the current Song based & playlist based on the song clicked
   const setPlaylistAndSong = (songIdx, playlistSongs, title) => {
@@ -180,7 +189,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     setPlaylistAndSong,
     toggleLikedSong,
     addSongToPlaylist,
-    addSongToQueue,
+    toggleSongFromQueue,
     createPlaylist,
     setPlaylistsDataGlobally,
   };

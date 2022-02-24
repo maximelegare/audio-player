@@ -1,3 +1,5 @@
+// DropdownMenu Content displayed in the song RowListItem
+
 import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
@@ -10,19 +12,21 @@ import { useAudioPlayer } from "../../../hooks/AudioHooks";
 import { useRouter } from "next/router";
 
 const DropdownMenuSong = ({ song }) => {
-  const { playlists, addSongToQueue, addSongToPlaylist, toggleLikedSong } =
+  const { playlists, toggleSongFromQueue, addSongToPlaylist, toggleLikedSong } =
     useAudioPlayer();
   const router = useRouter();
-  console.log(song);
+
+  console.log(router)
 
   return (
     <>
       <DropdownMenu.Item
         className={styles.menuItem}
-        onClick={() => addSongToQueue(song)}
+        onClick={() => toggleSongFromQueue(song, router.pathname)}
       >
-        Add to Queue
+      {router.pathname === "/queue" ? "Remove From":  "Add to"} Queue
       </DropdownMenu.Item>
+
       <DropdownMenu.Separator>
         <hr />
       </DropdownMenu.Separator>
@@ -45,7 +49,7 @@ const DropdownMenuSong = ({ song }) => {
         className={styles.menuItem}
         onClick={() => toggleLikedSong(song.song_route, song.liked)}
       >
-        {song.liked?"Remove from" : "Add to"} liked Songs
+        {song.liked ? "Remove from" : "Add to"} liked Songs
       </DropdownMenu.Item>
 
       <DropdownMenu.Root>
