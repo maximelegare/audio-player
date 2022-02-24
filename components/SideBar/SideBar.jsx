@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/SideBar/SideBar.module.scss";
 
-import { useRecoilValue } from "recoil";
-import { customPlaylistsState } from "../../atoms/audioAtom";
-
 import SideBarLink from "./SideBarLink";
 import { Scrollbar } from "react-scrollbars-custom";
 import FileInput from "../_Core/FileInput";
@@ -23,7 +20,7 @@ import { BsSuitHeart } from "react-icons/bs";
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 
 const SideBar = () => {
-  const { playlists } = useAudioPlayer()
+  const { playlists } = useAudioPlayer();
 
   return (
     <div className={styles.container}>
@@ -68,27 +65,28 @@ const SideBar = () => {
         </div>
         <hr />
       </div>
-      <div className={styles.scollbarContainer}>
+
+      <div className={styles.linkContainer}>
+        <SideBarLink
+          icon={<BsSuitHeart className={styles.icon} />}
+          text="Liked Songs"
+          href="/liked-songs"
+        />
+        <SideBarLink
+          icon={<MdPlaylistPlay className={styles.icon} />}
+          text="Queue"
+          href="/queue"
+        />
+        <SideBarLink
+          icon={<MdOutlinePlaylistAdd className={styles.icon} />}
+          text="New Playlist"
+          wholeButtonTrigger
+          menuItem={<NewPlaylist />}
+        />
+      </div>
+      <div className={styles.scrollbarContainer}>
+        <Scrollbar noScrollX style={{ height: "100%", width: "100%" }}>
         <div className={styles.linkContainer}>
-          <SideBarLink
-            icon={<BsSuitHeart className={styles.icon} />}
-            text="Liked Songs"
-            href="/liked-songs"
-          />
-          <SideBarLink
-            icon={<MdPlaylistPlay className={styles.icon} />}
-            text="Queue"
-            href="/queue"
-          />
-          <SideBarLink
-            icon={<MdOutlinePlaylistAdd className={styles.icon} />}
-            text="New Playlist"
-            wholeButtonTrigger
-            menuItem={<NewPlaylist />}
-          />
-        </div>
-        <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>
-          <div className={styles.linkContainer}>
             {playlists?.map(({ id, title, route }) => (
               <SideBarLink key={id} text={title} href={route} />
             ))}

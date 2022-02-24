@@ -16,15 +16,11 @@
 .top{
   display: flex;
   width: 100vw;
-  height: 100%;
+  flex-grow: 1;
   background-color: $bg-dark;
+  z-index: 10;
   color:$white;
 }
 
-.layout{
-    width: 100%;
-    height: 100%;
-    padding: 0 20px;
-}
 
 

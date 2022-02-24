@@ -10,8 +10,10 @@ import { useAudioPlayer } from "../../../hooks/AudioHooks";
 import { useRouter } from "next/router";
 
 const DropdownMenuSong = ({ song }) => {
-  const { playlists, addSongToQueue } = useAudioPlayer();
+  const { playlists, addSongToQueue, addSongToPlaylist } = useAudioPlayer();
   const router = useRouter();
+  console.log(song)
+
 
   return (
     <>
@@ -58,7 +60,7 @@ const DropdownMenuSong = ({ song }) => {
           className={styles.menuContent}
         >
           {playlists?.map(({ id, title, route }) => (
-            <DropdownMenu.Item key={id} className={styles.menuItem}>
+            <DropdownMenu.Item key={id} className={styles.menuItem} onClick={() => addSongToPlaylist(song.song_route, title)}>
               {title}
             </DropdownMenu.Item>
           ))}

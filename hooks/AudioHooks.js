@@ -1,13 +1,13 @@
+import { playlistRouteTypes as type } from "../lib/route_types/playlist.types";
 import { useState, useRef, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import {
   queueState,
   currentSongState,
   isPlayingState,
-  customPlaylistsState
+  customPlaylistsState,
 } from "../atoms/audioAtom";
 import axios from "axios";
-
 
 const useAudioPlayer = (fileUrl, duration) => {
   // Global state
@@ -62,7 +62,6 @@ const useAudioPlayer = (fileUrl, duration) => {
   //   SONGS   //
   ///////////////
 
-
   // Set play/pause based on isPlaying value & when file changes
   useEffect(() => {
     if (isPlaying) {
@@ -74,7 +73,6 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   }, [isPlaying, fileUrl]);
 
-  
   // Sets the next song Automatically when the previous song finished
   useEffect(() => {
     if (Math.round(audioPlayer?.current?.currentTime) === duration) {
@@ -101,28 +99,24 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
-  
   const addSongToLikedPlaylist = () => {};
-  const addSongToPlaylist = () => {};
-  
+
   ///////////////////////////////////////////////////////////////////////////////////
-  
+
   ///////////////
   // PLAYLISTS //
   ///////////////
 
-
   const addSongToQueue = (song) => {
-    setQueue({...queue, songs:[...queue.songs, song] })
+    setQueue({ ...queue, songs: [...queue.songs, song] });
   };
 
   // Set the current Song based & playlist based on the song clicked
   const setPlaylistAndSong = (songIdx, playlistSongs, title) => {
     setQueue({ songs: playlistSongs, title: title });
-    
+
     setCurrentSong({ ...playlistSongs[songIdx], songIdx });
   };
-
 
   // Set the local state the same as recoil state when loaded
   useEffect(() => {
@@ -132,7 +126,23 @@ const useAudioPlayer = (fileUrl, duration) => {
   // Send data to backend for it to create playlist in mysql
   const createPlaylist = async (name) => {
     try {
-      await axios.post("http://localhost:3000/api/create-playlist", { name });
+      await axios.post("http://localhost:3000/api/playlist", {
+        type: type.CREATE_PLAYLIST,
+        name,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Add song to specific playlist
+  const addSongToPlaylist = async (songRoute, playlistName) => {
+    try {
+      await axios.post("http://localhost:3000/api/playlist", {
+        type: type.ADD_SONG_TO_PLAYLIST,
+        songRoute,
+        playlistName,
+      });
     } catch (err) {
       console.log(err);
     }
