@@ -7,13 +7,8 @@ import { Scrollbar } from "react-scrollbars-custom";
 
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 
-
-
-
 const Layout = ({ children }) => {
-
-  const {currentSong} = useAudioPlayer()
- 
+  const { currentSong } = useAudioPlayer();
 
   return (
     <div>
@@ -38,6 +33,3 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
-
-
-

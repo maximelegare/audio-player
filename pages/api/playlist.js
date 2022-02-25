@@ -9,7 +9,6 @@ const handler = async (req, res) => {
     // If create a playlist
     case routeType.CREATE_PLAYLIST: {
       const route = createUrlRoute(["playlists", req.body.name]);
-      console.log(name);
       try {
         const response = await sql_insert("playlists", {
           title: name,

@@ -101,12 +101,11 @@ const useAudioPlayer = (fileUrl, duration) => {
   };
 
   const toggleLikedSong = async (songRoute, liked) => {
-
     try {
       await axios.post("http://localhost:3000/api/playlist", {
         type: type.TOGGLE_LIKED_SONG,
-        liked:!liked,
-        songRoute
+        liked: !liked,
+        songRoute,
       });
     } catch (err) {
       console.log(err);
@@ -120,16 +119,28 @@ const useAudioPlayer = (fileUrl, duration) => {
   ///////////////
 
   const toggleSongFromQueue = (song, route) => {
-    if(route === "/queue"){
-      const newQueue = queue.songs.filter((listSong) => song.song_route !== listSong.song_route)
-      setQueue({...queue, songs:newQueue})
 
-    }else{
-      setQueue({ ...queue, songs: [...queue.songs, song] });
+    // If the route is /queue => remove from queue with filter
+    if (route === "/queue") {
+      const newQueue = queue.songs.filter(
+        (listSong) => song.song_route !== listSong.song_route
+      );
+      setQueue({ ...queue, songs: newQueue });
+
+      // Otherwise Add to queue
+    } else {
+
+      // Check if duplicate
+      const duplicateSong = queue.songs.filter(
+        (listSong) => song.song_route === listSong.song_route
+      );
+      if (duplicateSong[0]) {
+        return;
+      } else {
+        setQueue({ ...queue, songs: [...queue.songs, song] });
+      }
     }
   };
-
-
 
   // Set the current Song based & playlist based on the song clicked
   const setPlaylistAndSong = (songIdx, playlistSongs, title) => {
@@ -156,13 +167,14 @@ const useAudioPlayer = (fileUrl, duration) => {
   };
 
   // Add song to specific playlist
-  const addSongToPlaylist = async (songRoute, playlistName) => {
+  const addSongToPlaylist = async (song, playlistName) => {
     try {
-      await axios.post("http://localhost:3000/api/playlist", {
-        type: type.ADD_SONG_TO_PLAYLIST,
-        songRoute,
-        playlistName,
-      });
+      // setPlaylists([...playlists, song])
+      // await axios.post("http://localhost:3000/api/playlist", {
+      //   type: type.ADD_SONG_TO_PLAYLIST,
+      //   songRoute:song.song_route,
+      //   playlistName,
+      // });
     } catch (err) {
       console.log(err);
     }

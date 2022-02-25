@@ -7,7 +7,6 @@ import { useAudioPlayer } from "../hooks/AudioHooks";
 import { sql_query_string } from "../lib/db";
 
 function LikedSongs({ songs }) {
-    console.log(songs)
   return (
     <div>
       <Header title="Liked Songs" />

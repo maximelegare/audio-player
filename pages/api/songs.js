@@ -5,7 +5,6 @@ const handler = async (_, res) => {
       
     const response = await sql_query_string();
     // const responseData = await response.json()
-    // console.log(responseData)
     return res.json(response);
 
   } catch (e) {

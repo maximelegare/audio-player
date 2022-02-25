@@ -16,7 +16,6 @@ const DropdownMenuSong = ({ song }) => {
     useAudioPlayer();
   const router = useRouter();
 
-  console.log(router)
 
   return (
     <>
@@ -70,7 +69,7 @@ const DropdownMenuSong = ({ song }) => {
             <DropdownMenu.Item
               key={id}
               className={styles.menuItem}
-              onClick={() => addSongToPlaylist(song.song_route, title)}
+              onClick={() => addSongToPlaylist(song, title)}
             >
               {title}
             </DropdownMenu.Item>

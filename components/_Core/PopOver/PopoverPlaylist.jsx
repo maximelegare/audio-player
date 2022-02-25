@@ -16,7 +16,6 @@ const NewPlaylist = () => {
     e.preventDefault();
 
     if (inputValue) {
-      console.log(inputValue);
       createPlaylist(inputValue);
       setInputValue("");
     } else {
