@@ -1,21 +1,26 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { sql_query_string } from "../../lib/db";
 import Header from "../../components/_Partials/Header";
 import RowList from "../../components/_Partials/List/RowList/RowList";
+import { useAudioPlayer } from "../../hooks/AudioHooks";
 
-
-const playlist = ({ playlistSongs }) => {
-  // const {query} = useRouter()
-
+const Playlist = ({ playlistSongs }) => {
+  const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer()
+  
+  useEffect(() => {
+    setCurrentRouteSongs(playlistSongs)    
+  }, [playlistSongs])
+  
+ 
   return (
     <div>
       <Header title={playlistSongs[0]?.playlist_title} />
-      <RowList data={playlistSongs}/>
+      <RowList data={currentRouteSongs}/>
     </div>
   );
 };
 
-export default playlist;
+export default Playlist;
 
 export async function getServerSideProps(context) {
   const { playlist } = context.query;

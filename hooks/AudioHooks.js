@@ -2,13 +2,13 @@ import { playlistRouteTypes as routeType } from "../lib/route_types/playlist.typ
 import { useState, useRef, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import {
-  queueState,
   currentSongState,
-  isPlayingState,
   customPlaylistsState,
+  isPlayingState,
+  queueState,
+  currentRouteSongsState,
 } from "../atoms/audioAtom";
 import axios from "axios";
-import { GiConsoleController } from "react-icons/gi";
 
 const useAudioPlayer = (fileUrl, duration) => {
   // Global state
@@ -16,12 +16,7 @@ const useAudioPlayer = (fileUrl, duration) => {
   const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
   const [queue, setQueue] = useRecoilState(queueState);
 
-  // Playlists state
-  const [recoilPlaylists, setRecoilPlaylists] =
-    useRecoilState(customPlaylistsState);
-
-  const [playlists, setPlaylists] = useState(null);
-
+  // Progress input state
   const [progressInput, setRangeInput] = useState({
     values: [0],
     min: 0,
@@ -118,13 +113,32 @@ const useAudioPlayer = (fileUrl, duration) => {
   // PLAYLISTS //
   ///////////////
 
+  // Playlist displayed on the current route (the songs)
+  // To update in real time songs in playlist
+  const [currentRouteSongs, setCurrentRouteSongs] = useRecoilState(
+    currentRouteSongsState
+  );
+
+  // Playlists state (in Sidebar)
+  // Use local state to prevent problemes with persistance
+  const [playlists, setPlaylists] = useState(null);
+  const [recoilPlaylists, setRecoilPlaylists] =
+    useRecoilState(customPlaylistsState);
+
+  // Set the local state the same as recoil state when loaded
+  
+  useEffect(() => {
+    setPlaylists(recoilPlaylists);
+  }, [recoilPlaylists]);
+
+  // Add or delete songs from the queue
   const toggleSongFromQueue = (song, route) => {
     // If the route is /queue => remove from queue with filter
     if (route === "/queue") {
-      const newQueue = queue.songs.filter(
+      const newFilteredQueue = queue.songs.filter(
         (listSong) => song.song_route !== listSong.song_route
       );
-      setQueue({ ...queue, songs: newQueue });
+      setQueue({ ...queue, songs: newFilteredQueue });
 
       // Otherwise Add to queue
     } else {
@@ -147,11 +161,6 @@ const useAudioPlayer = (fileUrl, duration) => {
     setCurrentSong({ ...playlistSongs[songIdx], songIdx });
   };
 
-  // Set the local state the same as recoil state when loaded
-  useEffect(() => {
-    setPlaylists(recoilPlaylists);
-  }, [recoilPlaylists]);
-
   // Send data to backend for it to create playlist in mysql
   const createPlaylist = async (name) => {
     try {
@@ -167,8 +176,11 @@ const useAudioPlayer = (fileUrl, duration) => {
   const addAndRemoveSongFromPlaylist = async (type, song, playlistName) => {
     // Add song to specific playlist if type add
     if (type === "add") {
+      // Add Locally
+      // setCurrentRouteSongs([...currentRouteSongs, song])
+
       try {
-        // setPlaylists([...playlists, song])
+        // Set db
         await axios.post("http://localhost:3000/api/playlist", {
           type: routeType.ADD_SONG_TO_PLAYLIST,
           songRoute: song.song_route,
@@ -177,9 +189,16 @@ const useAudioPlayer = (fileUrl, duration) => {
       } catch (err) {
         console.log(err);
       }
-    } 
-    // Otherwise remove from specific playlist 
+    }
+    // Otherwise remove from specific playlist
     else {
+      // Remove Locally
+      const newFilteredPlaylist = currentRouteSongs.filter(
+        (listSong) => song.song_route !== listSong.song_route
+      );
+      setCurrentRouteSongs(newFilteredPlaylist);
+
+      // Set db
       try {
         await axios.post("http://localhost:3000/api/playlist", {
           type: routeType.REMOVE_SONG_FROM_PLAYLIST,
@@ -198,24 +217,26 @@ const useAudioPlayer = (fileUrl, duration) => {
   };
 
   return {
-    isPlaying,
-    currentSong,
-    progressInput,
-    max,
-    queue,
-    audioPlayer,
     animationRef,
+    audioPlayer,
+    currentRouteSongs,
+    currentSong,
+    isPlaying,
+    max,
     playlists,
-    setIsPlaying,
-    setCurrentSong,
+    progressInput,
+    queue,
+    addAndRemoveSongFromPlaylist,
     changeRange,
+    createPlaylist,
+    setCurrentRouteSongs,
+    setCurrentSong,
+    setIsPlaying,
     setNextSong,
     setPlaylistAndSong,
-    toggleLikedSong,
-    addAndRemoveSongFromPlaylist,
-    toggleSongFromQueue,
-    createPlaylist,
     setPlaylistsDataGlobally,
+    toggleLikedSong,
+    toggleSongFromQueue,
   };
 };
 export { useAudioPlayer };

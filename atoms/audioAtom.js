@@ -25,3 +25,8 @@ export const customPlaylistsState = atom({
   key: "playlistsState",
   default: [],
 });
+
+export const currentRouteSongsState = atom({
+  key:"currentRouteSongsState",
+  default:[]
+})

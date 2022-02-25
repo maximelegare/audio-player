@@ -14,7 +14,7 @@ const RowList = ({ data }) => {
     <PageLayout>
       <RowHeader />
 
-      {data.map((song, idx) => {
+      {data?.map((song, idx) => {
         songNumber++;
         return (
           <ListElement
