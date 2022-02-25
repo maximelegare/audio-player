@@ -3,12 +3,12 @@ import { createUrlRoute } from "../../lib/utilities";
 import { playlistRouteTypes as routeType } from "../../lib/route_types/playlist.types";
 
 const handler = async (req, res) => {
-  const { type, name, songRoute, playlistName, liked } = req.body;
+  const { type, name, songRoute, playlistName, liked, route } = req.body;
 
   switch (type) {
     // If create a playlist
     case routeType.CREATE_PLAYLIST: {
-      const route = createUrlRoute(["playlists", req.body.name]);
+      
       try {
         const response = await sql_insert("playlists", {
           title: name,

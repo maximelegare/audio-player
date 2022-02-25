@@ -9,6 +9,8 @@ import {
   currentRouteSongsState,
 } from "../atoms/audioAtom";
 import axios from "axios";
+import { createUrlRoute } from "../lib/utilities";
+
 
 const useAudioPlayer = (fileUrl, duration) => {
   // Global state for song
@@ -174,10 +176,19 @@ const useAudioPlayer = (fileUrl, duration) => {
 
   // Send data to backend for it to create playlist in mysql
   const createPlaylist = async (name) => {
+    const route = createUrlRoute(["playlists",name]);
+    const playlist = {
+      title:name,
+      route:`/${route}`
+    }
+    setRecoilPlaylists([...playlists, playlist])
+
     try {
       await axios.post("http://localhost:3000/api/playlist", {
         type: routeType.CREATE_PLAYLIST,
         name,
+        route
+        
       });
     } catch (err) {
       console.log(err);
