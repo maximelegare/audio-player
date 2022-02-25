@@ -9,8 +9,8 @@ const playlist = ({ playlistSongs }) => {
 
   return (
     <div>
-      <Header title={playlistSongs[0]?.title} />
-      <RowList data={playlistSongs} />
+      <Header title={playlistSongs[0]?.playlist_title} />
+      <RowList data={playlistSongs}/>
     </div>
   );
 };
@@ -34,6 +34,7 @@ export async function getServerSideProps(context) {
   ON s.album = a.title 
   JOIN playlists p ON p.title = sp.playlist 
   WHERE p.route = '/playlists/${playlist}'
+  ORDER BY sp.id
   `);
 
   const playlistSongs = JSON.parse(JSON.stringify(res));

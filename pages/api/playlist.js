@@ -32,6 +32,16 @@ const handler = async (req, res) => {
         res.status(500).json({ message: e.message });
       }
     }
+    case routeType.REMOVE_SONG_FROM_PLAYLIST:{
+      try {
+        const response = await sql_query_string(
+          `DELETE FROM song_playlist WHERE song_route = '${songRoute}' AND playlist = '${playlistName}'`
+        );
+        return res.json(response);
+      } catch (e) {
+        res.status(500).json({ message: e.message });
+      }
+    }
 
     case routeType.TOGGLE_LIKED_SONG: {
       try {

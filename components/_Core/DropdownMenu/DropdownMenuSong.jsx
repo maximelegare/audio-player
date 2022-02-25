@@ -12,10 +12,13 @@ import { useAudioPlayer } from "../../../hooks/AudioHooks";
 import { useRouter } from "next/router";
 
 const DropdownMenuSong = ({ song }) => {
-  const { playlists, toggleSongFromQueue, addSongToPlaylist, toggleLikedSong } =
-    useAudioPlayer();
+  const {
+    playlists,
+    toggleSongFromQueue,
+    toggleLikedSong,
+    addAndRemoveSongFromPlaylist
+  } = useAudioPlayer();
   const router = useRouter();
-
 
   return (
     <>
@@ -23,7 +26,7 @@ const DropdownMenuSong = ({ song }) => {
         className={styles.menuItem}
         onClick={() => toggleSongFromQueue(song, router.pathname)}
       >
-      {router.pathname === "/queue" ? "Remove From":  "Add to"} Queue
+        {router.pathname === "/queue" ? "Remove From" : "Add to"} Queue
       </DropdownMenu.Item>
 
       <DropdownMenu.Separator>
@@ -69,13 +72,23 @@ const DropdownMenuSong = ({ song }) => {
             <DropdownMenu.Item
               key={id}
               className={styles.menuItem}
-              onClick={() => addSongToPlaylist(song, title)}
+              onClick={() => addAndRemoveSongFromPlaylist("add", song, title)}
             >
               {title}
             </DropdownMenu.Item>
           ))}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
+      {router.pathname.includes("/playlists") && (
+        <DropdownMenu.Item
+          className={styles.menuItem}
+          onClick={() => addAndRemoveSongFromPlaylist("remove", song, song.playlist_title)}
+        >
+          Remove from :
+          <br />
+           {`${song.playlist_title.slice(0, 18)} ${song.playlist_title.length > 18 ? "..." : ""}`}
+        </DropdownMenu.Item>
+      )}
     </>
   );
 };

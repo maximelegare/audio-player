@@ -1,4 +1,4 @@
-import { playlistRouteTypes as type } from "../lib/route_types/playlist.types";
+import { playlistRouteTypes as routeType } from "../lib/route_types/playlist.types";
 import { useState, useRef, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import {
@@ -103,7 +103,7 @@ const useAudioPlayer = (fileUrl, duration) => {
   const toggleLikedSong = async (songRoute, liked) => {
     try {
       await axios.post("http://localhost:3000/api/playlist", {
-        type: type.TOGGLE_LIKED_SONG,
+        type: routeType.TOGGLE_LIKED_SONG,
         liked: !liked,
         songRoute,
       });
@@ -119,7 +119,6 @@ const useAudioPlayer = (fileUrl, duration) => {
   ///////////////
 
   const toggleSongFromQueue = (song, route) => {
-
     // If the route is /queue => remove from queue with filter
     if (route === "/queue") {
       const newQueue = queue.songs.filter(
@@ -129,7 +128,6 @@ const useAudioPlayer = (fileUrl, duration) => {
 
       // Otherwise Add to queue
     } else {
-
       // Check if duplicate
       const duplicateSong = queue.songs.filter(
         (listSong) => song.song_route === listSong.song_route
@@ -158,7 +156,7 @@ const useAudioPlayer = (fileUrl, duration) => {
   const createPlaylist = async (name) => {
     try {
       await axios.post("http://localhost:3000/api/playlist", {
-        type: type.CREATE_PLAYLIST,
+        type: routeType.CREATE_PLAYLIST,
         name,
       });
     } catch (err) {
@@ -166,17 +164,31 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
-  // Add song to specific playlist
-  const addSongToPlaylist = async (song, playlistName) => {
-    try {
-      // setPlaylists([...playlists, song])
-      // await axios.post("http://localhost:3000/api/playlist", {
-      //   type: type.ADD_SONG_TO_PLAYLIST,
-      //   songRoute:song.song_route,
-      //   playlistName,
-      // });
-    } catch (err) {
-      console.log(err);
+  const addAndRemoveSongFromPlaylist = async (type, song, playlistName) => {
+    // Add song to specific playlist if type add
+    if (type === "add") {
+      try {
+        // setPlaylists([...playlists, song])
+        await axios.post("http://localhost:3000/api/playlist", {
+          type: routeType.ADD_SONG_TO_PLAYLIST,
+          songRoute: song.song_route,
+          playlistName,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    } 
+    // Otherwise remove from specific playlist 
+    else {
+      try {
+        await axios.post("http://localhost:3000/api/playlist", {
+          type: routeType.REMOVE_SONG_FROM_PLAYLIST,
+          songRoute: song.song_route,
+          playlistName,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -200,7 +212,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     setNextSong,
     setPlaylistAndSong,
     toggleLikedSong,
-    addSongToPlaylist,
+    addAndRemoveSongFromPlaylist,
     toggleSongFromQueue,
     createPlaylist,
     setPlaylistsDataGlobally,
