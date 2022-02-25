@@ -11,10 +11,9 @@ import {
 import axios from "axios";
 
 const useAudioPlayer = (fileUrl, duration) => {
-  // Global state
+  // Global state for song
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
-  const [queue, setQueue] = useRecoilState(queueState);
 
   // Progress input state
   const [progressInput, setRangeInput] = useState({
@@ -95,18 +94,6 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
-  const toggleLikedSong = async (songRoute, liked) => {
-    try {
-      await axios.post("http://localhost:3000/api/playlist", {
-        type: routeType.TOGGLE_LIKED_SONG,
-        liked: !liked,
-        songRoute,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   ///////////////////////////////////////////////////////////////////////////////////
 
   ///////////////
@@ -124,12 +111,37 @@ const useAudioPlayer = (fileUrl, duration) => {
   const [playlists, setPlaylists] = useState(null);
   const [recoilPlaylists, setRecoilPlaylists] =
     useRecoilState(customPlaylistsState);
+  
+  // Queue state
+  const [queue, setQueue] = useRecoilState(queueState);
 
   // Set the local state the same as recoil state when loaded
-  
   useEffect(() => {
     setPlaylists(recoilPlaylists);
   }, [recoilPlaylists]);
+
+  // Remove song from locally
+  const filterAndRemoveFromCurrentRouteSongs = (song) => {
+    const newFilteredPlaylist = currentRouteSongs.filter(
+      (listSong) => song.song_route !== listSong.song_route
+    );
+    setCurrentRouteSongs(newFilteredPlaylist);
+  };
+
+  // Toggle song from Liked playlist
+  const toggleLikedSong = async (song) => {
+    filterAndRemoveFromCurrentRouteSongs(song); // Locally
+
+    try {
+      await axios.post("http://localhost:3000/api/playlist", {
+        type: routeType.TOGGLE_LIKED_SONG,
+        liked: !song.liked,
+        songRoute: song.song_route,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // Add or delete songs from the queue
   const toggleSongFromQueue = (song, route) => {
@@ -157,7 +169,6 @@ const useAudioPlayer = (fileUrl, duration) => {
   // Set the current Song based & playlist based on the song clicked
   const setPlaylistAndSong = (songIdx, playlistSongs, title) => {
     setQueue({ songs: playlistSongs, title: title });
-
     setCurrentSong({ ...playlistSongs[songIdx], songIdx });
   };
 
@@ -193,10 +204,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     // Otherwise remove from specific playlist
     else {
       // Remove Locally
-      const newFilteredPlaylist = currentRouteSongs.filter(
-        (listSong) => song.song_route !== listSong.song_route
-      );
-      setCurrentRouteSongs(newFilteredPlaylist);
+      filterAndRemoveFromCurrentRouteSongs(song);
 
       // Set db
       try {

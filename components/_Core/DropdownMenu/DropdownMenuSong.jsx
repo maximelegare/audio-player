@@ -49,7 +49,7 @@ const DropdownMenuSong = ({ song }) => {
       </DropdownMenu.Separator>
       <DropdownMenu.Item
         className={styles.menuItem}
-        onClick={() => toggleLikedSong(song.song_route, song.liked)}
+        onClick={() => toggleLikedSong(song)}
       >
         {song.liked ? "Remove from" : "Add to"} liked Songs
       </DropdownMenu.Item>

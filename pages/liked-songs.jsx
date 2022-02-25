@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import RowList from "../components/_Partials/List/RowList/RowList";
 import Header from "../components/_Partials/Header";
@@ -6,11 +6,18 @@ import Header from "../components/_Partials/Header";
 import { useAudioPlayer } from "../hooks/AudioHooks";
 import { sql_query_string } from "../lib/db";
 
-function LikedSongs({ songs }) {
+function LikedSongs({ likedSongs }) {
+  const {currentRouteSongs, setCurrentRouteSongs} = useAudioPlayer()
+
+  useEffect(() => {
+    setCurrentRouteSongs(likedSongs)
+  },[likedSongs])
+  
+
   return (
     <div>
       <Header title="Liked Songs" />
-      <RowList data={songs} />
+      <RowList data={currentRouteSongs} />
     </div>
   );
 }
@@ -27,10 +34,10 @@ export async function getServerSideProps() {
 
   `);
 
-  const songs = JSON.parse(JSON.stringify(res));
+  const data = JSON.parse(JSON.stringify(res));
   return {
     props: {
-      songs: songs,
+      likedSongs: data,
     },
   };
 }
