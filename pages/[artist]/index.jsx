@@ -7,7 +7,7 @@ import { sql_query_string } from "../../lib/db";
 const index = ({ albums }) => {
   return (
     <>
-      <Header title={albums[0]?.artist} src={albums[0]?.picture_url} />
+      <Header title={albums[0]?.artist} smallTitle="Artist" src={albums[0]?.picture_url} />
       <GridList data={albums} variant="bigCard" />
     </>
   );

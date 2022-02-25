@@ -2,13 +2,13 @@ import React from "react";
 import styles from "../../styles/Header/Header.module.scss";
 import CustomImage from "../_Core/CustomImage";
 
-const Header = ({ title, smallTitle, src }) => {
+const Header = ({ title, smallTitle, src, round }) => {
 
   return (
     <div className={styles.container}>
       {src && (
         <div className={styles.image}>
-          <CustomImage round src={src} alt="" width={190} height={190} />
+          <CustomImage round={round} src={src} alt="" width={190} height={190} />
         </div>
       )}
 
