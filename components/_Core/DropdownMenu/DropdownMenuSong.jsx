@@ -84,9 +84,8 @@ const DropdownMenuSong = ({ song }) => {
           className={styles.menuItem}
           onClick={() => addAndRemoveSongFromPlaylist("remove", song, song.playlist_title)}
         >
-          Remove from :
-          <br />
-           {`${song.playlist_title.slice(0, 18)} ${song.playlist_title.length > 18 ? "..." : ""}`}
+          Remove from this playlist
+          
         </DropdownMenu.Item>
       )}
     </>

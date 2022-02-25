@@ -7,26 +7,22 @@ import {
   isPlayingState,
   queueState,
   currentRouteSongsState,
+  likedSongsPlaylistState,
 } from "../atoms/audioAtom";
 import axios from "axios";
 import { createUrlRoute } from "../lib/utilities";
-
 
 const useAudioPlayer = (fileUrl, duration) => {
   // Global state for song
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
 
-  
   // Queue state
   const [queue, setQueue] = useState([]);
-  const [recoilQueue, setRecoilQueue] = useRecoilState(queueState)
+  const [recoilQueue, setRecoilQueue] = useRecoilState(queueState);
   useEffect(() => {
     setQueue(recoilQueue);
   }, [recoilQueue]);
-  
-
-
 
   // Progress input state
   const [progressInput, setRangeInput] = useState({
@@ -113,6 +109,12 @@ const useAudioPlayer = (fileUrl, duration) => {
   // PLAYLISTS //
   ///////////////
 
+  // Liked songs playlist data
+  // Update in real time the liked songs
+  const [likedSongsPlaylist, setLikedSongsPlaylist] = useRecoilState(
+    likedSongsPlaylistState
+  );
+
   // Playlist displayed on the current route (the songs)
   // To update in real time songs in playlist
   const [currentRouteSongs, setCurrentRouteSongs] = useRecoilState(
@@ -123,27 +125,25 @@ const useAudioPlayer = (fileUrl, duration) => {
   // Use local state to prevent problemes with persistance
   const [playlists, setPlaylists] = useState(null);
   const [recoilPlaylists, setRecoilPlaylists] =
-  useRecoilState(customPlaylistsState);
+    useRecoilState(customPlaylistsState);
 
   // Set the local state the same as recoil state when loaded
   useEffect(() => {
     setPlaylists(recoilPlaylists);
   }, [recoilPlaylists]);
-  
- 
 
   // Remove song from locally
-  const filterAndRemoveFromCurrentRouteSongs = (song) => {
+  const filterSongFromPLaylist = (song) => {
     const newFilteredPlaylist = currentRouteSongs.filter(
       (listSong) => song.song_route !== listSong.song_route
     );
-    setCurrentRouteSongs(newFilteredPlaylist);
+    return newFilteredPlaylist;
   };
 
   // Toggle song from Liked playlist
   const toggleLikedSong = async (song) => {
-    filterAndRemoveFromCurrentRouteSongs(song); // Locally
-
+    const newPaylist = filterSongFromPLaylist(song); // Locally
+    setLikedSongsPlaylist(newPaylist);
     try {
       await axios.post("http://localhost:3000/api/playlist", {
         type: routeType.TOGGLE_LIKED_SONG,
@@ -186,19 +186,18 @@ const useAudioPlayer = (fileUrl, duration) => {
 
   // Send data to backend for it to create playlist in mysql
   const createPlaylist = async (name) => {
-    const route = createUrlRoute(["playlists",name]);
+    const route = createUrlRoute(["playlists", name]);
     const playlist = {
-      title:name,
-      route:`/${route}`
-    }
-    setRecoilPlaylists([...playlists, playlist])
+      title: name,
+      route: `/${route}`,
+    };
+    setRecoilPlaylists([...playlists, playlist]);
 
     try {
       await axios.post("http://localhost:3000/api/playlist", {
         type: routeType.CREATE_PLAYLIST,
         name,
-        route
-        
+        route,
       });
     } catch (err) {
       console.log(err);
@@ -225,8 +224,8 @@ const useAudioPlayer = (fileUrl, duration) => {
     // Otherwise remove from specific playlist
     else {
       // Remove Locally
-      filterAndRemoveFromCurrentRouteSongs(song);
-
+      const newPlaylist = filterSongFromPLaylist(song);
+      setCurrentRouteSongs(newPlaylist);
       // Set db
       try {
         await axios.post("http://localhost:3000/api/playlist", {
@@ -255,6 +254,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     playlists,
     progressInput,
     queue,
+    likedSongsPlaylist,
     addAndRemoveSongFromPlaylist,
     changeRange,
     createPlaylist,
@@ -262,6 +262,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     setCurrentSong,
     setIsPlaying,
     setNextSong,
+    setLikedSongsPlaylist,
     setPlaylistAndSong,
     setPlaylistsDataGlobally,
     toggleLikedSong,

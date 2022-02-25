@@ -30,3 +30,14 @@ export const currentRouteSongsState = atom({
   key:"currentRouteSongsState",
   default:[]
 })
+
+export const likedSongsPlaylistState = atom({
+  key:"likedSongsPlaylistState",
+  default:[]
+})
+
+
+export const currentRoutePlaylistTitleState = atom({
+  key:"currentPlaylistTitle",
+  default:""
+})

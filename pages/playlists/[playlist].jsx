@@ -4,9 +4,10 @@ import Header from "../../components/_Partials/Header";
 import RowList from "../../components/_Partials/List/RowList/RowList";
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 
-const Playlist = ({ playlistSongs }) => {
+const Playlist = ({ playlistSongs, playlistTitle }) => {
   const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer()
   
+
   useEffect(() => {
     setCurrentRouteSongs(playlistSongs)    
   }, [playlistSongs])
@@ -14,7 +15,7 @@ const Playlist = ({ playlistSongs }) => {
  
   return (
     <div>
-      <Header title={playlistSongs[0]?.playlist_title} />
+      <Header title={playlistTitle[0]?.title} />
       <RowList data={currentRouteSongs}/>
     </div>
   );
@@ -24,7 +25,14 @@ export default Playlist;
 
 export async function getServerSideProps(context) {
   const { playlist } = context.query;
-  const res = await sql_query_string(`
+
+  const titleRes = await sql_query_string(`
+  SELECT title
+  FROM playlists
+  WHERE route = '/playlists/${playlist}'
+  `);
+
+  const songsRes = await sql_query_string(`
   SELECT s.title, s.title_route as song_route, s.duration,  s.album, s.track_no,
   a.picture_url, a.artist,
   s.streaming_url,
@@ -42,11 +50,16 @@ export async function getServerSideProps(context) {
   ORDER BY sp.id
   `);
 
-  const playlistSongs = JSON.parse(JSON.stringify(res));
+  
+
+  const playlistSongs = JSON.parse(JSON.stringify(songsRes));
+  const playlistTitle = JSON.parse(JSON.stringify(titleRes));
+
 
   return {
     props: {
       playlistSongs,
+      playlistTitle
     },
   };
 }

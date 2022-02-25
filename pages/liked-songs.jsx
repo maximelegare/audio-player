@@ -7,17 +7,17 @@ import { useAudioPlayer } from "../hooks/AudioHooks";
 import { sql_query_string } from "../lib/db";
 
 function LikedSongs({ likedSongs }) {
-  const {currentRouteSongs, setCurrentRouteSongs} = useAudioPlayer()
+  const {likedSongsPlaylist, setLikedSongsPlaylist} = useAudioPlayer()
 
   useEffect(() => {
-    setCurrentRouteSongs(likedSongs)
+    setLikedSongsPlaylist(likedSongs)
   },[likedSongs])
   
 
   return (
     <div>
       <Header title="Liked Songs" />
-      <RowList data={currentRouteSongs} />
+      <RowList data={likedSongsPlaylist} />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
 import { Scrollbar } from "react-scrollbars-custom";
 
 import { useAudioPlayer } from "../../hooks/AudioHooks";
-
+import Search from "../Search/Search"
 const Layout = ({ children }) => {
   const { currentSong } = useAudioPlayer();
 
@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
           <SideBar />
 
           <Scrollbar noScrollX style={{ width: "100%", height: "100%" }}>
-            {children}
+            <>{children}</>
           </Scrollbar>
         </div>
         <AudioPlayer

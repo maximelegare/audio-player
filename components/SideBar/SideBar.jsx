@@ -19,8 +19,13 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BsSuitHeart } from "react-icons/bs";
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 
+import { useSetRecoilState } from "recoil";
+import { currentRoutePlaylistTitleState } from "../../atoms/audioAtom";
+
 const SideBar = () => {
   const { playlists } = useAudioPlayer();
+  const setCurrentRoutePlaylistState = useSetRecoilState(currentRoutePlaylistTitleState)
+
 
   return (
     <div className={styles.container}>
@@ -42,7 +47,6 @@ const SideBar = () => {
           <SideBarLink
             icon={<BsSearch className={styles.icon} />}
             text="Search"
-            wholeButtonTrigger
             menuItem={<CustomInput placeHolder="Search Anything" />}
           />
         </div>
@@ -81,14 +85,15 @@ const SideBar = () => {
           icon={<MdOutlinePlaylistAdd className={styles.icon} />}
           text="New Playlist"
           wholeButtonTrigger
+          dotsIcon
           menuItem={<NewPlaylist />}
         />
       </div>
       <div className={styles.scrollbarContainer}>
         <Scrollbar noScrollX style={{ height: "100%", width: "100%" }}>
-        <div className={styles.linkContainer}>
+          <div className={styles.linkContainer}>
             {playlists?.map(({ id, title, route }) => (
-              <SideBarLink key={id} text={title} href={route} />
+                <SideBarLink key={id} text={title} href={route} />
             ))}
           </div>
         </Scrollbar>
