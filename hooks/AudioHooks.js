@@ -17,6 +17,17 @@ const useAudioPlayer = (fileUrl, duration) => {
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
 
+  
+  // Queue state
+  const [queue, setQueue] = useState([]);
+  const [recoilQueue, setRecoilQueue] = useRecoilState(queueState)
+  useEffect(() => {
+    setQueue(recoilQueue);
+  }, [recoilQueue]);
+  
+
+
+
   // Progress input state
   const [progressInput, setRangeInput] = useState({
     values: [0],
@@ -74,7 +85,7 @@ const useAudioPlayer = (fileUrl, duration) => {
   useEffect(() => {
     if (Math.round(audioPlayer?.current?.currentTime) === duration) {
       setCurrentSong({
-        ...queue.songs[currentSong.songIdx + 1],
+        ...recoilQueue.songs[currentSong.songIdx + 1],
         songIdx: currentSong.songIdx + 1,
       });
     }
@@ -85,12 +96,12 @@ const useAudioPlayer = (fileUrl, duration) => {
     if (status === "previous") {
       setCurrentSong({
         // Check the current song in the playlist based on it's index
-        ...queue.songs[currentSong.songIdx - 1],
+        ...recoilQueue.songs[currentSong.songIdx - 1],
         songIdx: currentSong.songIdx - 1,
       });
     } else {
       setCurrentSong({
-        ...queue.songs[currentSong.songIdx + 1],
+        ...recoilQueue.songs[currentSong.songIdx + 1],
         songIdx: currentSong.songIdx + 1,
       });
     }
@@ -112,15 +123,14 @@ const useAudioPlayer = (fileUrl, duration) => {
   // Use local state to prevent problemes with persistance
   const [playlists, setPlaylists] = useState(null);
   const [recoilPlaylists, setRecoilPlaylists] =
-    useRecoilState(customPlaylistsState);
-  
-  // Queue state
-  const [queue, setQueue] = useRecoilState(queueState);
+  useRecoilState(customPlaylistsState);
 
   // Set the local state the same as recoil state when loaded
   useEffect(() => {
     setPlaylists(recoilPlaylists);
   }, [recoilPlaylists]);
+  
+ 
 
   // Remove song from locally
   const filterAndRemoveFromCurrentRouteSongs = (song) => {
@@ -149,28 +159,28 @@ const useAudioPlayer = (fileUrl, duration) => {
   const toggleSongFromQueue = (song, route) => {
     // If the route is /queue => remove from queue with filter
     if (route === "/queue") {
-      const newFilteredQueue = queue.songs.filter(
+      const newFilteredQueue = recoilQueue.songs.filter(
         (listSong) => song.song_route !== listSong.song_route
       );
-      setQueue({ ...queue, songs: newFilteredQueue });
+      setRecoilQueue({ ...recoilQueue, songs: newFilteredQueue });
 
       // Otherwise Add to queue
     } else {
       // Check if duplicate
-      const duplicateSong = queue.songs.filter(
+      const duplicateSong = recoilQueue.songs.filter(
         (listSong) => song.song_route === listSong.song_route
       );
       if (duplicateSong[0]) {
         return;
       } else {
-        setQueue({ ...queue, songs: [...queue.songs, song] });
+        setRecoilQueue({ ...recoilQueue, songs: [...recoilQueue.songs, song] });
       }
     }
   };
 
   // Set the current Song based & playlist based on the song clicked
   const setPlaylistAndSong = (songIdx, playlistSongs, title) => {
-    setQueue({ songs: playlistSongs, title: title });
+    setRecoilQueue({ songs: playlistSongs, title: title });
     setCurrentSong({ ...playlistSongs[songIdx], songIdx });
   };
 

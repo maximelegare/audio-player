@@ -18,7 +18,7 @@ export const currentSongState = atom({
 export const queueState = atom({
   key: "queueState",
   default: { title: null, songs: [] },
-  // effects_UNSTABLE: [persistAtom],
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const customPlaylistsState = atom({
