@@ -37,7 +37,6 @@ const GridList = ({ data, variant, ...otherProps }) => {
   };
 
   return (
-    <PageLayout>
       <div
         className={`${styles.gridListContainer} ${
           variant === "bigCard" && styles.large
@@ -46,7 +45,6 @@ const GridList = ({ data, variant, ...otherProps }) => {
         {data.map((item) => selectCard(item))}
        
       </div>
-    </PageLayout>
   );
 };
 

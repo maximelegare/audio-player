@@ -47,7 +47,9 @@ const SideBar = () => {
           <SideBarLink
             icon={<BsSearch className={styles.icon} />}
             text="Search"
-            menuItem={<CustomInput placeHolder="Search Anything" />}
+            // dotsIcon
+            // wholeButtonTrigger
+            // menuItem={<CustomInput placeHolder="Search Anything" />}
           />
         </div>
         <div className={styles.linkContainer}>

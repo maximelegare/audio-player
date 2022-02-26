@@ -1,23 +1,20 @@
 import React, { useEffect } from "react";
 import Header from "../components/_Partials/Header";
 import RowList from "../components/_Partials/List/RowList/RowList";
-
+import PageLayout from "../components/Layout/PageLayout";
 
 import { sql_query_string } from "../lib/db";
 
-
 const songs = ({ songs }) => {
-
   return (
     <div>
       <Header title="All Songs" />
-      
+      <PageLayout>
         <RowList data={songs} />
-      
+      </PageLayout>
     </div>
   );
 };
-
 
 export default songs;
 
@@ -30,5 +27,5 @@ export async function getServerSideProps(context) {
     `);
   const songs = JSON.parse(JSON.stringify(res));
 
-  return { props: { songs,  } };
+  return { props: { songs } };
 }

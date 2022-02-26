@@ -4,25 +4,23 @@ import Header from "../../components/_Partials/Header";
 import List from "../../components/_Partials/List/GridList/GridList";
 
 import { sql_query_string } from "../../lib/db";
-
+import PageLayout from "../../components/Layout/PageLayout";
 // import { audioRefState } from "../../atoms/audioAtom";
 
 // The itemTitle is used to differenciate between artists & albums bc they don't have the same data
 
 const index = ({ artists }) => {
-
-
   return (
     <div>
-      <Header title="All Artists"/>   
-      <List data={artists} round/>
+      <Header title="All Artists" />
+      <PageLayout>
+        <List data={artists} round />
+      </PageLayout>
     </div>
   );
 };
 
 export default index;
-
-
 
 export async function getServerSideProps() {
   const res = await sql_query_string(`

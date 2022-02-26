@@ -1,0 +1,14 @@
+@import "../variables.module.scss";
+
+.container{
+    max-width: 500px;
+    height: 200px;
+    background: $bg-color-800;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    
+}

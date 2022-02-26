@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
 import RowList from "../components/_Partials/List/RowList/RowList";
 import Header from "../components/_Partials/Header";
@@ -6,18 +6,21 @@ import Header from "../components/_Partials/Header";
 import { useAudioPlayer } from "../hooks/AudioHooks";
 import { sql_query_string } from "../lib/db";
 
+import likedSongImg from "../public/assets/SVG/liked.svg";
+import PageLayout from "../components/Layout/PageLayout";
 function LikedSongs({ likedSongs }) {
-  const {likedSongsPlaylist, setLikedSongsPlaylist} = useAudioPlayer()
+  const { likedSongsPlaylist, setLikedSongsPlaylist } = useAudioPlayer();
 
   useEffect(() => {
-    setLikedSongsPlaylist(likedSongs)
-  },[likedSongs])
-  
+    setLikedSongsPlaylist(likedSongs);
+  }, [likedSongs]);
 
   return (
     <div>
-      <Header title="Liked Songs" />
-      <RowList data={likedSongsPlaylist} />
+      <Header title="Liked Songs" smallTitle="Playlist" src={likedSongImg} />
+      <PageLayout>
+        <RowList data={likedSongsPlaylist} />
+      </PageLayout>
     </div>
   );
 }

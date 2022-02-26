@@ -1,24 +1,28 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { sql_query_string } from "../../lib/db";
 import Header from "../../components/_Partials/Header";
 import RowList from "../../components/_Partials/List/RowList/RowList";
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 
-import fallbackImage from "../../public/assets/SVG/musicNote.svg"
-
+import fallbackImage from "../../public/assets/SVG/musicNote.svg";
+import PageLayout from "../../components/Layout/PageLayout";
 const Playlist = ({ playlistSongs, playlistTitle }) => {
-  const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer()
-  
+  const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer();
 
   useEffect(() => {
-    setCurrentRouteSongs(playlistSongs)    
-  }, [playlistSongs])
-  
- 
+    setCurrentRouteSongs(playlistSongs);
+  }, [playlistSongs]);
+
   return (
     <div>
-      <Header src={fallbackImage} title={playlistTitle[0]?.title} smallTitle="Playlist"/>
-      <RowList data={currentRouteSongs}/>
+      <Header
+        src={fallbackImage}
+        title={playlistTitle[0]?.title}
+        smallTitle="Playlist"
+      />
+      <PageLayout>
+        <RowList data={currentRouteSongs} />
+      </PageLayout>
     </div>
   );
 };
@@ -52,16 +56,13 @@ export async function getServerSideProps(context) {
   ORDER BY sp.id
   `);
 
-  
-
   const playlistSongs = JSON.parse(JSON.stringify(songsRes));
   const playlistTitle = JSON.parse(JSON.stringify(titleRes));
-
 
   return {
     props: {
       playlistSongs,
-      playlistTitle
+      playlistTitle,
     },
   };
 }

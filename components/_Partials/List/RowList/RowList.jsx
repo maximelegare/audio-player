@@ -6,12 +6,11 @@ import PageLayout from "../../../Layout/PageLayout";
 import { useAudioPlayer } from "../../../../hooks/AudioHooks";
 
 const RowList = ({ data }) => {
-
   const { setPlaylistAndSong } = useAudioPlayer();
 
   let songNumber = 0;
   return (
-    <PageLayout>
+    <>
       <RowHeader />
 
       {data?.map((song, idx) => {
@@ -27,7 +26,7 @@ const RowList = ({ data }) => {
           />
         );
       })}
-    </PageLayout>
+    </>
   );
 };
 
