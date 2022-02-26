@@ -5,7 +5,7 @@ import styles from "../../styles/_Core/Image.module.scss";
 
 import fallbackImage from "../../public/assets/SVG/musicNote.svg";
 
-const CustomImage = ({ src, width, height, alt, round }) => {
+const CustomImage = ({ src, width, height, alt, round, noBorderRadius }) => {
 
 
 
@@ -19,11 +19,11 @@ const CustomImage = ({ src, width, height, alt, round }) => {
         alt={alt}
         width={width}
         height={height}
-        // loader={myLoader}
         objectFit="cover"
-        className={round ? styles.round : styles.square}
+        className={`${round ? styles.round : styles.square} ${noBorderRadius && styles.noBorderRadius}`}
         placeholder="blur"
         blurDataURL={fallbackImage}
+        
       />
     </div>
   );

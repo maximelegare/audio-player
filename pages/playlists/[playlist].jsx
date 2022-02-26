@@ -6,8 +6,10 @@ import { useAudioPlayer } from "../../hooks/AudioHooks";
 
 import fallbackImage from "../../public/assets/SVG/musicNote.svg";
 import PageLayout from "../../components/Layout/PageLayout";
-const Playlist = ({ playlistSongs, playlistTitle }) => {
+const Playlist = ({ playlistSongs, playlistTitle, playlistImages }) => {
   const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer();
+
+  
 
   useEffect(() => {
     setCurrentRouteSongs(playlistSongs);
@@ -17,6 +19,7 @@ const Playlist = ({ playlistSongs, playlistTitle }) => {
     <div>
       <Header
         src={fallbackImage}
+        images={playlistImages.slice(0, 4)}
         title={playlistTitle[0]?.title}
         smallTitle="Playlist"
       />
@@ -56,13 +59,28 @@ export async function getServerSideProps(context) {
   ORDER BY sp.id
   `);
 
+  const imagesRes = await sql_query_string(`
+  SELECT DISTINCT
+  a.picture_url
+  FROM songs s 
+  JOIN song_playlist sp 
+  ON s.title_route = sp.song_route 
+  JOIN albums a 
+  ON s.album = a.title 
+  JOIN playlists p ON p.title = sp.playlist 
+  WHERE p.route = '/playlists/${playlist}'  
+  `)
+
   const playlistSongs = JSON.parse(JSON.stringify(songsRes));
   const playlistTitle = JSON.parse(JSON.stringify(titleRes));
+  const playlistImages = JSON.parse(JSON.stringify(imagesRes));
 
+  console.log(playlistImages)
   return {
     props: {
       playlistSongs,
       playlistTitle,
+      playlistImages
     },
   };
 }

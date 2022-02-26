@@ -12,3 +12,17 @@
 .round{
   border-radius:50% !important; 
 }
+
+.noBorderRadius{
+  border-radius: 0 !important;
+}
+
+.fourImagesContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  overflow: hidden;
+  border-radius: 5px;
+  width: fit-content;
+  height: fit-content;
+}
