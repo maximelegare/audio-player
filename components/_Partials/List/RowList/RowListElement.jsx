@@ -56,7 +56,9 @@ const RowListElement = ({ song, idx, setPlaylistBasedOnSongSelected }) => {
         <div className={styles.numberContainer}>
           {
             // If hover, show play pause icon
-            hover  ? (
+            hover ||
+            (highlightedSong.song_route === song_route &&
+              currentSong.song_route !== song_route) ? (
               <CustomButton
                 handleClick={handlePlayPauseClick}
                 variant="play-small"
@@ -111,10 +113,9 @@ const RowListElement = ({ song, idx, setPlaylistBasedOnSongSelected }) => {
             e.stopPropagation();
           }}
         >
-          {
-            ((highlightedSong.song_route === song_route || hover) && (
-              <Dropdown menuItem={<DropdownMenuSong song={song} />} />
-            ))}
+          {(highlightedSong.song_route === song_route || hover) && (
+            <Dropdown menuItem={<DropdownMenuSong song={song} />} />
+          )}
         </div>
       </div>
     </div>
