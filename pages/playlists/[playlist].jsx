@@ -75,7 +75,6 @@ export async function getServerSideProps(context) {
   const playlistTitle = JSON.parse(JSON.stringify(titleRes));
   const playlistImages = JSON.parse(JSON.stringify(imagesRes));
 
-  console.log(playlistImages)
   return {
     props: {
       playlistSongs,

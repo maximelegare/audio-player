@@ -1,13 +1,16 @@
-import React from 'react'
-import styles from "../../styles/Card/BigCard.module.scss"
+import React from "react";
+import styles from "../../styles/Card/BigCard.module.scss";
 
+import Link from "next/link";
 
-const BigCard = () => {
+const BigCard = ({ title, route }) => {
   return (
-    <div className={styles.container}>
-      <h2>Liked Songs</h2>
-    </div>
-  )
-}
+    <Link href={route} passHref>
+      <div className={styles.container}>
+        <h2>{title}</h2>
+      </div>
+    </Link>
+  );
+};
 
-export default BigCard
+export default BigCard;

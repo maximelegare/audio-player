@@ -3,12 +3,20 @@
 .container{
     max-width: 500px;
     height: 200px;
-    background: $bg-color-800;
+    background: $bg-color-transparent;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
 
-    
+
+    &:hover{
+        transition: 200ms scale ease-in-out;
+        animation-delay: 2000ms;
+        background-color: $white-transparent;
+        transform: scale(1.02);
+
+        
+    }
 }

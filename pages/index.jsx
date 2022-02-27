@@ -13,17 +13,19 @@ import Header from "../components/_Partials/Header";
 import GridList from "../components/_Partials/List/GridList/GridList";
 import BigCard from "../components/Card/BigCard";
 import PageLayout from "../components/Layout/PageLayout";
+import TitleSection from "../components/_Partials/Title/TitleSection";
 
 export default function Home({ playlists }) {
   // const setPlaylist = useSetRecoilState(customPlaylistsState)
-
-
 
   return (
     <div className={styles.container}>
       <Header title="Good Morning!" />
       <PageLayout>
-        <BigCard />
+        <BigCard title="Liked Songs" route="/liked-songs"/>
+        <TitleSection>
+          <h2>Playlists</h2>
+        </TitleSection>
         <GridList data={playlists} variant="bigCard" />
       </PageLayout>
     </div>

@@ -18,12 +18,8 @@ const GridListBigCardElement = ({
 }) => {
   const router = useRouter();
 
-
-  console.log(images)
-
   return (
     <div className={styles.container} onClick={() => router.push(`/${route}`)}>
-
       {images?.length === 4 ? (
         <FourImagesSquare images={images} width={75} height={75} />
       ) : (
@@ -37,9 +33,11 @@ const GridListBigCardElement = ({
       )}
       <div className={styles.infos}>
         <h5>{title.length < 11 ? title : `${title.slice(0, 11)}...`}</h5>
-        <p>
-          {year} • {artist}
-        </p>
+        {artist && (
+          <p>
+            {year} • {artist}
+          </p>
+        )}
       </div>
     </div>
   );

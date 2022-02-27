@@ -39,7 +39,7 @@ const RowListElement = ({song, idx, setPlaylistBasedOnSongSelected}) => {
       className={`${styles.rowListContainer} ${styles.listElement}
        ${optionsVisibility && styles.optionsActive}
        `}
-      onClick={handleSongClicked}
+      onDoubleClick={handleSongClicked}
       onMouseEnter={() => setOptionsVisibility(true)}
       onMouseLeave={() => setOptionsVisibility(false)}
     >

@@ -19,9 +19,10 @@
   }
   
   &:hover {
-    transform: scale(1.02);
     transition: 200ms scale ease-in-out;
     animation-delay: 2000ms;
+    background-color: $white-transparent;
+    transform: scale(1.02);
 
     h5, p{
         opacity: 1;
