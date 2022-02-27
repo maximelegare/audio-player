@@ -56,7 +56,7 @@ const RowListElement = ({ song, idx, setPlaylistBasedOnSongSelected }) => {
         <div className={styles.numberContainer}>
           {
             // If hover, show play pause icon
-            hover || highlightedSong.song_route === song_route ? (
+            hover  ? (
               <CustomButton
                 handleClick={handlePlayPauseClick}
                 variant="play-small"
