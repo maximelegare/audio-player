@@ -12,7 +12,7 @@ const handler = async (req, res) => {
       try {
         const response = await sql_insert("playlists", {
           title: name,
-          route: `/${route}`,
+          route: route,
         });
         return res.json(response);
       } catch (e) {

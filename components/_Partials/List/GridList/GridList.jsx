@@ -7,9 +7,9 @@ import PageLayout from "../../../Layout/PageLayout";
 import GridListBigCardElement from "./GridListBigCardElement";
 
 const GridList = ({ data, variant, ...otherProps }) => {
+
+
   const selectCard = (item) => {
-
-
     switch (variant) {
       case "bigCard":
         return (
@@ -20,6 +20,7 @@ const GridList = ({ data, variant, ...otherProps }) => {
             route={item.route}
             year={item.year}
             artist={item.artist}
+            images={item.images}
             {...otherProps}
           />
         );

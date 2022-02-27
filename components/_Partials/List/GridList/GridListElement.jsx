@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 const GridListElement = ({ picture_url, title, route, round }) => {
   const router = useRouter();
 
+  
+
   return (
     <div
       className={styles.gridListElementContainer}

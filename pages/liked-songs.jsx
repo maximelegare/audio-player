@@ -34,10 +34,11 @@ export async function getServerSideProps() {
   JOIN albums a 
   ON a.title = s.album
   WHERE s.liked = 1
-
   `);
-
   const data = JSON.parse(JSON.stringify(res));
+
+  
+
   return {
     props: {
       likedSongs: data,
