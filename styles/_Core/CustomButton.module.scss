@@ -7,7 +7,6 @@
   justify-content: center;
   height: 60px;
   width: 60px;
-
   background: linear-gradient($primary-gradiant-colors);
   border: none;
   border-radius: 50%;
@@ -20,6 +19,15 @@
     transition: 200ms all ease-in-out;
   }
 }
+
+.small{
+  height: 25px;
+  width: 25px;
+  font-size: 15px;
+  background: none;
+
+}
+
 
 // Forward and backward buttons
 .forwardBackward {

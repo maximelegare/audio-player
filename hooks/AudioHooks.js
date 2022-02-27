@@ -2,12 +2,12 @@ import { playlistRouteTypes as routeType } from "../lib/route_types/playlist.typ
 import { useState, useRef, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import {
+  currentRouteSongsState,
   currentSongState,
   customPlaylistsState,
   isPlayingState,
-  queueState,
-  currentRouteSongsState,
   likedSongsPlaylistState,
+  queueState,
 } from "../atoms/audioAtom";
 import axios from "axios";
 import { createUrlRoute } from "../lib/utilities";
@@ -16,6 +16,8 @@ const useAudioPlayer = (fileUrl, duration) => {
   // Global state for song
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
+ 
+
 
   // Queue state
   const [queue, setQueue] = useState([]);
@@ -102,6 +104,8 @@ const useAudioPlayer = (fileUrl, duration) => {
       });
     }
   };
+
+
 
   ///////////////////////////////////////////////////////////////////////////////////
 

@@ -15,6 +15,13 @@ export const currentSongState = atom({
   // effects_UNSTABLE: [persistAtom],
 });
 
+
+export const highlightedSongState = atom({
+  key:"highlightedSongState",
+  default:{}
+})  
+
+
 export const queueState = atom({
   key: "queueState",
   default: { title: null, songs: [] },
@@ -41,3 +48,5 @@ export const currentRoutePlaylistTitleState = atom({
   key:"currentPlaylistTitle",
   default:""
 })
+
+
