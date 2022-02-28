@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react";
+import styles from "../../styles/Search/Search.module.scss";
 
 const Search = () => {
   return (
-    <div>Search</div>
-  )
-}
+      <div className={styles.fixed}>search</div>
+  );
+};
 
-export default Search
+export default Search;

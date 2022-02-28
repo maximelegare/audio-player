@@ -35,9 +35,9 @@ const SideBar = () => {
           <hr />
         </div>
 
-        <div className={styles.linkContainer}>
+        {/* <div className={styles.linkContainer}>
           <FileInput />
-        </div>
+        </div> */}
         <div className={styles.linkContainer}>
           <SideBarLink
             icon={<AiOutlineHome className={styles.icon} />}
@@ -49,7 +49,7 @@ const SideBar = () => {
             text="Search"
             // dotsIcon
             // wholeButtonTrigger
-            // menuItem={<CustomInput placeHolder="Search Anything" />}
+            menuItem={<CustomInput placeHolder="Search Anything" />}
           />
         </div>
         <div className={styles.linkContainer}>
