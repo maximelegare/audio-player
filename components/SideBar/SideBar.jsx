@@ -21,11 +21,18 @@ import { useAudioPlayer } from "../../hooks/AudioHooks";
 
 import { useSetRecoilState } from "recoil";
 import { currentRoutePlaylistTitleState } from "../../atoms/audioAtom";
+import { searchSectionVisibilityState } from "../../atoms/visibilityAtom";
+import { useRecoilState } from "recoil";
 
 const SideBar = () => {
   const { playlists } = useAudioPlayer();
-  const setCurrentRoutePlaylistState = useSetRecoilState(currentRoutePlaylistTitleState)
+  const setCurrentRoutePlaylistState = useSetRecoilState(
+    currentRoutePlaylistTitleState
+  );
 
+  const [searchVisibility, setSearchVisibility] = useRecoilState(
+    searchSectionVisibilityState
+  );
 
   return (
     <div className={styles.container}>
@@ -45,6 +52,7 @@ const SideBar = () => {
             href="/"
           />
           <SideBarLink
+            handleClick={() => setSearchVisibility(!searchVisibility)}
             icon={<BsSearch className={styles.icon} />}
             text="Search"
             // dotsIcon
@@ -95,7 +103,7 @@ const SideBar = () => {
         <Scrollbar noScrollX style={{ height: "100%", width: "100%" }}>
           <div className={styles.linkContainer}>
             {playlists?.map(({ id, title, route }) => (
-                <SideBarLink key={id} text={title} href={route} />
+              <SideBarLink key={id} text={title} href={route} />
             ))}
           </div>
         </Scrollbar>

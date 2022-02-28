@@ -4,11 +4,16 @@ import styles from "../../styles/Layout.module.scss";
 import SideBar from "../SideBar/SideBar";
 import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
 import { Scrollbar } from "react-scrollbars-custom";
+import { useRecoilValue } from "recoil";
+import { searchSectionVisibilityState } from "../../atoms/visibilityAtom";
+import { useMemo } from "react";
 
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 import Search from "../Search/Search";
 const Layout = ({ children }) => {
+  const seachVisibility = useRecoilValue(searchSectionVisibilityState);
   const { currentSong } = useAudioPlayer();
+  const memoizedValue = useMemo(() => <>{children}</>, [children]);
 
   return (
     <div>
@@ -25,9 +30,9 @@ const Layout = ({ children }) => {
               zIndex: 1,
             }}
           >
-            <div style={{position:"relative"}}>
-              <Search />
-              <div>{children}</div>
+            <div style={{ position: "relative" }}>
+              {seachVisibility && <Search />}
+              <div>{memoizedValue}</div>
             </div>
           </Scrollbar>
         </div>
