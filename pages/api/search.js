@@ -10,6 +10,8 @@ const handler = async (req, res) => {
       SELECT s.title, a.picture_url FROM songs s JOIN albums a ON s.album = a.title  WHERE s.title LIKE '%${req.query.q}%' LIMIT 5
     `,
     );
+
+    
     return res.status(200).json({ data:response });
   } catch (e) {
     res.status(500).json({ message: e.message });

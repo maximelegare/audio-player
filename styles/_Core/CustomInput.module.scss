@@ -29,24 +29,27 @@
         max-height: 300px;
         width: 500px;
         overflow: hidden;
-        background-color: white;
+        background-color: rgb(229, 225, 233);
         border-radius: 15px;
         margin-top: 5px;
+        color:black;
+        
     }
 }
 
 .CustomInputDropdownItem{
-    padding: 8px 15px;
-    margin: 5px 0;
+    padding:0 24px ;
+    padding: 8px 0px;
     padding-left: 24px;
     cursor: pointer;
     display: flex;
     align-items: center;
 
-    .text{
-        color:black
-    }
+    
 
+    &:hover{
+        background-color: rgb(182, 182, 182);
+    }
     
 
 
