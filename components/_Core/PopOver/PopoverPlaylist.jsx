@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CustomButton from "../CustomButton";
-import CustomInput from "../CustomInput";
+import CustomInput from "../CustomInput/CustomInput";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
 

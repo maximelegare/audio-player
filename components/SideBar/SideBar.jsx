@@ -5,7 +5,7 @@ import SideBarLink from "./SideBarLink";
 import { Scrollbar } from "react-scrollbars-custom";
 import FileInput from "../_Core/FileInput";
 import NewPlaylist from "../_Core/PopOver/PopoverPlaylist";
-import CustomInput from "../_Core/CustomInput";
+import CustomInput from "../_Core/CustomInput/CustomInput";
 
 import Image from "next/image";
 
