@@ -1,11 +1,19 @@
 @import "../variables.module.scss";
 
+.fixed {
+  z-index: 1000;
+  position: fixed;
+}
 
-.fixed{
-    background: linear-gradient($black-to-transparent-gradiant);
-    z-index: 1000;
-    position: fixed;
-    width: 100%;
-    height:100%;
+.input{
+    position: absolute;
+    z-index: 10000;
+}
+
+.background {
+  background: linear-gradient($black-to-transparent-gradiant);
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
 }
 
