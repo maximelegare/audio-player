@@ -71,7 +71,9 @@ const RowListElement = ({
          styles.highlight
        }
        `}
-      style={{ marginBottom: options?.condensed && "10px" }}
+
+      //Change the margin bottom & remove display grid if condensed (used in CustomInput)  
+      style={{ marginBottom: options?.condensed && "10px", display: options?.condensed && "block"}}
       onClick={handleSongClick}
       onDoubleClick={handleSongDoubleClick}
       onMouseEnter={() => setHover(true)}
