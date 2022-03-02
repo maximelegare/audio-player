@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../../../styles/List/RowList.module.scss";
 
 import CustomImage from "../../../_Core/CustomImage";
@@ -19,25 +19,48 @@ import { FaPlay } from "react-icons/fa";
 import { useRecoilState } from "recoil";
 import { highlightedSongState } from "../../../../atoms/audioAtom";
 
-const RowListElement = ({ song, idx, setPlaylistBasedOnSongSelected }) => {
+
+
+
+const RowListElement = ({
+  song,
+  idx,
+  setPlaylistBasedOnSongClicked,
+  noOptions,
+  noHighlightWhenClicked,
+}) => {
   const [highlightedSong, setHighlightedSong] =
     useRecoilState(highlightedSongState);
 
   const { title, artist, picture_url, album, duration, song_route } = song;
-
-  const { currentSong, setIsPlaying, isPlaying } = useAudioPlayer();
+  
+  const { currentSong, setIsPlaying, isPlaying, setPlaylistAndSong } = useAudioPlayer();
 
   const [hover, setHover] = useState(false);
 
   // Pass the song clicked to the parent for it to set the song & playlist when clicked
-  const handleSongClicked = (e) => {
-    setPlaylistBasedOnSongSelected(idx);
+  const handleSongDoubleClick = (e) => {
+    setPlaylistBasedOnSongClicked(idx);
     setIsPlaying(true);
+  };
+
+  const handleSongClick = (e) => {
+
+    // If no highlight when click
+    // Set only this song as playlist & start playing
+    // Used in search CustomInputDropdown
+    if (noHighlightWhenClicked) {
+      setPlaylistAndSong(0, [song]);
+      setIsPlaying(true);
+      // Highlight song
+    } else {
+      setHighlightedSong(song);
+    }
   };
 
   const handlePlayPauseClick = (e) => {
     e.stopPropagation();
-    setPlaylistBasedOnSongSelected(idx);
+    setPlaylistBasedOnSongClicked(idx);
     setIsPlaying(!isPlaying);
   };
 
@@ -47,37 +70,53 @@ const RowListElement = ({ song, idx, setPlaylistBasedOnSongSelected }) => {
        ${hover && styles.hover}
        ${highlightedSong.song_route === song_route && styles.highlight}
        `}
-      onClick={() => setHighlightedSong(song)}
-      onDoubleClick={handleSongClicked}
+      onClick={handleSongClick}
+      onDoubleClick={handleSongDoubleClick}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       <div className={`${styles.firstThird} ${styles.section}`}>
-        <div className={styles.numberContainer}>
+        <div
+          className={
+            // If there is no idx, remove margin right between number & image
+            idx !== undefined ? styles.numberContainer : undefined
+          }
+        >
           {
-            // If hover, show play pause icon
-            hover ||
-            (highlightedSong.song_route === song_route &&
-              currentSong.song_route !== song_route) ? (
-              <CustomButton
-                handleClick={handlePlayPauseClick}
-                variant="play-small"
-              >
-                {isPlaying && currentSong.song_route === song_route ? (
-                  <GiPauseButton />
-                ) : (
-                  <FaPlay className={styles.playIcon} />
-                )}
-              </CustomButton>
-            ) : (
-              // Otherwise, if current song, show playing icon
+            // Show if idx is not undefined (Cannot use !idx => 0 is false)
+            idx !== undefined && (
               <>
-                {currentSong.song_route === song_route ? (
-                  <PlayingIcon />
-                ) : (
-                  // Otherwise show number
-                  <p className={styles.number}>{idx + 1}</p>
-                )}
+                {
+                  // If hover, show play/pause icon
+                  hover ||
+                  (highlightedSong.song_route === song_route &&
+                    currentSong.song_route !== song_route) ? (
+                    <CustomButton
+                      handleClick={handlePlayPauseClick}
+                      variant="play-small"
+                    >
+                      {
+                        // show pause if it's the current song playing
+                        // Or show play for the other ones
+                        isPlaying && currentSong.song_route === song_route ? (
+                          <GiPauseButton />
+                        ) : (
+                          <FaPlay className={styles.playIcon} />
+                        )
+                      }
+                    </CustomButton>
+                  ) : (
+                    // Otherwise, if current song, show playing icon
+                    <>
+                      {currentSong.song_route === song_route ? (
+                        <PlayingIcon />
+                      ) : (
+                        // Otherwise show number
+                        <p className={styles.number}>{idx + 1}</p>
+                      )}
+                    </>
+                  )
+                }
               </>
             )
           }
@@ -96,7 +135,7 @@ const RowListElement = ({ song, idx, setPlaylistBasedOnSongSelected }) => {
           <p>{artist}</p>
         </div>
       </div>
-      <p>{album}</p>
+      {album && <p>{album}</p>}
       <div
         style={{
           display: "grid",
@@ -106,16 +145,18 @@ const RowListElement = ({ song, idx, setPlaylistBasedOnSongSelected }) => {
           gap: "10px",
         }}
       >
-        <p className={styles.time}>{calculateTime(duration)}</p>
+        {duration && <p className={styles.time}>{calculateTime(duration)}</p>}
         <div
           // To prevent the song from starting when clicked
           onClick={(e) => {
             e.stopPropagation();
           }}
         >
-          {(highlightedSong.song_route === song_route || hover) && (
-            <Dropdown menuItem={<DropdownMenuSong song={song} />} />
-          )}
+          {!noOptions &&
+            // If a song is highlighted (clicked and stay) or Hover, show options
+            (highlightedSong.song_route === song_route || hover) && (
+              <Dropdown menuItem={<DropdownMenuSong song={song} />} />
+            )}
         </div>
       </div>
     </div>

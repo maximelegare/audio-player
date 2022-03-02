@@ -2,11 +2,6 @@ import React, { useState } from "react";
 import styles from "../../styles/Search/Search.module.scss";
 import CustomInput from "../_Core/CustomInput/CustomInput";
 import PageLayout from "../Layout/PageLayout";
-import Script from "next/script";
-import { useRef } from "react";
-import Link from "next/link";
-import Head from "next/head";
-import { useEffect } from "react";
 
 const Search = () => {
   const [suggestions, setSuggestions] = useState([]);
@@ -28,14 +23,11 @@ const Search = () => {
     }
   };
 
-  useEffect(() => {
-  },[isLoading])
 
   return (
     <>
       <div className={styles.fixed}>
         <PageLayout>
-          {/* <CustomInput placeHolder="Search Anything" /> */}
           <div style={{ marginTop: "20px" }}>
             <form autoComplete="false" onSubmit={(e) => e.preventDefault()}>
               <CustomInput
@@ -49,14 +41,8 @@ const Search = () => {
           </div>
         </PageLayout>
       </div>
-      <Script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        // strategy="lazyOnload"
-      />
-      <Script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
-        // strategy="lazyOnload"
-      />
+      
+      
     </>
   );
 };

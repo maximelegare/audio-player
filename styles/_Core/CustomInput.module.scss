@@ -29,10 +29,10 @@
         max-height: 300px;
         width: 500px;
         overflow: hidden;
-        background-color: rgb(229, 225, 233);
-        border-radius: 15px;
+        background-color: #1f1326;
+        border-radius: 8px;
         margin-top: 5px;
-        color:black;
+        color:$white;
         
     }
 }
@@ -45,6 +45,9 @@
     display: flex;
     align-items: center;
 
+    .text{
+        opacity: 0.7;
+    }
     
 
     &:hover{
