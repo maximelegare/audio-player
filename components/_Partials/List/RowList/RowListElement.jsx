@@ -142,7 +142,7 @@ const RowListElement = ({
           <p>{artist}</p>
         </div>
       </div>
-      {album && <p>{album}</p>}
+      {!options?.noAlbum && <p>{album}</p>}
       <div
         style={{
           display: "grid",
@@ -152,7 +152,7 @@ const RowListElement = ({
           gap: "10px",
         }}
       >
-        {duration && <p className={styles.time}>{calculateTime(duration)}</p>}
+        {!options?.noDuration && <p className={styles.time}>{calculateTime(duration)}</p>}
         <div
           // To prevent the song from starting when clicked
           onClick={(e) => {

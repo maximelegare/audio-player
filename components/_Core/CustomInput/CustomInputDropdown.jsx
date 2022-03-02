@@ -19,7 +19,9 @@ const CustomInputDropdown = ({ list }) => {
                 imgHeight: 35,
                 noHighlightWhenClicked: true,
                 noOptionsIcon: true,
-                condensed:true
+                condensed:true,
+                noAlbum:true,
+                noDuration:true
               }}
             />
           ))}

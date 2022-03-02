@@ -1,13 +1,11 @@
-/* eslint-disable import/no-anonymous-default-export */
-
 import React from "react";
 
-import { sql_query_string } from "../../lib/db";
+import { sql_query_string } from "../../../lib/db";
 
-import Header from "../../components/_Partials/Header";
-import RowList from "../../components/_Partials/List/RowList/RowList";
+import Header from "../../../components/_Partials/Header";
+import RowList from "../../../components/_Partials/List/RowList/RowList";
 
-import PageLayout from "../../components/Layout/PageLayout";
+import PageLayout from "../../../components/Layout/PageLayout";
 
 const album = ({ album }) => {
   return (
@@ -25,6 +23,7 @@ const album = ({ album }) => {
 };
 
 export default album;
+
 
 export async function getServerSideProps({ params }) {
   const albumUrl = `${params.artist}/${params.album}`;
