@@ -9,9 +9,6 @@ const Box = ({children, variant}) => {
             }
         }
     }
-
-
-
   return (
     <div className={getStyles(variant)}>
         {children}

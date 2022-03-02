@@ -3,11 +3,13 @@
 .fixed {
   z-index: 1000;
   position: fixed;
+
+
 }
 
-.input{
-    position: absolute;
-    z-index: 10000;
+.input {
+  position: absolute;
+  z-index: 10000;
 }
 
 .background {
@@ -17,3 +19,18 @@
   height: 100vh;
 }
 
+
+//   .my-node-enter {
+//     opacity: 0;
+//   }
+//   .my-node-enter-active {
+//     opacity: 1;
+//     transition: opacity 2000ms;
+//   }
+//   .my-node-exit {
+//     opacity: 1;
+//   }
+//   .my-node-exit-active {
+//     opacity: 0;
+//     transition: opacity 2000ms;
+//   }

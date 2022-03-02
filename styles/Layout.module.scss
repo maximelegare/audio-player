@@ -1,7 +1,13 @@
 @import "./variables.module.scss";
 
 .layout {
-  margin: 0 20px;
+  &.small {
+    margin: 5px 10px;
+  }
+
+  &.default {
+    margin: 0 20px;
+  }
 }
 
 .main {
@@ -13,14 +19,11 @@
   // background-color: black;
 }
 
-.top{
+.top {
   display: flex;
   width: 100vw;
   flex-grow: 1;
   background-color: $bg-dark;
   z-index: 10;
-  color:$white;
+  color: $white;
 }
-
-
-
