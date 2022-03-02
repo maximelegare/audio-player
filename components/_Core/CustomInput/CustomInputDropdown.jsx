@@ -4,7 +4,6 @@ import styles from "../../../styles/_Core/CustomInput.module.scss";
 
 import RowListElement from "../../_Partials/List/RowList/RowListElement";
 
-
 const CustomInputDropdown = ({ list }) => {
   return (
     <ScrollArea.Root className={styles.customInputDropdown}>
@@ -15,8 +14,13 @@ const CustomInputDropdown = ({ list }) => {
             <RowListElement
               key={song.title}
               song={song}
-              noOptions
-              noHighlightWhenClicked
+              options={{
+                imgWidth: 35,
+                imgHeight: 35,
+                noHighlightWhenClicked: true,
+                noOptionsIcon: true,
+                condensed:true
+              }}
             />
           ))}
         </div>

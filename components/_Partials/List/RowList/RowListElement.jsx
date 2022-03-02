@@ -19,22 +19,19 @@ import { FaPlay } from "react-icons/fa";
 import { useRecoilState } from "recoil";
 import { highlightedSongState } from "../../../../atoms/audioAtom";
 
-
-
-
 const RowListElement = ({
   song,
   idx,
   setPlaylistBasedOnSongClicked,
-  noOptions,
-  noHighlightWhenClicked,
+  options,
 }) => {
   const [highlightedSong, setHighlightedSong] =
     useRecoilState(highlightedSongState);
 
   const { title, artist, picture_url, album, duration, song_route } = song;
-  
-  const { currentSong, setIsPlaying, isPlaying, setPlaylistAndSong } = useAudioPlayer();
+
+  const { currentSong, setIsPlaying, isPlaying, setPlaylistAndSong } =
+    useAudioPlayer();
 
   const [hover, setHover] = useState(false);
 
@@ -45,11 +42,10 @@ const RowListElement = ({
   };
 
   const handleSongClick = (e) => {
-
     // If no highlight when click
     // Set only this song as playlist & start playing
     // Used in search CustomInputDropdown
-    if (noHighlightWhenClicked) {
+    if (options?.noHighlightWhenClicked) {
       setPlaylistAndSong(0, [song]);
       setIsPlaying(true);
       // Highlight song
@@ -68,8 +64,14 @@ const RowListElement = ({
     <div
       className={`${styles.rowListContainer} ${styles.listElement}
        ${hover && styles.hover}
-       ${highlightedSong.song_route === song_route && styles.highlight}
+       ${
+         // Highlight the song when clicked
+         idx !== undefined &&
+         highlightedSong.song_route === song_route &&
+         styles.highlight
+       }
        `}
+      style={{ marginBottom: options?.condensed && "10px" }}
       onClick={handleSongClick}
       onDoubleClick={handleSongDoubleClick}
       onMouseEnter={() => setHover(true)}
@@ -122,7 +124,12 @@ const RowListElement = ({
           }
         </div>
         <div className={styles.image}>
-          <CustomImage width={50} height={50} src={picture_url} alt="" />
+          <CustomImage
+            width={options?.imgWidth || 50}
+            height={options?.imgHeight || 50}
+            src={picture_url}
+            alt=""
+          />
         </div>
         <div className={styles.infosContainer}>
           <h5
@@ -152,7 +159,7 @@ const RowListElement = ({
             e.stopPropagation();
           }}
         >
-          {!noOptions &&
+          {!options?.noOptionsIcon &&
             // If a song is highlighted (clicked and stay) or Hover, show options
             (highlightedSong.song_route === song_route || hover) && (
               <Dropdown menuItem={<DropdownMenuSong song={song} />} />
