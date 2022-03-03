@@ -53,7 +53,7 @@ const Search = () => {
                 handleChange={handleKeyUp}
                 variant="bigInput"
                 isLoading={isLoading}
-                list={suggestions}
+                dropdownSectionsData={suggestions}
               />
             </form>
           </PageLayout>

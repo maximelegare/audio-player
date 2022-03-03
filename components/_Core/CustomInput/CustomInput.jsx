@@ -9,7 +9,7 @@ const CustomInput = ({
   handleChange,
   variant,
   isLoading,
-  list,
+  dropdownSectionsData,
 }) => {
   const getStyles = (variant) => {
     switch (variant) {
@@ -39,7 +39,7 @@ const CustomInput = ({
         placeholder={placeHolder}
       />
 
-      {list && <CustomInputDropdown list={list} />}
+      {dropdownSectionsData && <CustomInputDropdown dropdownSectionsData={dropdownSectionsData} />}
     </>
   );
 };

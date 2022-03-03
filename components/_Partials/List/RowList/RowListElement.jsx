@@ -16,8 +16,11 @@ import CustomButton from "../../../_Core/CustomButton";
 import { GiPauseButton } from "react-icons/gi";
 import { FaPlay } from "react-icons/fa";
 
+import { searchSectionVisibilityState } from "../../../../atoms/visibilityAtom";
+import { useSetRecoilState } from "recoil";
 import { useRecoilState } from "recoil";
 import { highlightedSongState } from "../../../../atoms/audioAtom";
+import { useRouter } from "next/router";
 
 const RowListElement = ({
   song,
@@ -28,10 +31,13 @@ const RowListElement = ({
   const [highlightedSong, setHighlightedSong] =
     useRecoilState(highlightedSongState);
 
+  const setSearchVisibility = useSetRecoilState(searchSectionVisibilityState)
+
+  const { currentSong, setIsPlaying, isPlaying } = useAudioPlayer();
+  const router = useRouter();
+
   const { title, artist, picture_url, album, duration, song_route } = song;
 
-  const { currentSong, setIsPlaying, isPlaying, setPlaylistAndSong } =
-    useAudioPlayer();
 
   const [hover, setHover] = useState(false);
 
@@ -43,14 +49,13 @@ const RowListElement = ({
 
   const handleSongClick = (e) => {
     // If no highlight when click
-    // Set only this song as playlist & start playing
-    // Used in search CustomInputDropdown
+    //
     if (options?.noHighlightWhenClicked) {
-      setPlaylistAndSong(0, [song]);
-      setIsPlaying(true);
-      // Highlight song
+      router.push(song_route);
+      setSearchVisibility(false) // Close search when link clicked
+      
     } else {
-      setHighlightedSong(song);
+      setHighlightedSong(song); // Highlight song 
     }
   };
 
@@ -71,9 +76,11 @@ const RowListElement = ({
          styles.highlight
        }
        `}
-
-      //Change the margin bottom & remove display grid if condensed (used in CustomInput)  
-      style={{ marginBottom: options?.condensed && "10px", display: options?.condensed && "block"}}
+      //Change the margin bottom & remove display grid if condensed (used in CustomInput)
+      style={{
+        marginBottom: options?.condensed && "10px",
+        display: options?.condensed && "block",
+      }}
       onClick={handleSongClick}
       onDoubleClick={handleSongDoubleClick}
       onMouseEnter={() => setHover(true)}
@@ -154,7 +161,9 @@ const RowListElement = ({
           gap: "10px",
         }}
       >
-        {!options?.noDuration && <p className={styles.time}>{calculateTime(duration)}</p>}
+        {!options?.noDuration && (
+          <p className={styles.time}>{calculateTime(duration)}</p>
+        )}
         <div
           // To prevent the song from starting when clicked
           onClick={(e) => {

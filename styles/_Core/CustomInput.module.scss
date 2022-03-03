@@ -25,7 +25,7 @@
 .customInputDropdown{
     .scrollArea{
         height: fit-content;
-        max-height: 300px;
+        max-height: 75vh;
         width: 30vw;
         max-width: 500px;
         min-width: 300px;
@@ -39,4 +39,10 @@
     }
 }
 
+
+.customInputDropdownSections{
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    margin-bottom: 20px;  
+}
 
