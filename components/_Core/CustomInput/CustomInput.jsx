@@ -1,16 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 
 import styles from "../../../styles/_Core/CustomInput.module.scss";
 import CustomInputDropdown from "./CustomInputDropdown";
 
 const CustomInput = ({
   placeHolder,
-  value,
   handleChange,
   variant,
   isLoading,
   dropdownSectionsData,
 }) => {
+  
+  const [inputValue, setInputValue] = useState("")
+
   const getStyles = (variant) => {
     switch (variant) {
       case "bigInput": {
@@ -25,6 +27,7 @@ const CustomInput = ({
   const handleChangeLocally = (e) => {
     if (!isLoading) {
       handleChange(e);
+      setInputValue(e.target.value)
     }
   };
 
@@ -34,12 +37,14 @@ const CustomInput = ({
         className={getStyles(variant)}
         autoFocus
         type="text"
-        value={value}
+        value={inputValue}
         onChange={handleChangeLocally}
         placeholder={placeHolder}
       />
 
-      {dropdownSectionsData && <CustomInputDropdown dropdownSectionsData={dropdownSectionsData} />}
+      {inputValue !== "" && (
+        <CustomInputDropdown dropdownSectionsData={dropdownSectionsData} />
+      )}
     </>
   );
 };

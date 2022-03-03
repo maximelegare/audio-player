@@ -51,7 +51,7 @@ const RowListElement = ({
     // If no highlight when click
     //
     if (options?.noHighlightWhenClicked) {
-      router.push(song_route);
+      router.push(`/${song_route}`);
       setSearchVisibility(false) // Close search when link clicked
       
     } else {

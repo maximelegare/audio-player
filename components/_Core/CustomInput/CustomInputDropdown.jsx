@@ -9,15 +9,19 @@ const CustomInputDropdown = ({ dropdownSectionsData }) => {
   return (
     <ScrollArea.Root className={styles.customInputDropdown}>
       <ScrollArea.Viewport className={styles.scrollArea}>
-        {/* {scrollDropdown.length !== 0 && ( */}
-
-        {dropdownSectionsData.map((section, idx) => (
-          <PageLayout key={idx} variant="small">
-            <CustomInputDropdownItems data={section.data} title={section.title} />
-          </PageLayout>
-        ))}
-
-        {/* )} */}
+        <PageLayout variant="small">
+          {dropdownSectionsData.length !== 0 ? (
+            dropdownSectionsData.map((section, idx) => (
+              <CustomInputDropdownItems
+                key={idx}
+                data={section.data}
+                title={section.title}
+              />
+            ))
+          ) : (
+            <h4>No data Found</h4>
+          )}
+        </PageLayout>
       </ScrollArea.Viewport>
 
       <ScrollArea.Scrollbar orientation="vertical">
