@@ -1,17 +1,24 @@
 // Component used to display text items
 // Displays elements based by receiving an Array[]
 
-
-
-import React from "react";
+import React, { ReactChildren, ReactElement } from "react";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 import styles from "../../../styles/_Core/PopOver.module.scss";
 
-const Dropdown = ({ trigger, menuItem, wholeButtonTrigger, open, onOpenChange }) => {
+interface Props {
+  trigger:ReactChildren;
+  menuItem:ReactElement;
+  wholeButtonTrigger:boolean
+  open:boolean
+  onOpenChange:() => void
+}
 
+
+
+const Dropdown:React.FC<Props> = ({ trigger, menuItem, wholeButtonTrigger, open, onOpenChange }) => {
 
   return (
     

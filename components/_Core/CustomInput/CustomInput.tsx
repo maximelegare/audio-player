@@ -1,19 +1,27 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import styles from "../../../styles/_Core/CustomInput.module.scss";
 import CustomInputDropdown from "./CustomInputDropdown";
 
-const CustomInput = ({
+interface Props {
+  placeHolder: string;
+  handleChange: (e: React.ChangeEventHandler<HTMLInputElement>) => void;
+  variant?: string;
+  isLoading?: boolean;
+  dropdownSectionData?: any;
+}
+
+const CustomInput: React.FC<Props> = ({
   placeHolder,
   handleChange,
   variant,
   isLoading,
   dropdownSectionsData,
-}) => {
   
-  const [inputValue, setInputValue] = useState("")
+}) => {
+  const [inputValue, setInputValue] = useState("");
 
-  const getStyles = (variant) => {
+  const getStyles = (variant: string): string => {
     switch (variant) {
       case "bigInput": {
         return styles.bigInput;
@@ -24,10 +32,10 @@ const CustomInput = ({
     }
   };
 
-  const handleChangeLocally = (e) => {
+  const handleChangeLocally = (event): void => {
     if (!isLoading) {
-      handleChange(e);
-      setInputValue(e.target.value)
+      handleChange(event);
+      setInputValue(event.target.value);
     }
   };
 
@@ -42,7 +50,7 @@ const CustomInput = ({
         placeholder={placeHolder}
       />
 
-      {inputValue !== "" && (
+      {(inputValue !== "" || !dropdownSectionsData) && (
         <CustomInputDropdown dropdownSectionsData={dropdownSectionsData} />
       )}
     </>

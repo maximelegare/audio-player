@@ -5,6 +5,7 @@ import { PopoverClose } from "@radix-ui/react-popover";
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
 
 const NewPlaylist = () => {
+
   const [inputValue, setInputValue] = useState("");
   const { createPlaylist } = useAudioPlayer();
 
@@ -35,7 +36,7 @@ const NewPlaylist = () => {
       <div style={{ height: "10px" }} />
       <CustomInput
         placeHolder="Playlist Name"
-        value={inputValue}
+        // value={inputValue}
         handleChange={handleInputChange}
       />
       <div style={{ height: "20px" }} />

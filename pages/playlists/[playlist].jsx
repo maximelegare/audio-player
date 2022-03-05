@@ -6,6 +6,7 @@ import { useAudioPlayer } from "../../hooks/AudioHooks";
 
 import fallbackImage from "../../public/assets/SVG/musicNote.svg";
 import PageLayout from "../../components/Layout/PageLayout";
+
 const Playlist = ({ playlistSongs, playlistTitle, playlistImages }) => {
   const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer();
 

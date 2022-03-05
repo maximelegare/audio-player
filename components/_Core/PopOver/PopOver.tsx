@@ -5,7 +5,15 @@ import * as Popover from '@radix-ui/react-popover';
 
 import styles from "../../../styles/_Core/PopOver.module.scss";
 
-const SidePopOver = ({ trigger, menuItem, wholeButtonTrigger }) => {
+interface Props {
+  trigger:Element;
+  menuItem:Element;
+  wholeButtonTrigger:boolean
+}
+
+
+
+const SidePopOver:React.FC<Props> = ({ trigger, menuItem, wholeButtonTrigger }) => {
 
 
   return (

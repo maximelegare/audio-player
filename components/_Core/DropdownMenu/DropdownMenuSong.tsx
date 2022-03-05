@@ -1,4 +1,6 @@
 // DropdownMenu Content displayed in the song RowListItem
+import {Song} from "../../../typeScript/interfaces"
+
 
 import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
@@ -11,7 +13,11 @@ import DropdownItemWithIcon from "./DropdownItemWithIcon";
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
 import { useRouter } from "next/router";
 
-const DropdownMenuSong = ({ song }) => {
+
+
+
+
+const DropdownMenuSong: React.FC<Song> = ({ song }) => {
   const {
     playlists,
     toggleSongFromQueue,
