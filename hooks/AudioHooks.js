@@ -137,16 +137,18 @@ const useAudioPlayer = (fileUrl, duration) => {
   }, [recoilPlaylists]);
 
   // Remove song from locally
-  const filterSongFromPlaylist = (song) => {
-    const newFilteredPlaylist = currentRouteSongs.filter(
+  const filterSongFromPlaylist = (song, playlist) => {
+    const newFilteredPlaylist = playlist.filter(
       (listSong) => song.song_route !== listSong.song_route
     );
     return newFilteredPlaylist;
   };
 
+ 
+  
   // Toggle song from Liked playlist
   const toggleLikedSong = async (song) => {
-    const newPaylist = filterSongFromPlaylist(song); // Locally
+    const newPaylist = filterSongFromPlaylist(song, likedSongsPlaylist); // Locally
     setLikedSongsPlaylist(newPaylist);
     try {
       await axios.post("http://localhost:3000/api/playlist", {
@@ -162,10 +164,11 @@ const useAudioPlayer = (fileUrl, duration) => {
   // Add or delete songs from the queue
   const toggleSongFromQueue = (song, route) => {
     // If the route is /queue => remove from queue with filter
+
+    
     if (route === "/queue") {
-      const newFilteredQueue = recoilQueue.songs.filter(
-        (listSong) => song.song_route !== listSong.song_route
-      );
+      const newFilteredQueue = filterSongFromPlaylist(song, recoilQueue.songs)
+      
       setRecoilQueue({ ...recoilQueue, songs: newFilteredQueue });
 
       // Otherwise Add to queue
@@ -228,7 +231,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     // Otherwise remove from specific playlist
     else {
       // Remove Locally
-      const newPlaylist = filterSongFromPlaylist(song);
+      const newPlaylist = filterSongFromPlaylist(song, currentRouteSongs);
       setCurrentRouteSongs(newPlaylist);
       // Set db
       try {

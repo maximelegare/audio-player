@@ -26,7 +26,7 @@ export default album;
 
 
 export async function getServerSideProps({ params }) {
-  const albumUrl = `${params.artist}/${params.album}`;
+  const albumUrl = `/${params.artist}/${params.album}`;
 
   const res = await sql_query_string(`
     SELECT s.title, s.title_route as song_route, s.liked,  s.album, s.track_no, s.streaming_url, a.picture_url, a.artist, s.duration, a.title_route as album_route, a.artist_route 

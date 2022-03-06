@@ -34,13 +34,13 @@ const DropdownMenuSong = ({ song }) => {
       </DropdownMenu.Separator>
       <DropdownMenu.Item
         className={styles.menuItem}
-        onClick={() => router.push(`/${song.artist_route}`)}
+        onClick={() => router.push(song.artist_route)}
       >
         Go to Artist
       </DropdownMenu.Item>
       <DropdownMenu.Item
         className={styles.menuItem}
-        onClick={() => router.push(`/${song.album_route}`)}
+        onClick={() => router.push(song.album_route)}
       >
         Go to Album
       </DropdownMenu.Item>

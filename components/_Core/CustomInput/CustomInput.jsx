@@ -42,7 +42,7 @@ const CustomInput = ({
         placeholder={placeHolder}
       />
 
-      {inputValue !== "" && (
+      {(inputValue !== "" && dropdownSectionsData) && (
         <CustomInputDropdown dropdownSectionsData={dropdownSectionsData} />
       )}
     </>

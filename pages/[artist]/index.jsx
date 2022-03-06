@@ -26,7 +26,7 @@ export async function getServerSideProps(context) {
 
   const res = await sql_query_string(`
     SELECT title, picture_url, artist, title_route as route, year FROM albums 
-    WHERE artist_route = '${artist}'`);
+    WHERE artist_route = '/${artist}'`);
   const albums = JSON.parse(JSON.stringify(res));
   return { props: { albums } };
 }
