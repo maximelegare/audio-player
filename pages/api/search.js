@@ -4,8 +4,6 @@ import { db } from "../../lib/db";
 
 const handler = async (req, res) => {
   try {
-    let data = [];
-
     const songs = await db.query(
       `
     SELECT s.title, s.title_route as song_route, s.liked,  s.album, s.track_no, s.streaming_url, a.picture_url, a.artist, s.duration, a.title_route as album_route, a.artist_route 
@@ -29,20 +27,14 @@ const handler = async (req, res) => {
     GROUP BY artist 
     LIMIT 4
     `);
+    let data = [];
+    if (songs.length !== 0) data.push({ title: "Songs", data: songs });
 
-    if (songs.length !== 0) {
-      data.push({ title: "Songs", data: songs });
-    }
-    if (albums.length !== 0) {
-      data.push({ title: "Albums", data: albums });
-    }
-    if (artists.length !== 0) {
-      data.push({ title: "Artists", data: artists });
-    }
+    if (albums.length !== 0) data.push({ title: "Albums", data: albums });
 
-    return res.status(200).json({
-      data
-    });
+    if (artists.length !== 0) data.push({ title: "Artists", data: artists });
+
+    return res.status(200).json({ data });
   } catch (e) {
     res.status(500).json({ message: e.message });
   }

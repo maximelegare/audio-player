@@ -9,8 +9,8 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import styles from "../../../styles/_Core/PopOver.module.scss";
 
 interface Props {
-  trigger:ReactChildren;
-  menuItem:ReactElement;
+  trigger:string;
+  menuItem:React.ReactNode;
   wholeButtonTrigger:boolean
   open:boolean
   onOpenChange:() => void

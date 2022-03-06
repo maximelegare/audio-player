@@ -5,7 +5,7 @@ import Box from "../Box";
 
 interface Props {
   text:string,
-  children:ReactElement
+  children:React.ReactNode
 }
 
 const DropdownItemWithIcon:React.FC<Props> = ({ text, children }) => {

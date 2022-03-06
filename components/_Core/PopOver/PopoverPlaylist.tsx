@@ -49,11 +49,9 @@ const NewPlaylist = () => {
           margin: 0,
         }}
       >
-        <div onClick={handleSubmit}>
-          <CustomButton falseButton variant="text">
+          <CustomButton handleClick={handleSubmit} falseButton variant="text">
             Create
           </CustomButton>
-        </div>
       </PopoverClose>
       <div style={{ height: "10px" }} />
     </form>

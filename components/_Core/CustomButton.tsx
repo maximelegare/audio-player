@@ -1,15 +1,24 @@
-import React from "react";
+import React, { ReactChildren, ReactElement } from "react";
 
 import styles from "../../styles/_Core/CustomButton.module.scss";
 
-const CustomButton = ({
+
+interface Props {
+  falseButton?: boolean;
+  variant: string,
+  handleClick:(e) => void
+  children?:ReactElement | string
+} 
+
+
+const CustomButton:React.FC <Props> = ({
   falseButton,
   variant,
   handleClick,
-  type,
   children,
 }) => {
-  const getStyles = (variant) => {
+
+  const getStyles = (variant:string) => {
     switch (variant) {
       case "play": {
         return styles.playPause;
@@ -33,7 +42,6 @@ const CustomButton = ({
     <>
       {falseButton ? (
         <div
-          type={type ? type : ""}
           onClick={handleClick}
           className={getStyles(variant)}
         >
@@ -41,7 +49,6 @@ const CustomButton = ({
         </div>
       ) : (
         <button
-          type={type ? type : ""}
           onClick={handleClick}
           className={getStyles(variant)}
         >

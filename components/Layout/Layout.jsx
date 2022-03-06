@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import styles from "../../styles/Layout.module.scss";
 
+
+
+
+
 import SideBar from "../SideBar/SideBar";
 import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
 import { Scrollbar } from "react-scrollbars-custom";
@@ -14,6 +18,13 @@ const Layout = ({ children }) => {
   const seachVisibility = useRecoilValue(searchSectionVisibilityState);
   const { currentSong } = useAudioPlayer();
   const memoizedValue = useMemo(() => <>{children}</>, [children]);
+
+
+  
+  
+
+
+
 
   return (
     <div>
