@@ -14,6 +14,7 @@
     "axios": "^0.25.0",
     "cloudinary": "^1.28.1",
     "formidable-serverless": "^1.1.1",
+    "fwd-stream": "^1.0.4",
     "music-metadata": "^7.11.7",
     "mysql": "^2.18.1",
     "next": "12.0.8",

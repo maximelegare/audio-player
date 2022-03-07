@@ -1,34 +1,57 @@
-var SSH2Promise = require("ssh2-promise");
-const fs = require("fs");
+const SSH2Promise = require("ssh2-promise");
+const fwd = require("fwd-stream");
 
 var sshConfig = {
   host: process.env.SSH_RASBERRY_HOST,
-  username:process.env.SSH_RASBERRY_USERNAME,
+  username: process.env.SSH_RASBERRY_USERNAME,
   password: process.env.SSH_RASBERRY_PASSWORD,
 };
-// const sshConfig = ;
 
 const handler = async (req, res) => {
   //   console.log(sshConfig);
 
   const sshFolderPath = process.env.RASBERRY_HODEI_PATH;
+  const filePath = `${sshFolderPath}/_music/I-wish-I.flac`;
+
   const ssh = new SSH2Promise(sshConfig);
-
-  const range = req.headers.range;
-
   const sftp = ssh.sftp();
-  await sftp
-    .createReadStream(`'${sshFolderPath}'`)
-    .then((stream) => console.log(stream));
+
+  // Make sure there is a range
+  const range = req.headers.range;
+  if (!range) {
+    res.status(400).send("Requires Range header");
+  }
+
+  const fileSize = await sftp.getStat(filePath).then((stats) => stats.size);
+
+  const CHUNK_SIZE = 10 ** 6;
+  const start = Number(range.replace(/\D/g, ""));
+  const end = Math.min(start + CHUNK_SIZE, fileSize - 1);
+
+  const contentLength = end - start + 1;
+  const headers = {
+    "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+    "Accept-Ranges": "bytes",
+    "Content-Length": contentLength,
+    "Content-Type": "audio/flac",
+  };
+
+  res.writeHead(206, headers);
 
   await sftp
-    .readdir(sshFolderPath)
-    .then((data) => {
-      console.log(data); //file listing
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    .createReadStream(filePath, {start, end})
+    .then((stream) => fwd.readable(stream).pipe(res));
+
+  // audioStream.pipe(res)
+
+  // await sftp
+  //   .readFile(filePath)
+  //   .then((data) => {
+  //     console.log(data); //file listing
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 
   ssh.close().then(console.log("Closed Connection"));
 };
