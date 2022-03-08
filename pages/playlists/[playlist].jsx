@@ -45,6 +45,7 @@ export async function getServerSideProps(context) {
   SELECT s.title, s.title_route as song_route, s.duration,  s.album, s.track_no,
   a.picture_url, a.artist,
   s.streaming_url,
+  s.RP_streaming_path,
   s.liked,
   p.title as playlist_title,
   a.title_route as album_route,

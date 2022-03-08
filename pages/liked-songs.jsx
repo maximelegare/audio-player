@@ -29,7 +29,7 @@ export default LikedSongs;
 
 export async function getServerSideProps() {
   const res = await sql_query_string(`
-  SELECT DISTINCT (a.title), s.duration, s.title, s.liked, s.album, s.title_route as song_route, a.title_route as album_route, s.streaming_url, a.artist_route, a.picture_url, a.artist
+  SELECT DISTINCT (a.title), s.duration, s.title, s.liked, s.album, s.title_route as song_route, a.title_route as album_route, s.streaming_url, s.RP_streaming_path, a.artist_route, a.picture_url, a.artist
   FROM songs s
   JOIN albums a 
   ON a.title = s.album
