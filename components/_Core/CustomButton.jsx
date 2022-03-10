@@ -17,8 +17,8 @@ const CustomButton = ({
       case "play-small":{
         return `${styles.playPause} ${styles.small}`
       }
-      case "forwardBackward": {
-        return styles.forwardBackward;
+      case "iconOnly": {
+        return styles.iconOnly;
       }
       case "volume": {
         return styles.volume;

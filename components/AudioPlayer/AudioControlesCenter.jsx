@@ -11,19 +11,23 @@ import CustomButton from "../_Core/CustomButton";
 
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 
+import RepeatIcon from "../_Core/Icons/RepeatIcon";
+import RandomIcon from "../_Core/Icons/RandomIcon";
+
 const AudioControlesCenter = ({ isPlaying, handlePlayPause, audioElement }) => {
+  const { setNextSong } = useAudioPlayer();
 
-  const {setNextSong} = useAudioPlayer()
-
-  
   return (
     <div className={styles.controlesButtons}>
       {audioElement}
+      <CustomButton variant="iconOnly">
+        <RandomIcon />
+      </CustomButton>
       <CustomButton
-        variant="forwardBackward"
+        variant="iconOnly"
         handleClick={() => setNextSong("previous")}
       >
-        <BsFillSkipBackwardFill className={styles.arrow} />
+        <BsFillSkipBackwardFill />
       </CustomButton>
 
       <CustomButton handleClick={handlePlayPause} variant="play">
@@ -31,10 +35,13 @@ const AudioControlesCenter = ({ isPlaying, handlePlayPause, audioElement }) => {
       </CustomButton>
 
       <CustomButton
-        variant="forwardBackward"
+        variant="iconOnly"
         handleClick={() => setNextSong("next")}
       >
-        <BsFillSkipForwardFill className={styles.arrow} />
+        <BsFillSkipForwardFill/>
+      </CustomButton>
+      <CustomButton variant="iconOnly">
+        <RepeatIcon />
       </CustomButton>
     </div>
   );
