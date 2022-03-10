@@ -39,7 +39,8 @@ const Layout = ({ children }) => {
         <AudioPlayer
           title={currentSong.title}
           artist={currentSong.artist}
-          fileUrl={`api/stream-song${currentSong.RP_streaming_path}`}
+          // fileUrl={`api/stream-song${currentSong.RP_streaming_path}`}
+          fileUrl={currentSong.streaming_url}
           imgUrl={currentSong.picture_url}
           duration={currentSong.duration}
         />

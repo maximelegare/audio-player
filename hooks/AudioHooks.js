@@ -9,7 +9,7 @@ import {
   likedSongsPlaylistState,
   queueState,
   repeatState,
-  randomState
+  randomState,
 } from "../atoms/audioAtom";
 import axios from "axios";
 import { createUrlRoute } from "../lib/utilities";
@@ -39,6 +39,13 @@ const useAudioPlayer = (fileUrl, duration) => {
   const animationRef = useRef(null); // Animation of the Range input
 
   const audioPlayer = useRef(null); // AudioPlayer which is in child component
+
+  // Repeat Button State
+  const [repeatValue, setRepeatValue] = useState(null);
+  const [recoilRepeatState, setRecoilRepeatState] = useRecoilState(repeatState);
+  useEffect(() => {
+    setRepeatValue(recoilRepeatState);
+  }, [recoilRepeatState]);
 
   // set the max duration when metadata are loaded
   useEffect(() => {
@@ -81,13 +88,41 @@ const useAudioPlayer = (fileUrl, duration) => {
 
   // Sets the next song Automatically when the previous song finished
   useEffect(() => {
+    // If the current time equal duration (end of song)
     if (Math.round(audioPlayer?.current?.currentTime) === duration) {
-      setCurrentSong({
-        ...recoilQueue.songs[currentSong.songIdx + 1],
-        songIdx: currentSong.songIdx + 1,
-      });
+      // Song is not on repeat
+      if (repeatValue !== 2) {
+        //If it's the last song
+        if (currentSong.songIdx === queue.songs.length -1) {
+          // Repeat playlist
+          if (repeatValue === 1) {
+            console.log(queue.songs[0])
+            setCurrentSong({
+              ...queue.songs[0],
+              songIdx: 0,
+            });
+          }
+          // Stop the player
+          else{
+            changeRange(0)
+            setCurrentSong({})
+            setIsPlaying(false)
+
+          }
+        } else {
+          setCurrentSong({
+            ...recoilQueue.songs[currentSong.songIdx + 1],
+            songIdx: currentSong.songIdx + 1,
+          });
+        }
+        // Repeat song
+      } else {
+        changeRange(0);
+      }
     }
-  }, [audioPlayer?.current?.currentTime, duration]);
+  }, [audioPlayer?.current?.currentTime, duration, repeatValue]);
+
+
 
   // Set the next or previous song when button cliked
   const setNextSong = (status) => {
@@ -105,18 +140,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
-  // Set Repeat Option
-  // Repeat State
-  const [repeatValue, setRepeatValue] = useState(null);
-  const [recoilRepeatState, setRecoilRepeatState] = useRecoilState(repeatState);
-  useEffect(() => {
-    setRepeatValue(recoilRepeatState);
-  }, [recoilRepeatState]);
-
-  // Change Repeat state based on the number received (can't go higher then 2)
-  // 0 => disabled
-  // 1 => repeat all songs after end of playlist
-  // 2 => repeat song
+  // Change Repeat state based on the number received
   const changeRepeatValue = (number) => {
     if (number >= 2) {
       setRecoilRepeatState(0);
@@ -125,7 +149,6 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
-  
   // Set Random Option
   // Random button state (randomize order of songs)
   const [randomValue, setRandomValue] = useState(false);
@@ -135,9 +158,8 @@ const useAudioPlayer = (fileUrl, duration) => {
   }, [recoilRandomState]);
 
   const changeRandomValue = () => {
-    setRecoilRandomState(!randomValue)
-  }
-
+    setRecoilRandomState(!randomValue);
+  };
 
   ///////////////////////////////////////////////////////////////////////////////////
 
