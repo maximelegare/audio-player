@@ -55,4 +55,8 @@ export const repeatState = atom({
   effects_UNSTABLE: [persistAtom],
 })
 
-
+export const randomState = atom({
+  key:"randomState",
+  default:false,
+  effects_UNSTABLE:[persistAtom]
+})

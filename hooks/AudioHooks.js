@@ -9,6 +9,7 @@ import {
   likedSongsPlaylistState,
   queueState,
   repeatState,
+  randomState
 } from "../atoms/audioAtom";
 import axios from "axios";
 import { createUrlRoute } from "../lib/utilities";
@@ -104,23 +105,39 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
-  // Set Repeat Button
+  // Set Repeat Option
   // Repeat State
-  const [repeatValue, setRepeatValue] = useState(0);
+  const [repeatValue, setRepeatValue] = useState(null);
   const [recoilRepeatState, setRecoilRepeatState] = useRecoilState(repeatState);
   useEffect(() => {
     setRepeatValue(recoilRepeatState);
   }, [recoilRepeatState]);
 
-  // Change Repeat state
+  // Change Repeat state based on the number received (can't go higher then 2)
+  // 0 => disabled
+  // 1 => repeat all songs after end of playlist
+  // 2 => repeat song
   const changeRepeatValue = (number) => {
-        //  setRecoilRepeatState(0) 
     if (number >= 2) {
       setRecoilRepeatState(0);
     } else {
       setRecoilRepeatState(number + 1);
     }
   };
+
+  
+  // Set Random Option
+  // Random button state (randomize order of songs)
+  const [randomValue, setRandomValue] = useState(false);
+  const [recoilRandomState, setRecoilRandomState] = useRecoilState(randomState);
+  useEffect(() => {
+    setRandomValue(recoilRandomState);
+  }, [recoilRandomState]);
+
+  const changeRandomValue = () => {
+    setRecoilRandomState(!randomValue)
+  }
+
 
   ///////////////////////////////////////////////////////////////////////////////////
 
@@ -269,14 +286,17 @@ const useAudioPlayer = (fileUrl, duration) => {
     currentRouteSongs,
     currentSong,
     isPlaying,
+    likedSongsPlaylist,
     max,
     playlists,
     progressInput,
     queue,
-    likedSongsPlaylist,
+    randomValue,
     repeatValue,
     addAndRemoveSongFromPlaylist,
+    changeRandomValue,
     changeRange,
+    changeRepeatValue,
     createPlaylist,
     setCurrentRouteSongs,
     setCurrentSong,
@@ -285,7 +305,6 @@ const useAudioPlayer = (fileUrl, duration) => {
     setNextSong,
     setPlaylistAndSong,
     setPlaylistsDataGlobally,
-    changeRepeatValue,
     toggleLikedSong,
     toggleSongFromQueue,
   };

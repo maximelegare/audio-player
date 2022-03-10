@@ -15,13 +15,19 @@ import RepeatIcon from "../_Core/Icons/RepeatIcon";
 import RandomIcon from "../_Core/Icons/RandomIcon";
 
 const AudioControlesCenter = ({ isPlaying, handlePlayPause, audioElement }) => {
-  const { setNextSong, repeatValue, changeRepeatValue } = useAudioPlayer();
+  const {
+    setNextSong,
+    repeatValue,
+    changeRepeatValue,
+    randomValue,
+    changeRandomValue,
+  } = useAudioPlayer();
 
   return (
     <div className={styles.controlesButtons}>
       {audioElement}
-      <CustomButton variant="iconOnly">
-        <RandomIcon />
+      <CustomButton variant="iconOnly" handleClick={() => changeRandomValue(randomValue)}>
+        <RandomIcon value={randomValue}/>
       </CustomButton>
       <CustomButton
         variant="iconOnly"
@@ -41,7 +47,7 @@ const AudioControlesCenter = ({ isPlaying, handlePlayPause, audioElement }) => {
         variant="iconOnly"
         handleClick={() => changeRepeatValue(repeatValue)}
       >
-        <RepeatIcon repeatValue={repeatValue}/>
+        <RepeatIcon value={repeatValue} />
       </CustomButton>
     </div>
   );
