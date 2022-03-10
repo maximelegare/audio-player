@@ -8,6 +8,7 @@ import {
   isPlayingState,
   likedSongsPlaylistState,
   queueState,
+  repeatState,
 } from "../atoms/audioAtom";
 import axios from "axios";
 import { createUrlRoute } from "../lib/utilities";
@@ -16,8 +17,6 @@ const useAudioPlayer = (fileUrl, duration) => {
   // Global state for song
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
   const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
- 
-
 
   // Queue state
   const [queue, setQueue] = useState([]);
@@ -105,7 +104,23 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
+  // Set Repeat Button
+  // Repeat State
+  const [repeatValue, setRepeatValue] = useState(0);
+  const [recoilRepeatState, setRecoilRepeatState] = useRecoilState(repeatState);
+  useEffect(() => {
+    setRepeatValue(recoilRepeatState);
+  }, [recoilRepeatState]);
 
+  // Change Repeat state
+  const changeRepeatValue = (number) => {
+        //  setRecoilRepeatState(0) 
+    if (number >= 2) {
+      setRecoilRepeatState(0);
+    } else {
+      setRecoilRepeatState(number + 1);
+    }
+  };
 
   ///////////////////////////////////////////////////////////////////////////////////
 
@@ -144,8 +159,6 @@ const useAudioPlayer = (fileUrl, duration) => {
     return newFilteredPlaylist;
   };
 
- 
-  
   // Toggle song from Liked playlist
   const toggleLikedSong = async (song) => {
     const newPaylist = filterSongFromPlaylist(song, likedSongsPlaylist); // Locally
@@ -165,10 +178,9 @@ const useAudioPlayer = (fileUrl, duration) => {
   const toggleSongFromQueue = (song, route) => {
     // If the route is /queue => remove from queue with filter
 
-    
     if (route === "/queue") {
-      const newFilteredQueue = filterSongFromPlaylist(song, recoilQueue.songs)
-      
+      const newFilteredQueue = filterSongFromPlaylist(song, recoilQueue.songs);
+
       setRecoilQueue({ ...recoilQueue, songs: newFilteredQueue });
 
       // Otherwise Add to queue
@@ -262,16 +274,18 @@ const useAudioPlayer = (fileUrl, duration) => {
     progressInput,
     queue,
     likedSongsPlaylist,
+    repeatValue,
     addAndRemoveSongFromPlaylist,
     changeRange,
     createPlaylist,
     setCurrentRouteSongs,
     setCurrentSong,
     setIsPlaying,
-    setNextSong,
     setLikedSongsPlaylist,
+    setNextSong,
     setPlaylistAndSong,
     setPlaylistsDataGlobally,
+    changeRepeatValue,
     toggleLikedSong,
     toggleSongFromQueue,
   };

@@ -15,7 +15,7 @@ import RepeatIcon from "../_Core/Icons/RepeatIcon";
 import RandomIcon from "../_Core/Icons/RandomIcon";
 
 const AudioControlesCenter = ({ isPlaying, handlePlayPause, audioElement }) => {
-  const { setNextSong } = useAudioPlayer();
+  const { setNextSong, repeatValue, changeRepeatValue } = useAudioPlayer();
 
   return (
     <div className={styles.controlesButtons}>
@@ -34,14 +34,14 @@ const AudioControlesCenter = ({ isPlaying, handlePlayPause, audioElement }) => {
         {isPlaying ? <GiPauseButton /> : <FaPlay className={styles.playIcon} />}
       </CustomButton>
 
+      <CustomButton variant="iconOnly" handleClick={() => setNextSong("next")}>
+        <BsFillSkipForwardFill />
+      </CustomButton>
       <CustomButton
         variant="iconOnly"
-        handleClick={() => setNextSong("next")}
+        handleClick={() => changeRepeatValue(repeatValue)}
       >
-        <BsFillSkipForwardFill/>
-      </CustomButton>
-      <CustomButton variant="iconOnly">
-        <RepeatIcon />
+        <RepeatIcon repeatValue={repeatValue}/>
       </CustomButton>
     </div>
   );

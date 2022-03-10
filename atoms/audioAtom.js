@@ -49,4 +49,10 @@ export const currentRoutePlaylistTitleState = atom({
   default:""
 })
 
+export const repeatState = atom({
+  key:"repeatState",
+  default:0,
+  effects_UNSTABLE: [persistAtom],
+})
+
 

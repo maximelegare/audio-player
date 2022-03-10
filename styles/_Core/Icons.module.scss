@@ -1,10 +1,32 @@
-.repeatIcon{
-    height: 18px;
-    width: auto;
+@import "../variables.module.scss"; 
+
+
+.repeatIcon {
+  height: 18px;
+  width: auto;
 }
 
-.randomIcon{
-    height: 15px;
-    width: auto;
-    margin: 1px 0;
+.number {
+  display: none;
+}
+
+.repeatIcon.repeatSong {
+  .number {
+    display: block;
+  }
+}
+
+.repeatIcon.repeatAll{
+    .number {
+        display: none;
+      }
+}
+
+
+
+
+.randomIcon {
+  height: 15px;
+  width: auto;
+  margin: 1px 0;
 }
