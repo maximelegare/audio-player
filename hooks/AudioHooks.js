@@ -10,9 +10,12 @@ import {
   queueState,
   repeatState,
   randomState,
+  randomQueueState,
 } from "../atoms/audioAtom";
 import axios from "axios";
 import { createUrlRoute } from "../lib/utilities";
+
+import { shuffleArray } from "../lib/utilities";
 
 const useAudioPlayer = (fileUrl, duration) => {
   // Global state for song
@@ -25,6 +28,13 @@ const useAudioPlayer = (fileUrl, duration) => {
   useEffect(() => {
     setQueue(recoilQueue);
   }, [recoilQueue]);
+
+  const [randomQueue, setRandomQueue] = useState([]);
+  const [recoilRandomQueue, setRecoilRandomQueue] =
+    useRecoilState(randomQueueState);
+  useEffect(() => {
+    setRandomQueue(recoilRandomQueue);
+  }, [recoilRandomQueue]);
 
   // Progress input state
   const [progressInput, setRangeInput] = useState({
@@ -93,22 +103,21 @@ const useAudioPlayer = (fileUrl, duration) => {
       // Song is not on repeat
       if (repeatValue !== 2) {
         //If it's the last song
-        if (currentSong.songIdx === queue.songs.length -1) {
+        if (currentSong.songIdx === queue.songs.length - 1) {
           // Repeat playlist
           if (repeatValue === 1) {
-            console.log(queue.songs[0])
             setCurrentSong({
               ...queue.songs[0],
               songIdx: 0,
             });
           }
           // Stop the player
-          else{
-            changeRange(0)
-            setCurrentSong({})
-            setIsPlaying(false)
-
+          else {
+            setIsPlaying(false);
+            setCurrentSong({});
+            changeRange(0);
           }
+        // It's not the last song
         } else {
           setCurrentSong({
             ...recoilQueue.songs[currentSong.songIdx + 1],
@@ -124,21 +133,44 @@ const useAudioPlayer = (fileUrl, duration) => {
 
 
 
+
+
   // Set the next or previous song when button cliked
   const setNextSong = (status) => {
     if (status === "previous") {
-      setCurrentSong({
-        // Check the current song in the playlist based on it's index
-        ...recoilQueue.songs[currentSong.songIdx - 1],
-        songIdx: currentSong.songIdx - 1,
-      });
+      // If it's the first song
+      if (currentSong.songIdx === 0) {
+        setCurrentSong({
+          ...queue.songs[0],
+          songIdx: 0,
+        });
+        changeRange(0);
+      } else {
+        setIsPlaying(true);
+        setCurrentSong({
+          // Check the current song in the playlist based on it's index
+          ...recoilQueue.songs[currentSong.songIdx - 1],
+          songIdx: currentSong.songIdx - 1,
+        });
+      }
     } else {
-      setCurrentSong({
-        ...recoilQueue.songs[currentSong.songIdx + 1],
-        songIdx: currentSong.songIdx + 1,
-      });
+      // If it's the last song
+      if (currentSong.songIdx === queue.songs.length - 1) {
+        setCurrentSong({
+          ...queue.songs[0],
+          songIdx: 0,
+        });
+      } else {
+        setIsPlaying(true);
+        setCurrentSong({
+          ...recoilQueue.songs[currentSong.songIdx + 1],
+          songIdx: currentSong.songIdx + 1,
+        });
+      }
     }
   };
+
+
 
   // Change Repeat state based on the number received
   const changeRepeatValue = (number) => {
@@ -149,7 +181,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
-  // Set Random Option
+  // Set Random Option Button
   // Random button state (randomize order of songs)
   const [randomValue, setRandomValue] = useState(false);
   const [recoilRandomState, setRecoilRandomState] = useRecoilState(randomState);
@@ -238,7 +270,12 @@ const useAudioPlayer = (fileUrl, duration) => {
 
   // Set the current Song & playlist based on the song clicked
   const setPlaylistAndSong = (songIdx, playlistSongs, title) => {
-    setRecoilQueue({ songs: playlistSongs, title: title });
+    setRecoilQueue({ songs: playlistSongs, title });
+
+    // Shuffled Array for random queue
+    const shuffledPlaylistSongs = shuffleArray(playlistSongs);
+    setRecoilRandomQueue({ songs: shuffledPlaylistSongs, title });
+
     setCurrentSong({ ...playlistSongs[songIdx], songIdx });
   };
 

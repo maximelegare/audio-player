@@ -15,15 +15,19 @@ export const currentSongState = atom({
   // effects_UNSTABLE: [persistAtom],
 });
 
-
 export const highlightedSongState = atom({
-  key:"highlightedSongState",
-  default:{}
-})  
-
+  key: "highlightedSongState",
+  default: {},
+});
 
 export const queueState = atom({
   key: "queueState",
+  default: { title: null, songs: [] },
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const randomQueueState = atom({
+  key: "randomQueueState",
   default: { title: null, songs: [] },
   effects_UNSTABLE: [persistAtom],
 });
@@ -34,29 +38,28 @@ export const customPlaylistsState = atom({
 });
 
 export const currentRouteSongsState = atom({
-  key:"currentRouteSongsState",
-  default:[]
-})
+  key: "currentRouteSongsState",
+  default: [],
+});
 
 export const likedSongsPlaylistState = atom({
-  key:"likedSongsPlaylistState",
-  default:[]
-})
-
+  key: "likedSongsPlaylistState",
+  default: [],
+});
 
 export const currentRoutePlaylistTitleState = atom({
-  key:"currentPlaylistTitle",
-  default:""
-})
+  key: "currentPlaylistTitle",
+  default: "",
+});
 
 export const repeatState = atom({
-  key:"repeatState",
-  default:0,
+  key: "repeatState",
+  default: 0,
   effects_UNSTABLE: [persistAtom],
-})
+});
 
 export const randomState = atom({
-  key:"randomState",
-  default:false,
-  effects_UNSTABLE:[persistAtom]
-})
+  key: "randomState",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
