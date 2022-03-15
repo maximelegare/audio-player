@@ -16,7 +16,6 @@ import axios from "axios";
 import { createUrlRoute } from "../lib/utilities";
 
 import { shuffleArray } from "../lib/utilities";
-
 const useAudioPlayer = (fileUrl, duration) => {
   // Global state for song
   const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
@@ -130,12 +129,7 @@ const useAudioPlayer = (fileUrl, duration) => {
       }
     }
   }, [audioPlayer?.current?.currentTime, duration, repeatValue]);
-
-
-
-
-
-  // Set the next or previous song when button cliked
+    // Set the next or previous song when button cliked
   const setNextSong = (status) => {
     if (status === "previous") {
       // If it's the first song
@@ -273,8 +267,8 @@ const useAudioPlayer = (fileUrl, duration) => {
     setRecoilQueue({ songs: playlistSongs, title });
 
     // Shuffled Array for random queue
-    const shuffledPlaylistSongs = shuffleArray(playlistSongs);
-    setRecoilRandomQueue({ songs: shuffledPlaylistSongs, title });
+    // const shuffledPlaylistSongs = shuffleArray(playlistSongs);
+    // setRecoilRandomQueue({ songs: shuffledPlaylistSongs, title });
 
     setCurrentSong({ ...playlistSongs[songIdx], songIdx });
   };

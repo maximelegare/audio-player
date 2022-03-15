@@ -49,10 +49,9 @@ const handler = async (req, res) => {
   sftp.createReadStream(filePath, { start, end }).then(async (stream) => {
      fwd.readable(stream).pipe(res)
      
-  }).then(() => ssh.close().then(() =>sftp.removeAllListeners()));
+  });
 
   
   const events = ssh.eventNames()
-  console.log(events)
 };
 export default handler;
