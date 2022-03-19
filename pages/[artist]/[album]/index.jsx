@@ -33,8 +33,8 @@ export async function getServerSideProps({ params }) {
     FROM songs s
     JOIN albums a
     ON s.album = a.title 
-    WHERE a.title_route = '${albumUrl}' 
-    ORDER BY s.track_no`);
+    WHERE a.title_route = ?
+    ORDER BY s.track_no`, [`${albumUrl}`]);
   const album = JSON.parse(JSON.stringify(res));
   return { props: { album: album } };
 }

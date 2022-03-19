@@ -24,9 +24,9 @@ export default index;
 
 export async function getServerSideProps() {
   const res = await sql_query_string(`
-  SELECT artist as title, picture_url, artist_route as route 
+  SELECT artist, picture_url, artist_route as route
   FROM albums 
-  GROUP BY artist 
+  GROUP BY artist
   ORDER BY artist
   `);
 

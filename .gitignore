@@ -36,3 +36,6 @@ yarn-error.log*
 # google auth
 /dev
 
+# ssl certification
+/_cert
+

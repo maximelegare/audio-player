@@ -56,9 +56,9 @@ export async function getServerSideProps(context) {
   JOIN albums a 
   ON s.album = a.title 
   JOIN playlists p ON p.title = sp.playlist 
-  WHERE p.route = '/playlists/${playlist}'
+  WHERE p.route = ?
   ORDER BY sp.id
-  `);
+  `,[`/playlists/${playlist}`]);
 
   const imagesRes = await sql_query_string(`
   SELECT DISTINCT
@@ -69,8 +69,8 @@ export async function getServerSideProps(context) {
   JOIN albums a 
   ON s.album = a.title 
   JOIN playlists p ON p.title = sp.playlist 
-  WHERE p.route = '/playlists/${playlist}'  
-  `)
+  WHERE p.route = ? 
+  `,[`/playlists/${playlist}`])
 
   const playlistSongs = JSON.parse(JSON.stringify(songsRes));
   const playlistTitle = JSON.parse(JSON.stringify(titleRes));

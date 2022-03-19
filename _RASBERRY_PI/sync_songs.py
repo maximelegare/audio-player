@@ -8,7 +8,9 @@ directory = "C:/Users/maxle/Desktop/audioPlayer/audio-player/_musicTest"
 config = {"user": 'xxxxxxx',
           "password": 'xxxxxxxxx',
           "host": 'xxxxxxx',
-          "database": 'xxxxxxxx'}
+          "database": 'xxxxxxxx',
+          "ssl": {"fake_flag_to_enable_tls": True}
+          }
 
 cnx = mysql.connector.connect(config)
 
@@ -17,7 +19,6 @@ for file in os.listdir(directory):
     filename = os.fsdecode(file)
     filepath = f"{directory}/{filename}"
     tag = TinyTag.get(filepath, image=True)
-    
 
     # Route for the app
     songRoute = f"/{tag.artist}/{tag.album}/{tag.title}"
@@ -26,13 +27,13 @@ for file in os.listdir(directory):
     songName = f"{tag.artist} - {tag.album} - {tag.title}"
     albumName = f"{tag.artist} - {tag.album}"
 
-    # Checks if the album exists in Album table 
+    # Checks if the album exists in Album table
     try:
         cursor = cnx.cursor()
-        cursor.execute(f"""EXISTS(SELECT 1 FROM albums WHERE title = '{tag.album}'""")
+        cursor.execute(
+            f"""EXISTS(SELECT 1 FROM albums WHERE title = '{tag.album}'""")
     finally:
-        cnx.close()    
-
+        cnx.close()
 
     song = {
         "title": tag.title,
@@ -44,4 +45,3 @@ for file in os.listdir(directory):
         "duration": tag.duration,
         "liked": 0,
     }
-    
