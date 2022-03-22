@@ -1,24 +1,13 @@
-const SSH2Promise = require("ssh2-promise");
-const fwd = require("fwd-stream");
+import fs from "fs"
 
-var sshConfig = {
-  host: process.env.SSH_RASBERRY_HOST,
-  username: process.env.SSH_RASBERRY_USERNAME,
-  password: process.env.SSH_RASBERRY_PASSWORD,
-};
+// import song from "../../../public/assets/audio/the-denotes-let-us-run-for-it.mp3"
 
 const handler = async (req, res) => {
   //   console.log(sshConfig);
-  const {song} = req.query  
+  // const {song} = req.query  
 
-
-  const sshFolderPath = process.env.RASBERRY_HODEI_PATH;
-  const filePath = `${sshFolderPath}/_music/${song}`;
-
-  const ssh = new SSH2Promise(sshConfig);
-  await ssh.connect()
-  const sftp = ssh.sftp();
-
+  const filePath = ""
+  
 
  
   // Make sure there is a range
@@ -27,7 +16,7 @@ const handler = async (req, res) => {
     res.status(400).send("Requires Range header");
   }
   
-  const fileSize = await sftp.getStat(filePath).then((stats) => stats.size);
+  const fileSize = fs.statSync(filePath).size;
 
   const CHUNK_SIZE = 10 ** 6;
   const start = Number(range.replace(/\D/g, ""));
@@ -43,12 +32,9 @@ const handler = async (req, res) => {
 
   res.writeHead(206, headers);
 
-await sftp
-    .createReadStream(filePath, {start, end})
-    .then((stream) => fwd.readable(stream).pipe(res));
+  const videoStream = fs.createReadStream(filePath, {start, end})
+  videoStream.pipe(res)
 
-  // ssh.close();
 
-//   // res.status(206).headers(headers)
 };
 export default handler;
