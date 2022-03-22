@@ -1,6 +1,5 @@
 const withPWA = require("next-pwa")
 
-
 module.exports = withPWA({
   reactStrictMode: true,
   pwa:{
@@ -9,29 +8,21 @@ module.exports = withPWA({
     skipWaiting:true,
     disable:process.env.NODE_ENV === 'development'
   },
+  webpack(config, options) {
+    config.module.rules.push({
+      test: /\.(ogg|mp3|wav|mpe|flac|m4a?g)$/i,
+      use: [
+        {
+          loader: "url-loader",
+          options: {
+            name: "[name]-[hash].[ext]",
+          },
+        },
+      ],
+    });
+    return config;
+  },
   images:{
     domains:["res.cloudinary.com"]
   },
-  
-  cookies: {
-    csrfToken: {
-      name: 'next-auth.csrf-token',
-      options: {
-        httpOnly: true,
-        sameSite: 'none',
-        path: '/',
-        secure: true
-      }
-    },
-    pkceCodeVerifier: {
-      name: 'next-auth.pkce.code_verifier',
-      options: {
-        httpOnly: true,
-        sameSite: 'none',
-        path: '/',
-        secure: true
-      }
-    }
-  },
-  
 });

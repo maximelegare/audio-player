@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/Layout.module.scss";
 
 import SideBar from "../SideBar/SideBar";
@@ -8,19 +8,20 @@ import { useRecoilValue } from "recoil";
 import { searchSectionVisibilityState } from "../../atoms/visibilityAtom";
 import { useMemo } from "react";
 
+
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 import Search from "../Search/Search";
 const Layout = ({ children }) => {
-  const seachVisibility = useRecoilValue(searchSectionVisibilityState);
+
   const { currentSong } = useAudioPlayer();
   const memoizedValue = useMemo(() => <>{children}</>, [children]);
+  const seachVisibility = useRecoilValue(searchSectionVisibilityState);
 
   return (
     <div>
       <main className={styles.main}>
         <div className={styles.top}>
           <SideBar />
-
           <Scrollbar
             noScrollX
             style={{
@@ -39,9 +40,12 @@ const Layout = ({ children }) => {
         <AudioPlayer
           title={currentSong.title}
           artist={currentSong.artist}
-          // fileUrl={`api/stream-song${currentSong.RP_streaming_path}`}
-          fileUrl=""
-          // fileUrl={currentSong.streaming_url}
+          fileUrl={
+            currentSong?.RP_streaming_path !== undefined
+              ? require(`../../public/assets/audio${currentSong?.RP_streaming_path}`)
+                  .default
+              : ""
+          }
           imgUrl={currentSong.picture_url}
           duration={currentSong.duration}
         />
