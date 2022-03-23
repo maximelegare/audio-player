@@ -3,7 +3,7 @@ from tinytag import TinyTag
 import mysql.connector
 from mysql.connector.constants import ClientFlag
 
-directory = "C:/Users/maxle/Desktop/audioPlayer/audio-player/testfiles"
+directory = "C:/Users/maxle/Desktop/audioPlayer/audio-player/public/assets/audio"
 
 
 # Create URL route
