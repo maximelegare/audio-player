@@ -15,7 +15,7 @@ import { FaItunesNote } from "react-icons/fa";
 import { BsDisc, BsSearch } from "react-icons/bs";
 import { HiUserGroup } from "react-icons/hi";
 import { MdOutlinePlaylistAdd, MdPlaylistPlay } from "react-icons/md";
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineSync } from "react-icons/ai";
 import { BsSuitHeart } from "react-icons/bs";
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 
@@ -45,6 +45,12 @@ const SideBar = () => {
         {/* <div className={styles.linkContainer}>
           <FileInput />
         </div> */}
+        <div className={styles.linkContainer}>
+          <SideBarLink
+            icon={<AiOutlineSync className={styles.icon} />}
+            text="sync"
+          />
+        </div>
         <div className={styles.linkContainer}>
           <SideBarLink
             icon={<AiOutlineHome className={styles.icon} />}

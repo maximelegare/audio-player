@@ -17,10 +17,11 @@ import { GiPauseButton } from "react-icons/gi";
 import { FaPlay } from "react-icons/fa";
 
 import { searchSectionVisibilityState } from "../../../../atoms/visibilityAtom";
-import { useSetRecoilState } from "recoil";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilState, useRecoilValue  } from "recoil";
 import { highlightedSongState } from "../../../../atoms/audioAtom";
 import { useRouter } from "next/router";
+import { currentSongState } from "../../../../atoms/audioAtom";
+
 
 const RowListElement = ({
   song,
@@ -30,6 +31,7 @@ const RowListElement = ({
 }) => {
   const [highlightedSong, setHighlightedSong] =
     useRecoilState(highlightedSongState);
+
 
   const setSearchVisibility = useSetRecoilState(searchSectionVisibilityState)
 
@@ -43,8 +45,14 @@ const RowListElement = ({
 
   // Pass the song clicked to the parent for it to set the song & playlist when clicked
   const handleSongDoubleClick = (e) => {
-    setPlaylistBasedOnSongClicked(idx);
-    setIsPlaying(true);
+    // If the song currently playing is not the one clicked, play it
+    if(song_route !== currentSong.song_route){
+      setPlaylistBasedOnSongClicked(idx);
+      setIsPlaying(true);
+      // Otherwise pause
+    }else{
+      setIsPlaying(!isPlaying);
+    }
   };
 
   const handleSongClick = (e) => {
@@ -103,7 +111,7 @@ const RowListElement = ({
                   (highlightedSong.song_route === song_route &&
                     currentSong.song_route !== song_route) ? (
                     <CustomButton
-                      handleClick={handlePlayPauseClick}
+                      handleClick={handleSongDoubleClick}
                       variant="play-small"
                     >
                       {
