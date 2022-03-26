@@ -19,11 +19,11 @@ def createUrlRoute(values):
 try:
     # MUST pass keywords as arguments, NOT AN OBJECT
     cnx = mysql.connector.connect(
-            host="",
-            user="",
-            password="",
-            database="",
-            ssl_ca="",
+            host="lin-1190-1281-mysql-primary.servers.linodedb.net",
+            user="linroot",
+            password="WcHsS0Kc@A93weVL",
+            database="music_data_portfolio",
+            ssl_ca="../_cert/server.crt",
             client_flags=[ClientFlag.SSL]
             )   
     

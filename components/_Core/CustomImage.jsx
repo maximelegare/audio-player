@@ -10,12 +10,11 @@ const CustomImage = ({ src, width, height, alt, round, noBorderRadius }) => {
 
 
 
-  
 
   return (
     <div className={styles.imageWrapper}>
       <Image
-        src={src ? src : fallbackImage}
+        src={src ? require(`../../public/assets/img${src}`) : fallbackImage}
         alt={alt}
         width={width}
         height={height}
