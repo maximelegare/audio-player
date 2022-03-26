@@ -31,9 +31,9 @@
     "react-transition-group": "^4.4.2",
     "recoil": "^0.5.1",
     "recoil-persist": "^4.0.0",
+    "remote-exec": "^0.0.3",
     "sass": "^1.49.0",
     "serverless-mysql": "^1.5.4",
-    "ssh-exec": "^2.0.0",
     "ssh2-promise": "^1.0.2",
     "streamifier": "^0.1.1"
   },

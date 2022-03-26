@@ -1,13 +1,14 @@
 import React from "react";
 
 import styles from "../../styles/_Core/CustomButton.module.scss";
-
+import { PopoverClose } from "@radix-ui/react-popover";
 const CustomButton = ({
-  falseButton,
+  popOverClose,
   variant,
   handleClick,
   type,
   children,
+  disabled
 }) => {
   const getStyles = (variant) => {
     switch (variant) {
@@ -31,19 +32,21 @@ const CustomButton = ({
 
   return (
     <>
-      {falseButton ? (
-        <div
+      {popOverClose ? (
+        <PopoverClose
           type={type ? type : ""}
           onClick={handleClick}
-          className={getStyles(variant)}
+          className={`${disabled && styles.disabled} ${getStyles(variant)}`}
+          disabled={disabled}
         >
           {children}
-        </div>
+        </PopoverClose>
       ) : (
         <button
           type={type ? type : ""}
           onClick={handleClick}
-          className={getStyles(variant)}
+          className={`${disabled && styles.disabled} ${getStyles(variant)}`}
+          disabled={disabled}
         >
           {children}
         </button>

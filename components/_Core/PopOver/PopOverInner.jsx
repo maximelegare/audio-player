@@ -4,7 +4,7 @@ import CustomInput from "../CustomInput/CustomInput";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
 
-const NewPlaylist = () => {
+const PopOverInner = ({ buttonText, text, playlistPopover, handleSync, disableButton }) => {
   const [inputValue, setInputValue] = useState("");
   const { createPlaylist } = useAudioPlayer();
 
@@ -15,11 +15,15 @@ const NewPlaylist = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (inputValue) {
-      createPlaylist(inputValue);
-      setInputValue("");
+    if (playlistPopover) {
+      if (inputValue) {
+        createPlaylist(inputValue);
+        setInputValue("");
+      } else {
+        console.log("error");
+      }
     } else {
-      console.log("error");
+      handleSync();
     }
   };
 
@@ -30,33 +34,29 @@ const NewPlaylist = () => {
         flexDirection: "column",
         alignItems: "center",
       }}
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
     >
       <div style={{ height: "10px" }} />
-      <CustomInput
-        placeHolder="Playlist Name"
-        value={inputValue}
-        handleChange={handleInputChange}
-      />
+      {text && <p style={{ textAlign: "center", color: "#ffe3d4" }}>{text}</p>}
+      {playlistPopover && (
+        <CustomInput
+          placeHolder="Playlist Name"
+          value={inputValue}
+          handleChange={handleInputChange}
+        />
+      )}
+
       <div style={{ height: "20px" }} />
-      <PopoverClose
-        style={{
-          background: "transparent",
-          border: "none",
-          borderRadius: "99999px",
-          padding: 0,
-          margin: 0,
-        }}
-      >
-        <div onClick={handleSubmit}>
-          <CustomButton falseButton variant="text">
-            Create
-          </CustomButton>
-        </div>
-      </PopoverClose>
+
+      <div onClick={handleSubmit}>
+        <CustomButton popOverClose variant="text" disabled={disableButton}>
+          {buttonText}
+        </CustomButton>
+      </div>
+
       <div style={{ height: "10px" }} />
     </form>
   );
 };
 
-export default NewPlaylist;
+export default PopOverInner;

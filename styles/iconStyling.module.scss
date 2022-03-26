@@ -1,3 +1,5 @@
+@import "./variables.module.scss";
+
 .volumeIcon {
   margin-top: 3px;
   color: white;
@@ -14,11 +16,35 @@
   margin-right: 10px;
 }
 
-.sidePopOverDotsIcon{
-    font-size: 20px;
-    margin: 3px 8px;    
+.sidePopOverDotsIcon {
+  font-size: 20px;
+  margin: 3px 8px;
 }
 
-.rightArrow{
+.rightArrow {
   font-size: 12px;
 }
+
+.sideBarIcon {
+  width: 20px;
+  height: 20px;
+}
+
+
+.rotate {
+  animation: rotate-icon 2s linear;
+  animation-iteration-count: infinite;
+  animation-direction: forwards;
+}
+
+@keyframes rotate-icon {
+  0%{
+    transform: rotate(0deg);
+    // opacity: 0;
+  }
+  100%{
+    transform: rotate(360deg);
+    // opacity: 0;
+  }
+}
+

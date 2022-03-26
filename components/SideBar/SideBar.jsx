@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../../styles/SideBar/SideBar.module.scss";
 
 import SideBarLink from "./SideBarLink";
 import { Scrollbar } from "react-scrollbars-custom";
-import FileInput from "../_Core/FileInput";
-import NewPlaylist from "../_Core/PopOver/PopoverPlaylist";
+import PopOverInner from "../_Core/PopOver/PopOverInner";
 import CustomInput from "../_Core/CustomInput/CustomInput";
 
 import Image from "next/image";
@@ -23,6 +22,7 @@ import { useSetRecoilState } from "recoil";
 import { currentRoutePlaylistTitleState } from "../../atoms/audioAtom";
 import { searchSectionVisibilityState } from "../../atoms/visibilityAtom";
 import { useRecoilState } from "recoil";
+import CustomButton from "../_Core/CustomButton";
 
 const SideBar = () => {
   const { playlists } = useAudioPlayer();
@@ -34,6 +34,16 @@ const SideBar = () => {
     searchSectionVisibilityState
   );
 
+  const [isSynching, setIsSynching] = useState(false);
+
+  const handleSyncButton = async () => {
+    setIsSynching(true);
+    const res = await fetch("/api/sync");
+    const resData = await res.json();
+    console.log(resData);
+    setIsSynching(false);
+  };
+
   return (
     <div className={styles.container}>
       <div>
@@ -41,26 +51,37 @@ const SideBar = () => {
           <Image src={logo} width={100} height={50} alt="" />
           <hr />
         </div>
-
-        {/* <div className={styles.linkContainer}>
-          <FileInput />
-        </div> */}
         <div className={styles.linkContainer}>
           <SideBarLink
-            icon={<AiOutlineSync className={styles.icon} />}
+            icon={
+              <AiOutlineSync
+                className={`${styles.sideBarIcon} ${
+                  isSynching && styles.rotate
+                }`}
+              />
+            }
             text="sync"
-            handleClick={() => fetch("/api/sync")}
+            wholeButtonTrigger
+            dotsIcon
+            menuItem={
+              <PopOverInner
+                buttonText="Confirm"
+                text="Are you sure you want to Sync?"
+                handleSync={handleSyncButton}
+                disableButton={isSynching}
+              />
+            }
           />
         </div>
         <div className={styles.linkContainer}>
           <SideBarLink
-            icon={<AiOutlineHome className={styles.icon} />}
+            icon={<AiOutlineHome className={styles.sideBarIcon} />}
             text="Home"
             href="/"
           />
           <SideBarLink
             handleClick={() => setSearchVisibility(!searchVisibility)}
-            icon={<BsSearch className={styles.icon} />}
+            icon={<BsSearch className={styles.sideBarIcon} />}
             text="Search"
             // dotsIcon
             // wholeButtonTrigger
@@ -69,17 +90,17 @@ const SideBar = () => {
         </div>
         <div className={styles.linkContainer}>
           <SideBarLink
-            icon={<HiUserGroup className={styles.icon} />}
+            icon={<HiUserGroup className={styles.sideBarIcon} />}
             text="Artists"
             href="/artists"
           />
           <SideBarLink
-            icon={<BsDisc className={styles.icon} />}
+            icon={<BsDisc className={styles.sideBarIcon} />}
             text="Albums"
             href="/albums"
           />
           <SideBarLink
-            icon={<FaItunesNote className={styles.icon} />}
+            icon={<FaItunesNote className={styles.sideBarIcon} />}
             text="Songs"
             href="/songs"
           />
@@ -89,21 +110,21 @@ const SideBar = () => {
 
       <div className={styles.linkContainer}>
         <SideBarLink
-          icon={<BsSuitHeart className={styles.icon} />}
+          icon={<BsSuitHeart className={styles.sideBarIcon} />}
           text="Liked Songs"
           href="/liked-songs"
         />
         <SideBarLink
-          icon={<MdPlaylistPlay className={styles.icon} />}
+          icon={<MdPlaylistPlay className={styles.sideBarIcon} />}
           text="Queue"
           href="/queue"
         />
         <SideBarLink
-          icon={<MdOutlinePlaylistAdd className={styles.icon} />}
+          icon={<MdOutlinePlaylistAdd className={styles.sideBarIcon} />}
           text="New Playlist"
           wholeButtonTrigger
           dotsIcon
-          menuItem={<NewPlaylist />}
+          menuItem={<PopOverInner buttonText="Create" playlistPopover />}
         />
       </div>
       <div className={styles.scrollbarContainer}>
