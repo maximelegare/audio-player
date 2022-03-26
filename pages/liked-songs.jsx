@@ -17,7 +17,7 @@ function LikedSongs({ likedSongs }) {
 
   return (
     <div>
-      <Header title="Liked Songs" smallTitle="Playlist" src={likedSongImg} />
+      <Header title="Liked Songs" smallTitle="Playlist" src={likedSongImg} headerImage />
       <PageLayout>
         <RowList data={likedSongsPlaylist} />
       </PageLayout>

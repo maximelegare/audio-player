@@ -3,7 +3,7 @@ import styles from "../../styles/Header/Header.module.scss";
 import CustomImage from "../_Core/CustomImage";
 import FourImagesSquare from "../_Core/FourImagesSquare";
 
-const Header = ({ title, smallTitle, src, round, images }) => {
+const Header = ({ title, smallTitle, src, round, images, headerImage }) => {
 
 
   return (
@@ -19,6 +19,7 @@ const Header = ({ title, smallTitle, src, round, images }) => {
               alt=""
               width={190}
               height={190}
+              headerImage={headerImage}
             />
           )}
         </div>
