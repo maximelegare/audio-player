@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "ssl":" (local-ssl-proxy --source 3001 --target 3000)",
+    "ssl": " (local-ssl-proxy --source 3001 --target 3000)",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -33,6 +33,7 @@
     "recoil-persist": "^4.0.0",
     "sass": "^1.49.0",
     "serverless-mysql": "^1.5.4",
+    "ssh-exec": "^2.0.0",
     "ssh2-promise": "^1.0.2",
     "streamifier": "^0.1.1"
   },

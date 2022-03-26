@@ -1,7 +1,7 @@
 const SSH2Promise = require("ssh2-promise");
 const fwd = require("fwd-stream");
 
-var sshConfig = {
+const sshConfig = {
   host: process.env.SSH_RASBERRY_HOST,
   username: process.env.SSH_RASBERRY_USERNAME,
   password: process.env.SSH_RASBERRY_PASSWORD,

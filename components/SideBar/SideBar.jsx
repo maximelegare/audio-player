@@ -49,6 +49,7 @@ const SideBar = () => {
           <SideBarLink
             icon={<AiOutlineSync className={styles.icon} />}
             text="sync"
+            handleClick={() => fetch("/api/sync")}
           />
         </div>
         <div className={styles.linkContainer}>
