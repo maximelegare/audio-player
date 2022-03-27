@@ -21,7 +21,7 @@ def createUrlRoute(values):
 
 try:
     firebaseProjectID = ""
-    cred = credentials.Certificate("") #Firebase service-account certificate
+    cred = credentials.Certificate("/srv/dev-disk-by-uuid-5D9F-2A63/hodei/sync/firebase-private-key.json")
     firebase_admin.initialize_app(cred, {"storageBucket" : f"{firebaseProjectID}.appspot.com" })
   
 except Exception as e:
@@ -56,7 +56,6 @@ try:
         artist_route = createUrlRoute([tag.artist])
         
         imageBuffer = tag.get_image()
-        # print(picture_url)
 
         
         try:
@@ -68,6 +67,7 @@ try:
             
             # If song does not exist, add it to songs table
             if songRow == None:
+                
                 # Create song data & insert it
                 song_data = (tag.title, tag.album, tag.duration, song_route, 0, f"/{file}")
                 stmt_insert_song = ("INSERT INTO songs" 
@@ -81,22 +81,22 @@ try:
                 # if album does not exist, add it to albums table
                 if albumRow == None:
                     
-                    # Create bucket on Firebase storage
-                    bucket = storage.bucket()
-                    blob = bucket.blob(f"{albumName}.jpg")
-                    
-                    # Generate token for the image to be able to access it from here (create the url)
-                    new_token = uuid4()
-                    metadata = {"firebaseStorageDownloadTokens": new_token}    
-                    
-                    # Upload with specific metadata
-                    blob.metadata = metadata 
-                    blob.upload_from_string(
-                        imageBuffer,
-                        content_type='image/jpg',
-                    )    
-                    
-                    picture_url = f"https://firebasestorage.googleapis.com/v0/b/{bucket.name}/o/{quote(albumName)}.jpg?alt=media&token={new_token}"
+                    picture_url = None
+                    if imageBuffer:
+                        bucket = storage.bucket()
+                        blob = bucket.blob(f"{albumName}.jpg")
+
+                        # Generate token for the image to be able to access it from here (create the url)
+                        new_token = uuid4()
+                        metadata = {"firebaseStorageDownloadTokens": new_token}    
+
+                        blob.metadata = metadata 
+                        blob.upload_from_string(
+                            imageBuffer,
+                            content_type='image/jpg',
+                        )    
+
+                        picture_url = f"https://firebasestorage.googleapis.com/v0/b/{bucket.name}/o/{quote(albumName)}.jpg?alt=media&token={new_token}"
                     
                     # Create album data & insert it
                     album_data = (tag.album, album_route, picture_url, tag.year, tag.artist, artist_route) 
@@ -112,11 +112,11 @@ try:
         except Exception as e:
             print(e)    
         
-    cnx.close()     
+    cnx.close()    
+    print("disconnected")     
     
 except Exception as e:
     print("failed to connect to db :", e)
-    
     
 
         
