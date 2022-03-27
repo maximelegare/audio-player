@@ -1,26 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import styles from "../../../styles/_Core/CustomInput.module.scss";
 
 import CustomInputDropdownItems from "./CustomInputDropdownItems";
 import PageLayout from "../../Layout/PageLayout";
 
-const CustomInputDropdown = ({ dropdownSectionsData }) => {
+import WithSpinner from "../../../HOC/withSpinner";
+
+const CustomInputDropdownItemsWithSpinner = WithSpinner(
+  CustomInputDropdownItems
+);
+
+const CustomInputDropdown = ({ dropdownSectionsData, isLoading }) => {
+  useEffect(() => {
+    console.log("customInputDropdown :", isLoading);
+  }, [isLoading]);
+
   return (
     <ScrollArea.Root className={styles.customInputDropdown}>
       <ScrollArea.Viewport className={styles.scrollArea}>
         <PageLayout variant="small">
-          {dropdownSectionsData.length !== 0 ? (
-            dropdownSectionsData.map((section, idx) => (
-              <CustomInputDropdownItems
-                key={idx}
-                data={section.data}
-                title={section.title}
-              />
-            ))
-          ) : (
-            <h4>No data Found</h4>
-          )}
+          <CustomInputDropdownItemsWithSpinner
+            sections={dropdownSectionsData}
+            isLoading={isLoading}
+          />
         </PageLayout>
       </ScrollArea.Viewport>
 

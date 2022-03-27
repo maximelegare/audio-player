@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import styles from "../../../styles/_Core/CustomInput.module.scss";
 import CustomInputDropdown from "./CustomInputDropdown";
@@ -10,8 +10,7 @@ const CustomInput = ({
   isLoading,
   dropdownSectionsData,
 }) => {
-  
-  const [inputValue, setInputValue] = useState("")
+  const [inputValue, setInputValue] = useState("");
 
   const getStyles = (variant) => {
     switch (variant) {
@@ -27,7 +26,7 @@ const CustomInput = ({
   const handleChangeLocally = (e) => {
     if (!isLoading) {
       handleChange(e);
-      setInputValue(e.target.value)
+      setInputValue(e.target.value);
     }
   };
 
@@ -42,8 +41,11 @@ const CustomInput = ({
         placeholder={placeHolder}
       />
 
-      {(inputValue !== "" && dropdownSectionsData) && (
-        <CustomInputDropdown dropdownSectionsData={dropdownSectionsData} />
+      {inputValue !== "" && dropdownSectionsData && (
+        <CustomInputDropdown
+          dropdownSectionsData={dropdownSectionsData}
+          isLoading={isLoading}
+        />
       )}
     </>
   );
