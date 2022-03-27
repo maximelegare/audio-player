@@ -66,7 +66,7 @@ const SideBar = () => {
             menuItem={
               <PopOverInner
                 buttonText="Confirm"
-                text="Are you sure you want to Sync?"
+                text="Are you sure you want to Synchronize?"
                 handleSync={handleSyncButton}
                 disableButton={isSynching}
               />
