@@ -1,20 +1,21 @@
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google"
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
   providers: [
-    GoogleProvider({
-      clientId:process.env.GOOGLE_CLIENT_ID,
-      clientSecret:process.env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code"
-        }
+    CredentialsProvider({
+      name:"Custom Provider",
+      credentials:{
+        username:{label:"Username", type:"text", placeholder:"Username"},
+        password:{label:"Password", type:"password"}
+      },
+      async authorize(credentials){
+        const user = {name:"Hodei-Music"}
+        return user
       }
     })
   ],
+  
   secret: process.env.JWT_SECRET,
   // pages: {
   //   signIn: "Login",

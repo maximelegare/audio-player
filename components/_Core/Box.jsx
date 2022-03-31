@@ -7,6 +7,9 @@ const Box = ({children, variant}) => {
             case "center" :{
                 return styles.center
             }
+            case "margins":{
+                return styles.margins
+            }
         }
     }
   return (

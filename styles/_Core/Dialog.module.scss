@@ -1,0 +1,41 @@
+@import "../variables.module.scss"; 
+
+
+
+
+.overlay{
+    background-color: rgba(0, 0, 0, 0.781);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 199;
+}
+
+.content{
+    background: $bg-color-gradiant;
+    border-radius: 5px;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    // height: 500px;
+    max-width: 400px;   
+    z-index: 200;
+    
+    .contentElement{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .container{
+        padding:20px;
+        display: flex;
+        flex-direction: column;
+        
+    }
+}
