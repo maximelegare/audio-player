@@ -9,6 +9,8 @@ const CustomInput = ({
   variant,
   isLoading,
   dropdownSectionsData,
+  name,
+  autoFocus
 }) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -34,11 +36,12 @@ const CustomInput = ({
     <>
       <input
         className={getStyles(variant)}
-        autoFocus
+        autoFocus={autoFocus}
         type="text"
         value={inputValue}
         onChange={handleChangeLocally}
         placeholder={placeHolder}
+        name={name}
       />
 
       {inputValue !== "" && dropdownSectionsData && (

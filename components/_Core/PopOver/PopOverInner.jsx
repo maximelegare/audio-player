@@ -43,6 +43,7 @@ const PopOverInner = ({ buttonText, text, playlistPopover, handleSync, disableBu
           placeHolder="Playlist Name"
           value={inputValue}
           handleChange={handleInputChange}
+          autoFocus
         />
       )}
 

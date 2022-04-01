@@ -54,6 +54,7 @@ const Search = () => {
                 variant="bigInput"
                 isLoading={isLoading}
                 dropdownSectionsData={suggestions}
+                autoFocus
               />
             </form>
           </PageLayout>

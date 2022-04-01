@@ -12,9 +12,7 @@ const CustomInputDropdownItemsWithSpinner = WithSpinner(
 );
 
 const CustomInputDropdown = ({ dropdownSectionsData, isLoading }) => {
-  useEffect(() => {
-    console.log("customInputDropdown :", isLoading);
-  }, [isLoading]);
+
 
   return (
     <ScrollArea.Root className={styles.customInputDropdown}>

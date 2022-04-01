@@ -4,14 +4,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export default NextAuth({
   providers: [
     CredentialsProvider({
-      name:"Custom Provider",
-      credentials:{
-        username:{label:"Username", type:"text", placeholder:"Username"},
-        password:{label:"Password", type:"password"}
-      },
+      name:"credentials",
+      id:"credentials",
       async authorize(credentials){
-        const user = {name:"Hodei-Music"}
-        return user
+        
+        if(credentials.username === ""){}
       }
     })
   ],
