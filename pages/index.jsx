@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { AudioPlayer } from "../components/AudioPlayer/AudioPlayer";
 import styles from "../styles/Index.module.scss";
-import { getProviders, signIn, signOut } from "next-auth/react";
 import SideBar from "../components/SideBar/SideBar";
 // import Center from "../components/Artist/Center";
 
@@ -14,9 +13,13 @@ import GridList from "../components/_Partials/List/GridList/GridList";
 import BigCard from "../components/Card/BigCard";
 import PageLayout from "../components/Layout/PageLayout";
 import TitleSection from "../components/_Partials/Title/TitleSection";
+import { useSession,  } from "next-auth/react";
 
 export default function Home({ playlists }) {
   // const setPlaylist = useSetRecoilState(customPlaylistsState)
+  const { data: session, status } = useSession();
+
+  console.log(session)
 
   return (
     <div className={styles.container}>
@@ -33,6 +36,8 @@ export default function Home({ playlists }) {
 }
 
 export async function getServerSideProps(context) {
+
+
   const res = await sql_query_string(`
   SELECT p.title, p.route, a.picture_url
   FROM playlists p 

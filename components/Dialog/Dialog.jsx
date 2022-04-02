@@ -5,6 +5,7 @@ import logo from "../../public/assets/SVG/hodei-logo-white.svg";
 import Image from "next/image";
 import { useState } from "react";
 import CustomButton from "../_Core/CustomButton";
+import { signIn } from "next-auth/react";
 
 const Dialog = () => {
   const [inputValues, setInputValues] = useState({
@@ -30,7 +31,7 @@ const Dialog = () => {
               </div>
               <div className={styles.contentElement}>
                 <CustomInput
-                  autoFocus  
+                  autoFocus
                   placeHolder="Username"
                   value={inputValues.username}
                   handleChange={handleChange}
@@ -41,12 +42,21 @@ const Dialog = () => {
                 <CustomInput
                   placeHolder="Password"
                   name="password"
+                  type="password"
                   value={inputValues.password}
                   handleChange={handleChange}
                 />
               </div>
               <div className={styles.contentElement}>
-                <CustomButton variant="text" href="/">Login</CustomButton>
+                <CustomButton
+                  variant="text"
+                  handleClick={(e) => {
+                    e.preventDefault()
+                    signIn("spotify", { callbackUrl: "/" });
+                  }}
+                >
+                  Login
+                </CustomButton>
               </div>
             </div>
           </AlertDialog.Content>

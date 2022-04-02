@@ -20,7 +20,7 @@
     "music-metadata": "^7.11.7",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
-    "next": "12.0.8",
+    "next": "^12.1.4",
     "next-auth": "^4.1.2",
     "next-pwa": "^5.4.4",
     "npm": "^8.4.1",
@@ -36,6 +36,7 @@
     "sass": "^1.49.0",
     "serverless-mysql": "^1.5.4",
     "sharp": "^0.30.3",
+    "spotify-web-api-node": "^5.0.2",
     "ssh2-promise": "^1.0.2",
     "streamifier": "^0.1.1"
   },
