@@ -57,15 +57,20 @@ export default NextAuth({
 
       //   Initial sign in of the user
       if (account && user) {
-    
-        return {
-          ...token,
-          accessToken: account.access_token,
-          refreshToken: account.refresh_token,
-          username: account.providerAccountId,
-          accessTokenExpires: account.expires_at * 1000,
-          
-        };
+        
+        if(account.providerAccountId === process.env.SPOTIFY_USERID){
+          return {
+            ...token,
+            accessToken: account.access_token,
+            refreshToken: account.refresh_token,
+            username: account.providerAccountId,
+            accessTokenExpires: account.expires_at * 1000,
+            
+          };
+        }
+        else{
+          return {}
+        }
       }
 
       // Return previous token if the token access has not expired yet

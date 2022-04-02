@@ -29,7 +29,7 @@ const Dialog = () => {
               <div className={styles.contentElement}>
                 <Image src={logo} width={100} height={50} alt="" />
               </div>
-              <div className={styles.contentElement}>
+              {/* <div className={styles.contentElement}>
                 <CustomInput
                   autoFocus
                   placeHolder="Username"
@@ -46,7 +46,7 @@ const Dialog = () => {
                   value={inputValues.password}
                   handleChange={handleChange}
                 />
-              </div>
+              </div> */}
               <div className={styles.contentElement}>
                 <CustomButton
                   variant="text"
@@ -55,7 +55,7 @@ const Dialog = () => {
                     signIn("spotify", { callbackUrl: "/" });
                   }}
                 >
-                  Login
+                  Login with Spotify
                 </CustomButton>
               </div>
             </div>
