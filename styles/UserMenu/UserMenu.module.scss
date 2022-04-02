@@ -1,0 +1,20 @@
+@import "../variables.module.scss";
+
+
+.container{
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    padding: 5px 5px;
+    border-radius: 99999px;
+    background:$bg-color-gradiant;
+    opacity: 0.8;
+
+    .userName{
+        margin: 0 10px;
+    }
+    &:hover{
+        cursor: pointer;
+        opacity: 1;
+    }
+}

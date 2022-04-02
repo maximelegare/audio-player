@@ -1,28 +1,33 @@
 @import "../variables.module.scss";
 
-.container {
+
+.wrapper{
   display: flex;
   margin-bottom: 70px;
   background: $bg-color-transparent;
-  padding:40px 20px  ;
+  padding: 40px 20px;
+  justify-content: space-between;
+}
+
+.container {
+  display: flex;
   
   //   justify-content: space-between;
-}
+  .headerInfos {
+    align-self: center;
+  }
 
-.headerInfos {
-  align-self: center;
-}   
-
-.artist{
+  .artist {
     margin-bottom: 5px;
     font-weight: bold;
-}
+  }
 
-.title {
-  font-size: 4rem;
-  line-height: 1;
-}
+  .title {
+    font-size: 4rem;
+    line-height: 1;
+  }
 
-.image{
-  margin-right: 20px;
+  .image {
+    margin-right: 20px;
+  }
 }

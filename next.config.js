@@ -10,7 +10,7 @@ module.exports = withPWA({
     disable:process.env.NODE_ENV === 'development'
   },
   images:{
-    domains:["res.cloudinary.com", "firebasestorage.googleapis.com"]
+    domains:["res.cloudinary.com", "firebasestorage.googleapis.com", "i.scdn.co"]
   },
   
   cookies: {
