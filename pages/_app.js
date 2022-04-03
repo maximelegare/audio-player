@@ -18,7 +18,7 @@ const AppWrapper = ({ children }) => {
 
 
   useEffect(() => {
-    fetchPlaylists("http://localhost:3000/api/get-playlists")
+    fetchPlaylists(`${process.env.BASE_URL}/api/get-playlists`)
   }, []);
   
   return <>{children}</>;
