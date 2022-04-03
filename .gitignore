@@ -37,5 +37,5 @@ yarn-error.log*
 /dev
 
 # ssl certification
-/_cert
+
 
