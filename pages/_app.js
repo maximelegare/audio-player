@@ -16,9 +16,8 @@ const AppWrapper = ({ children }) => {
 
   const {fetchPlaylists} = useFetch()
 
-
   useEffect(() => {
-    fetchPlaylists(`https://audio-player-five.vercel.app/api/get-playlists`)
+    fetchPlaylists(`/api/get-playlists`)
   }, []);
   
   return <>{children}</>;
