@@ -15,7 +15,6 @@
     "@radix-ui/react-scroll-area": "^0.1.4",
     "axios": "^0.25.0",
     "cloudinary": "^1.28.1",
-    "formidable-serverless": "^1.1.1",
     "fwd-stream": "^1.0.4",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
