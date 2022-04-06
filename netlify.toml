@@ -1,6 +1,0 @@
-[build]
-  functions = "lib"
-  command = "npm run build"
-
-[functions]
-  included_files = ["_cert/**"]  
