@@ -21,7 +21,7 @@ def createUrlRoute(values):
 
 try:
     firebaseProjectID = ""
-    cred = credentials.Certificate("/srv/dev-disk-by-uuid-5D9F-2A63/hodei/sync/firebase-private-key.json")
+    cred = credentials.Certificate("/srv/dev-disk-by-uuid-1ff3e8df-731b-496d-be7d-09abcb10dffc/hodei2/sync/firebase-private-key.json")
     firebase_admin.initialize_app(cred, {"storageBucket" : f"{firebaseProjectID}.appspot.com" })
   
 except Exception as e:
@@ -32,11 +32,12 @@ try:
     # MUST pass keywords as arguments, NOT AN OBJECT
     cnx = mysql.connector.connect(
             host="",
+            port="",
             user="",
             password="",
             database="",
-            ssl_ca="/srv/dev-disk-by-uuid-5D9F-2A63/hodei/sync/server.crt",
-            client_flags=[ClientFlag.SSL]
+            # ssl_ca="/srv/dev-disk-by-uuid-5D9F-2A63/hodei/sync/server.crt",
+            # client_flags=[ClientFlag.SSL]
             )
     directory = "/srv/dev-disk-by-uuid-5D9F-2A63/hodei/_music"
 
