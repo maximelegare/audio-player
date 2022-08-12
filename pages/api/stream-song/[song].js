@@ -5,6 +5,7 @@ const sshConfig = {
   host: process.env.SSH_RASBERRY_HOST,
   username: process.env.SSH_RASBERRY_USERNAME,
   password: process.env.SSH_RASBERRY_PASSWORD,
+  port:process.env.SSH_RASBERRY_PORT
 };
 
 let ssh = null;
