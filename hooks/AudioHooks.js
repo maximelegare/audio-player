@@ -229,7 +229,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     const newPaylist = filterSongFromPlaylist(song, likedSongsPlaylist); // Locally
     setLikedSongsPlaylist(newPaylist);
     try {
-      await axios.post("http://localhost:3000/api/playlist", {
+      await axios.post("/api/playlist", {
         type: routeType.TOGGLE_LIKED_SONG,
         liked: !song.liked,
         songRoute: song.song_route,
@@ -283,7 +283,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     setRecoilPlaylists([...playlists, playlist]);
 
     try {
-      await axios.post("http://localhost:3000/api/playlist", {
+      await axios.post("/api/playlist", {
         type: routeType.CREATE_PLAYLIST,
         name,
         route,
@@ -301,7 +301,7 @@ const useAudioPlayer = (fileUrl, duration) => {
 
       try {
         // Set db
-        await axios.post("http://localhost:3000/api/playlist", {
+        await axios.post("/api/playlist", {
           type: routeType.ADD_SONG_TO_PLAYLIST,
           songRoute: song.song_route,
           playlistName,
@@ -317,7 +317,7 @@ const useAudioPlayer = (fileUrl, duration) => {
       setCurrentRouteSongs(newPlaylist);
       // Set db
       try {
-        await axios.post("http://localhost:3000/api/playlist", {
+        await axios.post("/api/playlist", {
           type: routeType.REMOVE_SONG_FROM_PLAYLIST,
           songRoute: song.song_route,
           playlistName,
