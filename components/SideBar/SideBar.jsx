@@ -51,7 +51,7 @@ const SideBar = () => {
           <Image src={logo} width={100} height={50} alt="" />
           <hr />
         </div>
-        <div className={styles.linkContainer}>
+        {/* <div className={styles.linkContainer}>
           <SideBarLink
             icon={
               <AiOutlineSync
@@ -72,7 +72,7 @@ const SideBar = () => {
               />
             }
           />
-        </div>
+        </div> */}
         <div className={styles.linkContainer}>
           <SideBarLink
             icon={<AiOutlineHome className={styles.sideBarIcon} />}

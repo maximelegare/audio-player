@@ -23,7 +23,7 @@ const Search = () => {
       setSuggestions([]);
     } else {
       setIsLoading(true);
-      const res = await fetch(`http://localhost:3000/api/search?q=${value}`);
+      const res = await fetch(`/api/search?q=${value}`);
       if (res) {
         setIsLoading(false);
       }
