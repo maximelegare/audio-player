@@ -23,6 +23,7 @@ export async function getServerSideProps(context) {
   const res = await sql_query_string(`
   SELECT title, picture_url, title_route as route, artist, year 
   FROM albums 
+  WHERE portfolio = 1
   ORDER BY title`);
 
   const albums = JSON.parse(JSON.stringify(res));

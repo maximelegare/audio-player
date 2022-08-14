@@ -24,6 +24,7 @@ export async function getServerSideProps(context) {
     FROM songs s
     JOIN albums a 
     ON a.title = s.album
+    WHERE a.portfolio = 1
     `);
   const songs = JSON.parse(JSON.stringify(res));
 

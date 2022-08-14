@@ -33,7 +33,8 @@ export async function getServerSideProps() {
   FROM songs s
   JOIN albums a 
   ON a.title = s.album
-  WHERE s.liked = 1
+  WHERE s.liked = 1 
+  && a.portfolio = 1
   `);
   const data = JSON.parse(JSON.stringify(res));
 

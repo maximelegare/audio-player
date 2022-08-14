@@ -19,7 +19,6 @@ export default function Home({ playlists }) {
   // const setPlaylist = useSetRecoilState(customPlaylistsState)
   const { data: session, status } = useSession();
 
-  console.log(session)
 
   return (
     <div className={styles.container}>
@@ -47,6 +46,7 @@ export async function getServerSideProps(context) {
   ON s.title_route = sp.song_route
   JOIN albums a 
   ON a.title = s.album
+  WHERE p.portfolio = 1
   ORDER BY p.route
   `);
 

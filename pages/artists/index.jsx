@@ -26,6 +26,7 @@ export async function getServerSideProps() {
   const res = await sql_query_string(`
   SELECT artist as title, picture_url, artist_route as route
   FROM albums 
+  WHERE portfolio = 1
   GROUP BY artist
   ORDER BY artist
   `);

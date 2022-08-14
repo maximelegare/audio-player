@@ -56,7 +56,8 @@ export async function getServerSideProps(context) {
   JOIN albums a 
   ON s.album = a.title 
   JOIN playlists p ON p.title = sp.playlist 
-  WHERE p.route = ?
+  WHERE p.route = ? 
+  && a.portfolio = 1
   ORDER BY sp.id
   `,[`/playlists/${playlist}`]);
 

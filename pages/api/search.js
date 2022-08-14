@@ -10,21 +10,21 @@ const handler = async (req, res) => {
     SELECT s.title, s.title_route as song_route, s.liked,  s.album, s.track_no, s.streaming_url, s.RP_streaming_path, a.picture_url, a.artist, s.duration, a.title_route as album_route, a.artist_route 
     FROM songs s
     JOIN albums as a
-    ON s.album = a.title  WHERE s.title LIKE ? LIMIT 6
+    ON s.album = a.title  WHERE s.title LIKE ? && a.portfolio = 1 LIMIT 6
     `
     ,[`%${req.query.q}%`]);
 
     const albums = await sql_query_string(`
     SELECT title, title_route as song_route, picture_url, artist 
     FROM albums 
-    WHERE title LIKE '%${req.query.q}%' 
+    WHERE title LIKE '%${req.query.q}%' && portfolio = 1
     LIMIT 4;
     `);
 
     const artists = await sql_query_string(`
     SELECT DISTINCT (artist) as title,  picture_url, artist_route as song_route
     FROM albums 
-    WHERE artist LIKE '%${req.query.q}%' 
+    WHERE artist LIKE '%${req.query.q}%' && portfolio = 1
     GROUP BY artist 
     LIMIT 4;
     `);

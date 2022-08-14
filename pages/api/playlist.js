@@ -13,6 +13,7 @@ const handler = async (req, res) => {
         const response = await sql_insert("playlists", {
           title: name,
           route: route,
+          portfolio:1
         });
         return res.json(response);
       } catch (e) {
