@@ -1,5 +1,7 @@
 @import "./variables.module.scss";
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 html,
 body {
   padding: 0;

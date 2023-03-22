@@ -6,7 +6,6 @@ import { signOut } from "next-auth/react";
 
 const UserMenu = () => {
   const { data: session } = useSession();
-
   return (
     <div className={styles.container} onClick={() => signOut()}>
       <CustomImage

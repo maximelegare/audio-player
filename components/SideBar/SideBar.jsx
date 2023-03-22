@@ -10,6 +10,8 @@ import Image from "next/image";
 
 import logo from "../../public/assets/SVG/hodei-logo-white.svg";
 
+import hodeiSmall from "../../public/assets/SVG/hodei.svg";
+
 import { FaItunesNote } from "react-icons/fa";
 import { BsDisc, BsSearch } from "react-icons/bs";
 import { HiUserGroup } from "react-icons/hi";
@@ -23,6 +25,8 @@ import { currentRoutePlaylistTitleState } from "../../atoms/audioAtom";
 import { searchSectionVisibilityState } from "../../atoms/visibilityAtom";
 import { useRecoilState } from "recoil";
 import CustomButton from "../_Core/CustomButton";
+import { signIn } from "next-auth/react";
+import spotify from "../../public/assets/SVG/spotify.svg";
 
 const SideBar = () => {
   const { playlists } = useAudioPlayer();
@@ -46,33 +50,51 @@ const SideBar = () => {
 
   return (
     <div className={styles.container}>
-      <div>
-        <div className={styles.linkContainer}>
-          <Image src={logo} width={100} height={50} alt="" />
-          <hr />
+      <div className={styles.linkContainer}>
+        <Image src={logo} width={100} height={50} alt="" />
+      </div>
+      <hr />
+      <div className={styles.linkContainer}>
+        <div className="flex items-center gap-4">
+          <CustomButton variant="iconOnly" underline>
+            <div className="flex items-center">
+              <Image src={hodeiSmall} width={25} height={25} alt="" />
+            </div>
+          </CustomButton>
+          <CustomButton
+            variant="iconOnly"
+            handleClick={(e) => {
+              e.preventDefault();
+              signIn("spotify", { callbackUrl: "/" });
+            }}
+          >
+            <div className="flex items-center">
+              <Image src={spotify} width={25} height={25} alt="" />
+              <div>+</div>
+            </div>
+          </CustomButton>
         </div>
-        <div className={styles.linkContainer}>
-          <SideBarLink
-            icon={
-              <AiOutlineSync
-                className={`${styles.sideBarIcon} ${
-                  isSynching && styles.rotate
-                }`}
-              />
-            }
-            text="sync"
-            wholeButtonTrigger
-            dotsIcon
-            menuItem={
-              <PopOverInner
-                buttonText="Confirm"
-                text="Are you sure you want to Synchronize?"
-                handleSync={handleSyncButton}
-                disableButton={isSynching}
-              />
-            }
-          />
-        </div>
+      </div>
+      <hr />
+      <div className={styles.linkContainer}>
+        <SideBarLink
+          icon={
+            <AiOutlineSync
+              className={`${styles.sideBarIcon} ${isSynching && styles.rotate}`}
+            />
+          }
+          text="sync"
+          wholeButtonTrigger
+          dotsIcon
+          menuItem={
+            <PopOverInner
+              buttonText="Confirm"
+              text="Are you sure you want to Synchronize?"
+              handleSync={handleSyncButton}
+              disableButton={isSynching}
+            />
+          }
+        />
         <div className={styles.linkContainer}>
           <SideBarLink
             icon={<AiOutlineHome className={styles.sideBarIcon} />}
@@ -105,8 +127,8 @@ const SideBar = () => {
             href="/songs"
           />
         </div>
-        <hr />
       </div>
+      <hr />
 
       <div className={styles.linkContainer}>
         <SideBarLink
