@@ -9,7 +9,17 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        greenPrimaryAccent:"#2DE282",
+        bluePrimaryAccent:"#0DE7DA",
+        white:"#ffe3d4",
+        whiteHover:"#fff0e8"
+      },
+      backgroundImage:(theme) => ({
+        gradiantPrimary:`linear-gradient(to right, ${theme('colors.greenPrimaryAccent')}, ${theme('colors.bluePrimaryAccent')})`
+      })
+    },
   },
   plugins: [],
 }

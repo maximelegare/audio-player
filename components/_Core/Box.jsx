@@ -5,10 +5,10 @@ const Box = ({children, variant}) => {
     const getStyles = (variant) => {
         switch (variant){
             case "center" :{
-                return styles.center
+                return "flex justify-center items-center"
             }
             case "margins":{
-                return styles.margins
+                return "my-5"
             }
         }
     }

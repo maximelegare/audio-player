@@ -14,12 +14,13 @@ const CustomButton = ({
   underline,
 }) => {
   const getStyles = (variant) => {
+    console.log(underline)
     switch (variant) {
       case "play": {
-        return styles.playPause;
+        return `bg-gradiantPrimary bg-white ${styles.playPause}`;
       }
       case "play-small": {
-        return `${styles.playPause} ${styles.small}`;
+        return `bg-gradiantPrimary bg-white ${styles.playPause} ${styles.small}`;
       }
       case "iconOnly": {
         return styles.iconOnly;
@@ -35,7 +36,7 @@ const CustomButton = ({
 
   return (
     <>
-      <div>
+      <div className="relative">
         {popOverClose ? (
           <PopoverClose
             type={type ? type : ""}
@@ -79,8 +80,8 @@ const CustomButton = ({
             )}
           </>
         )}
-        <div className={underline? "visible":"hidden"}>
-          <hr className="border-2 border-[#2DE282] border-solid opacity-100 rounded-lg" />
+        <div className={underline ? "visible" : "hidden"}>
+          <div className="absolute -bottom-2 rounded-full h-1 w-full bg-gradiantPrimary"></div>
         </div>
       </div>
     </>
