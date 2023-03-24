@@ -8,11 +8,11 @@
     "queue": "/queue"
   },
   "spotify":{
-    "home": "sp/",
+    "home": "/",
     "artists": "sp/artists",
     "albums": "sp/albums",
     "songs": "sp/songs",
     "likedSongs": "sp/liked-songs",
-    "queue": "sp/queue"
+    "queue": "/queue"
   }
 }

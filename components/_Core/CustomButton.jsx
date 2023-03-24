@@ -14,7 +14,6 @@ const CustomButton = ({
   underline,
 }) => {
   const getStyles = (variant) => {
-    console.log(underline)
     switch (variant) {
       case "play": {
         return `bg-gradiantPrimary bg-white ${styles.playPause}`;

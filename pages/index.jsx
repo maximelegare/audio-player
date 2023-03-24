@@ -19,7 +19,6 @@ export default function Home({ playlists }) {
   // const setPlaylist = useSetRecoilState(customPlaylistsState)
   const { data: session, status } = useSession();
 
-  console.log(session)
 
   return (
     <div className={styles.container}>

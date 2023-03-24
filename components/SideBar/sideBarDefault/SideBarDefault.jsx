@@ -5,6 +5,8 @@ import { selectedSideBarProvider } from "../../../atoms/visibilityAtom";
 import { searchSectionVisibilityState } from "../../../atoms/visibilityAtom";
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
 
+import useSpotify from "../../../hooks/useSpotify";
+
 import { signIn } from "next-auth/react";
 
 import { useSession } from "next-auth/react";
@@ -28,9 +30,13 @@ import { MdOutlinePlaylistAdd, MdPlaylistPlay } from "react-icons/md";
 import { Scrollbar } from "react-scrollbars-custom";
 
 import sideBarLinks from "../../../lib/sidebarLinks.json";
+import { SideBarScrollbar } from "./sideBarScrollbar/SideBarScrollbar";
 
 export const SideBarDefault = () => {
   const { playlists } = useAudioPlayer();
+  const { spotifyPlaylists } = useSpotify();
+
+  console.log(spotifyPlaylists);
 
   const [provider, setSelectedProvider] = useRecoilState(
     selectedSideBarProvider
@@ -41,6 +47,17 @@ export const SideBarDefault = () => {
   const [searchVisibility, setSearchVisibility] = useRecoilState(
     searchSectionVisibilityState
   );
+
+  const getPlaylists = (provider) => {
+    switch (provider) {
+      case "hodei": {
+        return playlists;
+      }
+      case "spotify": {
+        return spotifyPlaylists;
+      }
+    }
+  };
 
   return (
     <>
@@ -137,17 +154,10 @@ export const SideBarDefault = () => {
           menuItem={<PopOverInner buttonText="Create" playlistPopover />}
         />
       </div>
-      <div className={styles.scrollbarContainer}>
-        <Scrollbar noScrollX style={{ height: "100%", width: "100%" }}>
-          <div className={styles.linkContainer}>
-            {playlists?.map(({ id, title, route }) => (
-              <SideBarLink key={id} text={title} href={route} />
-            ))}
-          </div>
-        </Scrollbar>
-      </div>
-      <div className="flex gap-2">
-      </div>
+      <hr />
+
+      <SideBarScrollbar playlists={getPlaylists(provider)} />
+      <div className="flex gap-2"></div>
     </>
   );
 };
