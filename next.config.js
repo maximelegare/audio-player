@@ -34,6 +34,15 @@ module.exports = withPWA({
     }
     
   },
+  async redirects() {
+    return [
+      {
+        source: '/sp',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
   // async headers() {
   //   return [
   //     {

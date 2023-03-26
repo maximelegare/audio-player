@@ -4,11 +4,20 @@ import SpotifyWebApi from "spotify-web-api-node";
 
 import { useRecoilState } from "recoil";
 import { spotifyPlaylistsAtomState } from "../atoms/audioAtomSpotify";
+import { spotifyCurrentPlaylistAtomState } from "../atoms/audioAtomSpotify";
+import { spotifyCurrentPlaylistIdAtomState } from "../atoms/audioAtomSpotify";
 
 function useSpotify() {
   const [spotifyPlaylists, setSpotifyPlaylists] = useRecoilState(
     spotifyPlaylistsAtomState
   );
+
+  const [spotifyCurrentPlaylist, setSpotifyCurrentPlaylist] = useRecoilState(
+    spotifyCurrentPlaylistAtomState
+  );
+
+  const [spotifyCurrentPlaylistId, setspotifyCurrentPlaylistId] =
+    useRecoilState(spotifyCurrentPlaylistIdAtomState);
 
   // Create Spotify APi
   const spotifyApi = new SpotifyWebApi({
@@ -29,6 +38,7 @@ function useSpotify() {
     }
   }, [session]);
 
+  // Get all the user's spotify playlists
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
       return spotifyApi.getUserPlaylists().then((data) => {
@@ -37,7 +47,25 @@ function useSpotify() {
     }
   }, [session, spotifyApi]);
 
-  return { spotifyApi, spotifyPlaylists };
+
+  // Get specific spotify playlist 
+  const getSpotifyCurrentPlaylist = () =>{
+    spotifyApi
+      ?.getPlaylist(spotifyCurrentPlaylistId)
+      .then((data) => {
+        setSpotifyCurrentPlaylist(data?.body);
+      })
+      .catch((err) => console.log(err));
+  }    
+    
+
+
+  return {
+    spotifyApi,
+    spotifyPlaylists,
+    spotifyCurrentPlaylist,
+    getSpotifyCurrentPlaylist
+  };
 }
 
 export default useSpotify;

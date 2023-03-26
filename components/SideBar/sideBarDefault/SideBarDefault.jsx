@@ -115,7 +115,6 @@ export const SideBarDefault = () => {
           menuItem={<CustomInput placeHolder="Search Anything" />}
         />
       </div>
-      <hr />
       <div className={styles.linkContainer}>
         <SideBarLink
           icon={<HiUserGroup className={styles.sideBarIcon} />}
@@ -133,7 +132,6 @@ export const SideBarDefault = () => {
           href={sideBarLinks[provider].songs}
         />
       </div>
-      <hr />
 
       <div className={styles.linkContainer}>
         <SideBarLink
@@ -157,7 +155,6 @@ export const SideBarDefault = () => {
       <hr />
 
       <SideBarScrollbar playlists={getPlaylists(provider)} />
-      <div className="flex gap-2"></div>
     </>
   );
 };

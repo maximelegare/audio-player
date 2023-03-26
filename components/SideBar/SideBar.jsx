@@ -43,6 +43,8 @@ const SideBar = () => {
       </div>
       <hr />
       {getSideBarPage(page)}
+      <div className="w-100 h-2" ></div>
+      <hr />
       <div className={styles.linkContainer}>
         {page === "default" ? (
           <SideBarLink

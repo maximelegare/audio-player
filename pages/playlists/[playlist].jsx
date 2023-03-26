@@ -3,13 +3,11 @@ import { sql_query_string } from "../../lib/db";
 import Header from "../../components/_Partials/Header";
 import RowList from "../../components/_Partials/List/RowList/RowList";
 import { useAudioPlayer } from "../../hooks/AudioHooks";
-
+import { useRouter } from "next/router";
 import fallbackImage from "../../public/assets/SVG/musicNote.svg";
 import PageLayout from "../../components/Layout/PageLayout";
 const Playlist = ({ playlistSongs, playlistTitle, playlistImages }) => {
   const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer();
-
-  
 
   useEffect(() => {
     setCurrentRouteSongs(playlistSongs);

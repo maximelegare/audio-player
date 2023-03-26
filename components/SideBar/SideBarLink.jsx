@@ -41,7 +41,9 @@ const SideBarLink = ({
                             <div className={styles.sideBarIcon}>{icon}</div>
                           )}
                         </div>
-                        <h4 className={styles.text}>{text}</h4>
+                        <h4 className={styles.text}>
+                          {text.length > 20 ? text.slice(0, 20) : text}
+                        </h4>
                       </>
                     }
                     menuItem={menuItem}
@@ -50,9 +52,10 @@ const SideBarLink = ({
                   // When only the three dots icon is the trigger
                   // Top container set display flex to these elements
                   <>
-                    
-                      {icon && <div className={styles.sideBarIcon}>{icon}</div>}
-                      <h4 className={styles.text}>{text}</h4>
+                    {icon && <div className={styles.sideBarIcon}>{icon}</div>}
+                    <h4 className={styles.text}>
+                      {text.length > 20 ? text.slice(0, 20) : text}
+                    </h4>
                     <SidePopOver
                       wholeButtonTrigger={wholeButtonTrigger}
                       menuItem={menuItem}
@@ -85,7 +88,9 @@ const SideBarLink = ({
                   >
                     {icon && <div className={styles.sideBarIcon}>{icon}</div>}
 
-                    <h4 className={styles.text}>{text}</h4>
+                    <h4 className={styles.text}>
+                      {text?.length > 30 ? `${text.slice(0, 30)} ...` : text}
+                    </h4>
                   </div>
                 </>
               )

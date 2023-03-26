@@ -11,7 +11,7 @@ export const SideBarScrollbar = ({ playlists }) => {
           {playlists?.map((item) => {
 
             if(item?.uri?.slice(0,7) === "spotify"){
-                return <SideBarLink key={item.id} text={item.name}  />;
+                return <SideBarLink key={item.id} text={item.name} href={`/sp/playlists/${item.id}`} />;
             }else{
                 return <SideBarLink key={item.id} text={item.title} href={item.route} />
             }                
