@@ -36,7 +36,6 @@ export const SideBarDefault = () => {
   const { playlists } = useAudioPlayer();
   const { spotifyPlaylists } = useSpotify();
 
-  console.log(spotifyPlaylists);
 
   const [provider, setSelectedProvider] = useRecoilState(
     selectedSideBarProvider

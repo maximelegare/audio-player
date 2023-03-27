@@ -4,8 +4,18 @@ import CustomImage from "../_Core/CustomImage";
 import FourImagesSquare from "../_Core/FourImagesSquare";
 import UserMenu from "../UserMenu/UserMenu";
 
-
 const Header = ({ title, smallTitle, src, round, images }) => {
+
+  const getImage = (images) => {
+    if (images && images[0].picture_url) {
+      return images[0].picture_url;
+    } else if (images) {
+      return images[0];
+    } else {
+      return src;
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -16,7 +26,7 @@ const Header = ({ title, smallTitle, src, round, images }) => {
             ) : (
               <CustomImage
                 round={round}
-                src={(images && images[0]?.picture_url) || src}
+                src={getImage(images)}
                 alt=""
                 width={190}
                 height={190}

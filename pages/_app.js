@@ -51,5 +51,7 @@ export async function getInitialProps() {
   const res = await sql_query_string("SELECT title, route, id FROM playlists");
   const playlists = JSON.parse(JSON.stringify(res));
 
+  
+
   return { props: { playlists } };
 }
