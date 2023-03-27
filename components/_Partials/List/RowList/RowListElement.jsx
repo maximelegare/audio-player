@@ -38,7 +38,7 @@ const RowListElement = ({
   const { currentSong, setIsPlaying, isPlaying } = useAudioPlayer();
   const router = useRouter();
 
-  const { title, artist, picture_url, album, duration, song_route } = song;
+  const { title, artist, picture_url, album, duration, song_route, id } = song;
 
 
   const [hover, setHover] = useState(false);
@@ -63,7 +63,7 @@ const RowListElement = ({
       setSearchVisibility(false) // Close search when link clicked
       
     } else {
-      setHighlightedSong(song); // Highlight song 
+      setHighlightedSong(song.id); // Highlight song 
     }
   };
 
@@ -80,7 +80,7 @@ const RowListElement = ({
        ${
          // Highlight the song when clicked
          idx !== undefined &&
-         highlightedSong.song_route === song_route &&
+         highlightedSong === id &&
          styles.highlight
        }
        `}

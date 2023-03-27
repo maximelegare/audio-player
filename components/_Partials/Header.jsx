@@ -7,8 +7,8 @@ import UserMenu from "../UserMenu/UserMenu";
 const Header = ({ title, smallTitle, src, round, images }) => {
 
   const getImage = (images) => {
-    if (images && images[0].picture_url) {
-      return images[0].picture_url;
+    if (images && images[0]?.picture_url) {
+      return images[0]?.picture_url;
     } else if (images) {
       return images[0];
     } else {

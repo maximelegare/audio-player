@@ -6,12 +6,15 @@ import { useAudioPlayer } from "../../hooks/AudioHooks";
 import { useRouter } from "next/router";
 import fallbackImage from "../../public/assets/SVG/musicNote.svg";
 import PageLayout from "../../components/Layout/PageLayout";
+
 const Playlist = ({ playlistSongs, playlistTitle, playlistImages }) => {
+
   const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer();
 
   useEffect(() => {
     setCurrentRouteSongs(playlistSongs);
   }, [playlistSongs]);
+
 
   return (
     <div>
@@ -40,7 +43,7 @@ export async function getServerSideProps(context) {
   `);
 
   const songsRes = await sql_query_string(`
-  SELECT s.title, s.title_route as song_route, s.duration,  s.album, s.track_no,
+  SELECT s.id, s.title, s.title_route as song_route, s.duration,  s.album, s.track_no,
   a.picture_url, a.artist,
   s.streaming_url,
   s.RP_streaming_path,
@@ -73,6 +76,7 @@ export async function getServerSideProps(context) {
   const playlistSongs = JSON.parse(JSON.stringify(songsRes));
   const playlistTitle = JSON.parse(JSON.stringify(titleRes));
   const playlistImages = JSON.parse(JSON.stringify(imagesRes));
+
 
   return {
     props: {

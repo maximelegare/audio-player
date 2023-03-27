@@ -10,7 +10,7 @@ import fallbackImage from "../../../public/assets/SVG/musicNote.svg";
 import PageLayout from "../../../components/Layout/PageLayout";
 import spotifyApi from "../../../lib/spotify";
 
-const Playlist = ({ playlistSongs, playlistImages, playlist }) => {
+const Playlist = ({ playlistTitle, playlistImages, playlist }) => {
   useEffect(() => {
     console.log(playlist);
   }, [playlist]);
@@ -20,8 +20,7 @@ const Playlist = ({ playlistSongs, playlistImages, playlist }) => {
       <Header
         src={fallbackImage}
         images={playlistImages}
-        title="test"
-        // title={playlistTitle[0]?.title}
+        title={playlistTitle}
         smallTitle="Spotify Playlist"
       />
       <PageLayout>
@@ -43,15 +42,19 @@ export async function getServerSideProps(context) {
 
   if (session) {
     res = await spotifyApi.getPlaylist(playlistId).then((data) => {
-      return data.body.tracks.items;
+      console.log(data.body);
+      return {
+        tracks: data.body.tracks.items,
+        playlistTitle: data.body.name,
+      };
     });
   }
   const playlistImagesSet = new Set();
 
-  const formatedPlaylist = res.map((item) => {
+  const formatedPlaylist = res.tracks.map((item) => {
     playlistImagesSet.add(item.track.album.images[0].url);
-
     return {
+      id:item.track.id,
       title: item.track.name,
       artist: item.track.artists[0].name,
       picture_url: item.track.album.images[0].url,
@@ -59,12 +62,18 @@ export async function getServerSideProps(context) {
       duration: item.track.duration_ms,
       ...item,
     };
+
   });
   const playlistImagesArray = Array.from(playlistImagesSet).slice(0, 4);
   const playlist = JSON.parse(JSON.stringify(formatedPlaylist));
   return {
-    props: { playlist: playlist, playlistImages: playlistImagesArray },
+    props: {
+      playlist: playlist,
+      playlistImages: playlistImagesArray,
+      playlistTitle: res.playlistTitle,
+    },
   };
+  // return {props:{}}
 }
 
 // Get specific spotify playlist

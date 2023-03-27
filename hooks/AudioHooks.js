@@ -294,6 +294,9 @@ const useAudioPlayer = (fileUrl, duration) => {
   };
 
   const addAndRemoveSongFromPlaylist = async (type, song, playlistName) => {
+
+    
+
     // Add song to specific playlist if type add
     if (type === "add") {
       // Add Locally
