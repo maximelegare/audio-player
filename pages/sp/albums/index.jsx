@@ -6,21 +6,17 @@ import { getSession } from "next-auth/react";
 import spotifyApi from "../../../lib/spotify";
 import { useEffect } from "react";
 
-
-const Index = ({artists}) => {
-
-  useEffect(() => {
-    console.log(artists)
-  },[artists])
+const Index = ({ albums }) => {
+    useEffect(() => {
+      console.log(albums);
+    }, [albums]);
 
   return (
     <>
-      <Header
-      title="Spotify Artists"
-      />
+      <Header title="Spotify albums" />
       <PageLayout>
-        <GridList data={artists} />
-      </PageLayout>
+        <GridList data={albums} variant="bigCard" />
+    </PageLayout>
     </>
   );
 };
@@ -38,28 +34,36 @@ export async function getServerSideProps(context) {
   if (session) {
     console.log("here");
     res = await spotifyApi
-      .getFollowedArtists({ limit: 20 })
-      .then((data) => {
-        return data.body.artists.items;
+      .getMySavedAlbums({
+        limit: 20,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(
+        (data) => {
+          return data.body.items;
+        },
+        function (err) {
+          console.log("Something went wrong!", err);
+        }
+      );
   }
-  const artists = res.map((artist) => {
+
+  console.log(res)
+  const albums = res.map(({album}) => {
     return {
-      id: artist.id,
-      picture_url: artist.images[0].url,
-      title: artist.name,
-      route: `/sp/artists/${artist.id}`,
-      round:true
+      id: album.id,
+      picture_url: album.images[0].url,
+      artist: album.artists[0].name,
+      route: `/sp/albums/${album.id}`,
+      images:album.images,
+      year:album.release_date.slice(0,4),
+      title:album.name
     };
   });
   // console.log(artists)
-  const formatedArtists = JSON.parse(JSON.stringify(artists));
+    const formatedAlbums = JSON.parse(JSON.stringify(albums));
   return {
     props: {
-      artists: formatedArtists,
+        albums: formatedAlbums,
     },
   };
 }

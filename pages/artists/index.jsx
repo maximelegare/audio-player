@@ -12,7 +12,7 @@ import PageLayout from "../../components/Layout/PageLayout";
 const index = ({ artists }) => {
   return (
     <div>
-      <Header title="All Artists" />
+      <Header title="Hodei Artists" />
       <PageLayout>
         <List data={artists} round />
       </PageLayout>

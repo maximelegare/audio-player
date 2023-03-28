@@ -9,7 +9,7 @@ import PageLayout from "../../components/Layout/PageLayout";
 const index = ({ albums }) => {
   return (
     <div>
-      <Header title="All Albums" />
+      <Header title="Hodei Albums" />
       <PageLayout>
         <List data={albums} variant="bigCard" />
       </PageLayout>

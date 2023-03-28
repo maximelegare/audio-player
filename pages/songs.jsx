@@ -8,7 +8,7 @@ import { sql_query_string } from "../lib/db";
 const songs = ({ songs }) => {
   return (
     <div>
-      <Header title="All Songs" />
+      <Header title="Hodei Songs" />
       <PageLayout>
         <RowList data={songs} />
       </PageLayout>
