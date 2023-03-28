@@ -38,7 +38,6 @@ export const SideBarDefault = () => {
 
   const { spotifyPlaylists } = useSpotify();
 
-
   const [provider, setSelectedProvider] = useRecoilState(
     selectedSideBarProvider
   );
@@ -59,6 +58,21 @@ export const SideBarDefault = () => {
       }
     }
   };
+
+  const getColor = (provier) => {
+    switch (provider){
+      case "hodei":{
+        return "bg-[#5d1d91]"
+      }
+      case "spotify":{
+        return "bg-[#3BD75F]"
+      }
+      default:{
+        return "bg-[#2c0948]"
+      }
+    }
+  }
+
 
   return (
     <>
@@ -100,12 +114,17 @@ export const SideBarDefault = () => {
           )}
         </div>
       </div>
-      <hr/>
+      <hr />
       <div className={styles.linkContainer}>
         <SideBarLink
           icon={<AiOutlineHome className={styles.sideBarIcon} />}
           text="Home"
-          href={providers[provider].home}
+          href="/home"
+        />
+        <SideBarLink
+          icon={<MdPlaylistPlay className={styles.sideBarIcon} />}
+          text="Queue"
+          href="/queue"
         />
         <SideBarLink
           handleClick={() => setSearchVisibility(!searchVisibility)}
@@ -116,44 +135,43 @@ export const SideBarDefault = () => {
           menuItem={<CustomInput placeHolder="Search Anything" />}
         />
       </div>
-      <div className={styles.linkContainer}>
-        <SideBarLink
-          icon={<HiUserGroup className={styles.sideBarIcon} />}
-          text="Artists"
-          href={providers[provider].artists}
-        />
-        <SideBarLink
-          icon={<BsDisc className={styles.sideBarIcon} />}
-          text="Albums"
-          href={providers[provider].albums}
-        />
-        <SideBarLink
-          icon={<FaItunesNote className={styles.sideBarIcon} />}
-          text="Songs"
-          href={providers[provider].songs}
-        />
+      <hr />
+      <div className={`flex mt-3 gap-2`}>
+        <div className={`w-[2px] h-full ${getColor(provider)}`}></div>
+        <div className="flex-grow">
+          <div className={styles.linkContainer}>
+            <SideBarLink
+              icon={<HiUserGroup className={styles.sideBarIcon} />}
+              text="Artists"
+              href={providers[provider].artists}
+            />
+            <SideBarLink
+              icon={<BsDisc className={styles.sideBarIcon} />}
+              text="Albums"
+              href={providers[provider].albums}
+            />
+            <SideBarLink
+              icon={<FaItunesNote className={styles.sideBarIcon} />}
+              text="Songs"
+              href={providers[provider].songs}
+            />
+          </div>
+          <div className={styles.linkContainer}>
+            <SideBarLink
+              icon={<BsSuitHeart className={styles.sideBarIcon} />}
+              text="Liked Songs"
+              href={providers[provider].likedSongs}
+            />
+            <SideBarLink
+              icon={<MdOutlinePlaylistAdd className={styles.sideBarIcon} />}
+              text="New Playlist"
+              wholeButtonTrigger
+              dotsIcon
+              menuItem={<PopOverInner buttonText="Create" playlistPopover />}
+            />
+          </div>
+        </div>
       </div>
-
-      <div className={styles.linkContainer}>
-        <SideBarLink
-          icon={<BsSuitHeart className={styles.sideBarIcon} />}
-          text="Liked Songs"
-          href={providers[provider].likedSongs}
-        />
-        <SideBarLink
-          icon={<MdPlaylistPlay className={styles.sideBarIcon} />}
-          text="Queue"
-          href={providers[provider].queue}
-        />
-        <SideBarLink
-          icon={<MdOutlinePlaylistAdd className={styles.sideBarIcon} />}
-          text="New Playlist"
-          wholeButtonTrigger
-          dotsIcon
-          menuItem={<PopOverInner buttonText="Create" playlistPopover />}
-        />
-      </div>
-      <hr/>
       <SideBarScrollbar playlists={getPlaylists(provider)} />
     </>
   );

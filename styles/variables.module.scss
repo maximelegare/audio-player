@@ -1,12 +1,8 @@
+$primary-gradiant-colors: (90deg, #0de7da 3%, #2de282 95%);
 
+$primary-gradiant-colors-vertical: (#0de7da 3%, #2de282 95%);
 
-$primary-gradiant-colors:(
-  90deg,
-  #0DE7DA 3%,
-  #2DE282 95%
-);
-
-$primary-color:#26c9c3;
+$primary-color: #26c9c3;
 
 $bg-color-gradiant: linear-gradient(
   90deg,
@@ -14,24 +10,26 @@ $bg-color-gradiant: linear-gradient(
   rgba(34, 9, 98, 1) 100%
 );
 
-$black-to-transparent-gradiant:(180deg, rgba(0,0,0,1) 9%, rgba(0,0,0,0.8519608527004552) 32%, rgba(0,0,0,0.41778718323266806) 59%, rgba(0,212,255,0) 100%);
+$black-to-transparent-gradiant: (
+  180deg,
+  rgba(0, 0, 0, 1) 9%,
+  rgba(0, 0, 0, 0.8519608527004552) 32%,
+  rgba(0, 0, 0, 0.41778718323266806) 59%,
+  rgba(0, 212, 255, 0) 100%
+);
 
+$bg-color-100: rgb(90, 20, 160);
+$bg-color-500: rgb(35, 5, 65);
+$bg-color-800: rgb(18, 7, 31);
+$bg-dark: rgb(13, 2, 24);
 
-$bg-color-100:rgb(90, 20, 160);
-$bg-color-500:rgb(35, 5, 65);
-$bg-color-800:rgb(18, 7, 31);
-$bg-dark:rgb(13, 2, 24);
-
-$bg-color-transparent:rgba(37, 4, 56, 0.24);
+$bg-color-transparent: rgba(37, 4, 56, 0.24);
 
 $white-transparent: #ffe3d409;
 $white-transparent-2: #ffe3d413;
 
-
-
-
 $white: #ffe3d4;
-$hover-white:#fff0e8;
+$hover-white: #fff0e8;
 $gray-100: #dbc5b9;
 $gray-200: #b9a69b;
 

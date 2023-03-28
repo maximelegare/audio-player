@@ -5,8 +5,7 @@
     "albums": "/albums",
     "songs": "/songs",
     "likedSongs": "/liked-songs",
-    "queue": "/queue",
-    "color":"#12021F"
+    "queue": "/queue"
   },
   "spotify":{
     "home": "/",
@@ -14,7 +13,6 @@
     "albums": "/sp/albums",
     "songs": "/sp/songs",
     "likedSongs": "/sp/liked-songs",
-    "queue": "/queue",
-    "color":"#3BD75F"
+    "queue": "/queue"
   }
 }
