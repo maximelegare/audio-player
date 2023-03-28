@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styles from "../../styles/Search/Search.module.scss";
 import CustomInput from "../_Core/CustomInput/CustomInput";
 import PageLayout from "../Layout/PageLayout";
-import { searchSectionVisibilityState } from "../../atoms/visibilityAtom";
+import { searchSectionVisibilityState } from "../../atoms/generalAtom";
 import { useRecoilState } from "recoil";
 
 import { CSSTransition } from "react-transition-group";

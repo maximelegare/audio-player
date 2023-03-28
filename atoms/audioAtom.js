@@ -12,7 +12,7 @@ export const isPlayingState = atom({
 export const currentSongState = atom({
   key: "currentSongState",
   default: {},
-  // effects_UNSTABLE: [persistAtom],
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const highlightedSongState = atom({

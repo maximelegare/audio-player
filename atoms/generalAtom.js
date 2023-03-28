@@ -1,4 +1,7 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 export const searchSectionVisibilityState = atom({
     key:"searchSectionVisibilityState",
@@ -7,7 +10,8 @@ export const searchSectionVisibilityState = atom({
 
 export const selectedSideBarProvider = atom({
     key:"selectedSideBarProvider",
-    default:"hodei"
+    default:"hodei",
+    // effects_UNSTABLE: [persistAtom],
 })
 
 export const sideBarPage = atom({

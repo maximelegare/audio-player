@@ -1,8 +1,8 @@
 import React from "react";
 
 import { useRecoilState } from "recoil";
-import { selectedSideBarProvider } from "../../../atoms/visibilityAtom";
-import { searchSectionVisibilityState } from "../../../atoms/visibilityAtom";
+import { selectedSideBarProvider } from "../../../atoms/generalAtom";
+import { searchSectionVisibilityState } from "../../../atoms/generalAtom";
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
 
 import useSpotify from "../../../hooks/useSpotify";
@@ -29,11 +29,13 @@ import { FaItunesNote } from "react-icons/fa";
 import { MdOutlinePlaylistAdd, MdPlaylistPlay } from "react-icons/md";
 import { Scrollbar } from "react-scrollbars-custom";
 
-import sideBarLinks from "../../../lib/sidebarLinks.json";
+import providers from "../../../lib/providersData.json";
+
 import { SideBarScrollbar } from "./sideBarScrollbar/SideBarScrollbar";
 
 export const SideBarDefault = () => {
   const { playlists } = useAudioPlayer();
+
   const { spotifyPlaylists } = useSpotify();
 
 
@@ -98,16 +100,16 @@ export const SideBarDefault = () => {
           )}
         </div>
       </div>
-      <hr />
+      <hr/>
       <div className={styles.linkContainer}>
         <SideBarLink
           icon={<AiOutlineHome className={styles.sideBarIcon} />}
           text="Home"
-          href={sideBarLinks[provider].home}
+          href={providers[provider].home}
         />
         <SideBarLink
           handleClick={() => setSearchVisibility(!searchVisibility)}
-          icon={<BsSearch className={styles.sideBarIcon} />}
+          icon={<BsSearch className={`${styles.sideBarIcon}`} />}
           text="Search"
           // dotsIcon
           // wholeButtonTrigger
@@ -118,17 +120,17 @@ export const SideBarDefault = () => {
         <SideBarLink
           icon={<HiUserGroup className={styles.sideBarIcon} />}
           text="Artists"
-          href={sideBarLinks[provider].artists}
+          href={providers[provider].artists}
         />
         <SideBarLink
           icon={<BsDisc className={styles.sideBarIcon} />}
           text="Albums"
-          href={sideBarLinks[provider].albums}
+          href={providers[provider].albums}
         />
         <SideBarLink
           icon={<FaItunesNote className={styles.sideBarIcon} />}
           text="Songs"
-          href={sideBarLinks[provider].songs}
+          href={providers[provider].songs}
         />
       </div>
 
@@ -136,12 +138,12 @@ export const SideBarDefault = () => {
         <SideBarLink
           icon={<BsSuitHeart className={styles.sideBarIcon} />}
           text="Liked Songs"
-          href={sideBarLinks[provider].likedSongs}
+          href={providers[provider].likedSongs}
         />
         <SideBarLink
           icon={<MdPlaylistPlay className={styles.sideBarIcon} />}
           text="Queue"
-          href={sideBarLinks[provider].queue}
+          href={providers[provider].queue}
         />
         <SideBarLink
           icon={<MdOutlinePlaylistAdd className={styles.sideBarIcon} />}
@@ -151,8 +153,7 @@ export const SideBarDefault = () => {
           menuItem={<PopOverInner buttonText="Create" playlistPopover />}
         />
       </div>
-      <hr />
-
+      <hr/>
       <SideBarScrollbar playlists={getPlaylists(provider)} />
     </>
   );

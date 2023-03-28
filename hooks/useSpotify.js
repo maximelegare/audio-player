@@ -38,6 +38,7 @@ function useSpotify() {
     }
   }, [session]);
 
+  
   // Get all the user's spotify playlists
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {

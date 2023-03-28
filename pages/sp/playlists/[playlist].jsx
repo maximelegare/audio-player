@@ -42,7 +42,6 @@ export async function getServerSideProps(context) {
 
   if (session) {
     res = await spotifyApi.getPlaylist(playlistId).then((data) => {
-      console.log(data.body);
       return {
         tracks: data.body.tracks.items,
         playlistTitle: data.body.name,
@@ -73,7 +72,5 @@ export async function getServerSideProps(context) {
       playlistTitle: res.playlistTitle,
     },
   };
-  // return {props:{}}
 }
 
-// Get specific spotify playlist

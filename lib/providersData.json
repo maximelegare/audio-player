@@ -1,0 +1,20 @@
+{
+  "hodei": {
+    "home": "/",
+    "artists": "/artists",
+    "albums": "/albums",
+    "songs": "/songs",
+    "likedSongs": "/liked-songs",
+    "queue": "/queue",
+    "color":"#12021F"
+  },
+  "spotify":{
+    "home": "/",
+    "artists": "/sp/artists",
+    "albums": "/sp/albums",
+    "songs": "/sp/songs",
+    "likedSongs": "/sp/liked-songs",
+    "queue": "/queue",
+    "color":"#3BD75F"
+  }
+}

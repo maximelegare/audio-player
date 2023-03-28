@@ -16,7 +16,7 @@ import CustomButton from "../../../_Core/CustomButton";
 import { GiPauseButton } from "react-icons/gi";
 import { FaPlay } from "react-icons/fa";
 
-import { searchSectionVisibilityState } from "../../../../atoms/visibilityAtom";
+import { searchSectionVisibilityState } from "../../../../atoms/generalAtom";
 import { useSetRecoilState, useRecoilState, useRecoilValue  } from "recoil";
 import { highlightedSongState } from "../../../../atoms/audioAtom";
 import { useRouter } from "next/router";
@@ -108,8 +108,8 @@ const RowListElement = ({
                 {
                   // If hover, show play/pause icon
                   hover ||
-                  (highlightedSong.song_route === song_route &&
-                    currentSong.song_route !== song_route) ? (
+                  (highlightedSong === id &&
+                    currentSong.id !== id) ? (
                     <CustomButton
                       handleClick={handleSongDoubleClick}
                       variant="play-small"
@@ -117,7 +117,7 @@ const RowListElement = ({
                       {
                         // show pause if it's the current song playing
                         // Or show play for the other ones
-                        isPlaying && currentSong.song_route === song_route ? (
+                        isPlaying && currentSong.id === id ? (
                           <GiPauseButton />
                         ) : (
                           <FaPlay className={styles.playIcon} />
@@ -127,7 +127,7 @@ const RowListElement = ({
                   ) : (
                     // Otherwise, if current song, show playing icon
                     <>
-                      {currentSong.song_route === song_route ? (
+                      {currentSong.id === id ? (
                         <PlayingIcon />
                       ) : (
                         // Otherwise show number
@@ -151,7 +151,7 @@ const RowListElement = ({
         <div className={styles.infosContainer}>
           <h5
             className={`${styles.title} ${
-              currentSong.song_route === song_route && styles.currentSong
+              currentSong.id === id && styles.currentSong
             }`}
           >
             {title}
@@ -180,7 +180,7 @@ const RowListElement = ({
         >
           {!options?.noOptionsIcon &&
             // If a song is highlighted (clicked and stay) or Hover, show options
-            (highlightedSong.song_route === song_route || hover) && (
+            (highlightedSong === id || hover) && (
               <Dropdown menuItem={<DropdownMenuSong song={song} />} />
             )}
         </div>

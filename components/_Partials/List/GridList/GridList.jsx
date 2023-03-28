@@ -10,6 +10,7 @@ const GridList = ({ data, variant, ...otherProps }) => {
 
 
   const selectCard = (item) => {
+    console.log(item)
     switch (variant) {
       case "bigCard":
         return (
@@ -31,6 +32,7 @@ const GridList = ({ data, variant, ...otherProps }) => {
             picture_url={item.picture_url}
             title={item.title}
             route={item.route}
+            round
             {...otherProps}
           />
         );

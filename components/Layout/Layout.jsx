@@ -5,7 +5,7 @@ import SideBar from "../SideBar/SideBar";
 import { AudioPlayer } from "../AudioPlayer/AudioPlayer";
 import { Scrollbar } from "react-scrollbars-custom";
 import { useRecoilValue } from "recoil";
-import { searchSectionVisibilityState } from "../../atoms/visibilityAtom";
+import { searchSectionVisibilityState } from "../../atoms/generalAtom";
 import { useMemo } from "react";
 
 import { useAudioPlayer } from "../../hooks/AudioHooks";

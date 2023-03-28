@@ -7,7 +7,7 @@ import hodeiMainLogo from "../../public/assets/SVG/hodei-logo-white.svg";
 
 import { SideBarDefault } from "./sideBarDefault/SideBarDefault";
 
-import { sideBarPage } from "../../atoms/visibilityAtom";
+import { sideBarPage } from "../../atoms/generalAtom";
 import { useRecoilState } from "recoil";
 import SideBarLink from "./SideBarLink";
 import { HiOutlineCog } from "react-icons/hi";
