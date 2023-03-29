@@ -4,10 +4,13 @@ import styles from "../../../../styles/List/RowList.module.scss";
 
 import { FiClock, FiHash } from "react-icons/fi";
 
-const RowHeader = () => {
+const RowHeader = ({ topTitle }) => {
   return (
     <>
-      <div className={`${styles.rowListContainer} ${styles.header}`}>
+      {/* {topTitle && <h2 className={styles.topTitle}>{topTitle}:</h2>} */}
+      <div
+        className={`${styles.rowListContainer} ${styles.header}`}
+      >
         <div className={styles.firstThird}>
           <div className={styles.numberContainer}>
             <FiHash className={styles.number} />
@@ -17,7 +20,7 @@ const RowHeader = () => {
           </div>
         </div>
         <h4>Album</h4>
-        <FiClock className={styles.time} style={{marginRight:"45px"}} />
+        <FiClock className={styles.time} style={{ marginRight: "45px" }} />
       </div>
       <hr style={{ marginBottom: "30px" }} />
     </>

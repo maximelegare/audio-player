@@ -1,17 +1,17 @@
 @import "../variables.module.scss";
 
-
-.wrapper{
+.wrapper {
   display: flex;
   margin-bottom: 70px;
   background: $bg-color-transparent;
-  padding: 40px 20px;
+  padding-right: 20px;
+  padding-left: 20px;
   justify-content: space-between;
 }
 
 .container {
   display: flex;
-  
+
   //   justify-content: space-between;
   .headerInfos {
     align-self: center;
@@ -24,6 +24,11 @@
 
   .title {
     font-size: 4rem;
+    line-height: 1;
+  }
+
+  .smallTitle {
+    font-size: 2rem;
     line-height: 1;
   }
 

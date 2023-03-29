@@ -14,7 +14,8 @@ module.exports = {
         greenPrimaryAccent:"#2DE282",
         bluePrimaryAccent:"#0DE7DA",
         white:"#ffe3d4",
-        whiteHover:"#fff0e8"
+        whiteHover:"#fff0e8",
+        transparentWhite:"#160A1F"
       },
       backgroundImage:(theme) => ({
         gradiantPrimary:`linear-gradient(to right, ${theme('colors.greenPrimaryAccent')}, ${theme('colors.bluePrimaryAccent')})`

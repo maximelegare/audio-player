@@ -4,16 +4,13 @@ import PageLayout from "../../../components/Layout/PageLayout";
 import GridList from "../../../components/_Partials/List/GridList/GridList";
 import { getSession } from "next-auth/react";
 import spotifyApi from "../../../lib/spotify";
-import { useEffect } from "react";
 
 const Index = ({ albums }) => {
-    useEffect(() => {
-      console.log(albums);
-    }, [albums]);
+
 
   return (
     <>
-      <Header title="Spotify albums" />
+      <Header title="Spotify albums" variant="small" />
       <PageLayout>
         <GridList data={albums} variant="bigCard" />
     </PageLayout>

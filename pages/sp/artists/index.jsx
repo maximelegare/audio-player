@@ -17,6 +17,7 @@ const Index = ({artists}) => {
     <>
       <Header
       title="Spotify Artists"
+      variant="small"
       />
       <PageLayout>
         <GridList data={artists} />

@@ -1,17 +1,19 @@
-import React from "react";
+import React, { use } from "react";
 import ListElement from "./RowListElement";
 import RowHeader from "./RowHeader";
 import PageLayout from "../../../Layout/PageLayout";
-
+import { useEffect } from "react";
 import { useAudioPlayer } from "../../../../hooks/AudioHooks";
 
-const RowList = ({ data }) => {
+const RowList = ({ data, topHeaderTitle }) => {
   const { setPlaylistAndSong } = useAudioPlayer();
 
+ 
   return (
     <>
-      <RowHeader />
+      <RowHeader topTitle={topHeaderTitle}></RowHeader>
       {data?.map((song, idx) => {
+        console.log(song)
         return (
           <ListElement
             key={song.title}

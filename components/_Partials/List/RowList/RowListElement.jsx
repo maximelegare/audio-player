@@ -17,11 +17,10 @@ import { GiPauseButton } from "react-icons/gi";
 import { FaPlay } from "react-icons/fa";
 
 import { searchSectionVisibilityState } from "../../../../atoms/generalAtom";
-import { useSetRecoilState, useRecoilState, useRecoilValue  } from "recoil";
+import { useSetRecoilState, useRecoilState, useRecoilValue } from "recoil";
 import { highlightedSongState } from "../../../../atoms/audioAtom";
 import { useRouter } from "next/router";
 import { currentSongState } from "../../../../atoms/audioAtom";
-
 
 const RowListElement = ({
   song,
@@ -32,25 +31,27 @@ const RowListElement = ({
   const [highlightedSong, setHighlightedSong] =
     useRecoilState(highlightedSongState);
 
+  useEffect(() => {
+    console.log(song);
+  }, [song]);
 
-  const setSearchVisibility = useSetRecoilState(searchSectionVisibilityState)
+  const setSearchVisibility = useSetRecoilState(searchSectionVisibilityState);
 
   const { currentSong, setIsPlaying, isPlaying } = useAudioPlayer();
   const router = useRouter();
 
   const { title, artist, picture_url, album, duration, song_route, id } = song;
 
-
   const [hover, setHover] = useState(false);
 
   // Pass the song clicked to the parent for it to set the song & playlist when clicked
   const handleSongDoubleClick = (e) => {
     // If the song currently playing is not the one clicked, play it
-    if(song_route !== currentSong.song_route){
+    if (song_route !== currentSong.song_route) {
       setPlaylistBasedOnSongClicked(idx);
       setIsPlaying(true);
       // Otherwise pause
-    }else{
+    } else {
       setIsPlaying(!isPlaying);
     }
   };
@@ -60,10 +61,9 @@ const RowListElement = ({
     //
     if (options?.noHighlightWhenClicked) {
       router.push(`/${song_route}`);
-      setSearchVisibility(false) // Close search when link clicked
-      
+      setSearchVisibility(false); // Close search when link clicked
     } else {
-      setHighlightedSong(song.id); // Highlight song 
+      setHighlightedSong(song.id); // Highlight song
     }
   };
 
@@ -74,7 +74,8 @@ const RowListElement = ({
   };
 
   return (
-    <div
+    <>
+      <div
       className={`${styles.rowListContainer} ${styles.listElement}
        ${hover && styles.hover}
        ${
@@ -186,6 +187,7 @@ const RowListElement = ({
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -4,8 +4,7 @@ import CustomImage from "../_Core/CustomImage";
 import FourImagesSquare from "../_Core/FourImagesSquare";
 import UserMenu from "../UserMenu/UserMenu";
 
-const Header = ({ title, smallTitle, src, round, images }) => {
-
+const Header = ({ title, smallTitle, src, round, images, variant }) => {
   const getImage = (images) => {
     if (images && images[0]?.picture_url) {
       return images[0]?.picture_url;
@@ -17,7 +16,7 @@ const Header = ({ title, smallTitle, src, round, images }) => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${variant === "small"? "py-5" : "py-10"} `}>
       <div className={styles.container}>
         {src && (
           <div className={styles.image}>
@@ -39,7 +38,11 @@ const Header = ({ title, smallTitle, src, round, images }) => {
           {smallTitle && (
             <h3 className={styles.artist}>{smallTitle.toUpperCase()}</h3>
           )}
-          <h1 className={styles.title}>{title}</h1>
+          {variant === "small" ? (
+            <h3 className={styles.smallTitle}>{title}</h3>
+          ) : (
+            <h1 className={styles.title}>{title}</h1>
+          )}
         </div>
       </div>
       <UserMenu />
