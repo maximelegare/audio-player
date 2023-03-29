@@ -52,6 +52,7 @@ export async function getServerSideProps(context) {
       picture_url: res.images[0].url,
       album: res.name,
       duration: item.duration_ms / 1000,
+      provider:"spotify",
       spotify:{...item}
       
     };

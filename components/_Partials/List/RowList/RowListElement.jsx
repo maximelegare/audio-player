@@ -22,6 +22,8 @@ import { highlightedSongState } from "../../../../atoms/audioAtom";
 import { useRouter } from "next/router";
 import { currentSongState } from "../../../../atoms/audioAtom";
 
+import { selectedSideBarProvider } from "../../../../atoms/generalAtom";
+
 const RowListElement = ({
   song,
   idx,
@@ -29,11 +31,7 @@ const RowListElement = ({
   options,
 }) => {
   const [highlightedSong, setHighlightedSong] =
-    useRecoilState(highlightedSongState);
-
-  useEffect(() => {
-    console.log(song);
-  }, [song]);
+    useRecoilState(highlightedSongState);    
 
   const setSearchVisibility = useSetRecoilState(searchSectionVisibilityState);
 
@@ -73,120 +71,133 @@ const RowListElement = ({
     setIsPlaying(!isPlaying);
   };
 
+  const getColor = (color) => {
+    switch (color){
+      case "hodei" :{
+        return "bg-hodeiAccent"
+      }
+      case "spotify":{
+        return "bg-spotifyAccent"
+      }
+    } 
+  }
+
+
+
   return (
     <>
       <div
-      className={`${styles.rowListContainer} ${styles.listElement}
+        className={`${styles.rowListContainer} ${styles.listElement}
        ${hover && styles.hover}
        ${
          // Highlight the song when clicked
-         idx !== undefined &&
-         highlightedSong === id &&
-         styles.highlight
+         idx !== undefined && highlightedSong === id && styles.highlight
        }
        `}
-      //Change the margin bottom & remove display grid if condensed (used in CustomInput)
-      style={{
-        marginBottom: options?.condensed && "10px",
-        display: options?.condensed && "block",
-      }}
-      onClick={handleSongClick}
-      onDoubleClick={handleSongDoubleClick}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      <div className={`${styles.firstThird} ${styles.section}`}>
-        <div
-          className={
-            // If there is no idx, remove margin right between number & image
-            idx !== undefined ? styles.numberContainer : undefined
-          }
-        >
-          {
-            // Show if idx is not undefined (Cannot use !idx => 0 is false)
-            idx !== undefined && (
-              <>
-                {
-                  // If hover, show play/pause icon
-                  hover ||
-                  (highlightedSong === id &&
-                    currentSong.id !== id) ? (
-                    <CustomButton
-                      handleClick={handleSongDoubleClick}
-                      variant="play-small"
-                    >
-                      {
-                        // show pause if it's the current song playing
-                        // Or show play for the other ones
-                        isPlaying && currentSong.id === id ? (
-                          <GiPauseButton />
-                        ) : (
-                          <FaPlay className={styles.playIcon} />
-                        )
-                      }
-                    </CustomButton>
-                  ) : (
-                    // Otherwise, if current song, show playing icon
-                    <>
-                      {currentSong.id === id ? (
-                        <PlayingIcon />
-                      ) : (
-                        // Otherwise show number
-                        <p className={styles.number}>{idx + 1}</p>
-                      )}
-                    </>
-                  )
-                }
-              </>
-            )
-          }
-        </div>
-        <div className={styles.image}>
-          <CustomImage
-            width={options?.imgWidth || 50}
-            height={options?.imgHeight || 50}
-            src={picture_url}
-            alt=""
-          />
-        </div>
-        <div className={styles.infosContainer}>
-          <h5
-            className={`${styles.title} ${
-              currentSong.id === id && styles.currentSong
-            }`}
-          >
-            {title}
-          </h5>
-          <p>{artist}</p>
-        </div>
-      </div>
-      {!options?.noAlbum && <p>{album}</p>}
-      <div
+        //Change the margin bottom & remove display grid if condensed (used in CustomInput)
         style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 35px",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          gap: "10px",
+          marginBottom: options?.condensed && "10px",
+          display: options?.condensed && "block",
         }}
+        onClick={handleSongClick}
+        onDoubleClick={handleSongDoubleClick}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
       >
-        {!options?.noDuration && (
-          <p className={styles.time}>{calculateTime(duration)}</p>
-        )}
+        <div className={`${styles.firstThird} ${styles.section}`}>
+          <div
+            className={
+              // If there is no idx, remove margin right between number & image
+              idx !== undefined ? styles.numberContainer : undefined
+            }
+          >
+            {
+              // Show if idx is not undefined (Cannot use !idx => 0 is false)
+              idx !== undefined && (
+                <>
+                  {
+                    // If hover, show play/pause icon
+                    hover ||
+                    (highlightedSong === id && currentSong.id !== id) ? (
+                      <CustomButton
+                        handleClick={handleSongDoubleClick}
+                        variant="play-small"
+                      >
+                        {
+                          // show pause if it's the current song playing
+                          // Or show play for the other ones
+                          isPlaying && currentSong.id === id ? (
+                            <GiPauseButton />
+                          ) : (
+                            <FaPlay className={styles.playIcon} />
+                          )
+                        }
+                      </CustomButton>
+                    ) : (
+                      // Otherwise, if current song, show playing icon
+                      <>
+                        {currentSong.id === id ? (
+                          <PlayingIcon />
+                        ) : (
+                          // Otherwise show number
+                          <div className="flex items-center flex-col ">
+                            <div className={`${styles.dot} ${getColor(song.provider)}`}></div>
+                            <p className={styles.number}>{idx + 1}</p>
+                          </div>
+                        )}
+                      </>
+                    )
+                  }
+                </>
+              )
+            }
+          </div>
+          <div className={styles.image}>
+            <CustomImage
+              width={options?.imgWidth || 50}
+              height={options?.imgHeight || 50}
+              src={picture_url}
+              alt=""
+            />
+          </div>
+          <div className={styles.infosContainer}>
+            <h5
+              className={`${styles.title} ${
+                currentSong.id === id && styles.currentSong
+              }`}
+            >
+              {title}
+            </h5>
+            <p>{artist}</p>
+          </div>
+        </div>
+        {!options?.noAlbum && <p>{album}</p>}
         <div
-          // To prevent the song from starting when clicked
-          onClick={(e) => {
-            e.stopPropagation();
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 35px",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            gap: "10px",
           }}
         >
-          {!options?.noOptionsIcon &&
-            // If a song is highlighted (clicked and stay) or Hover, show options
-            (highlightedSong === id || hover) && (
-              <Dropdown menuItem={<DropdownMenuSong song={song} />} />
-            )}
+          {!options?.noDuration && (
+            <p className={styles.time}>{calculateTime(duration)}</p>
+          )}
+          <div
+            // To prevent the song from starting when clicked
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            {!options?.noOptionsIcon &&
+              // If a song is highlighted (clicked and stay) or Hover, show options
+              (highlightedSong === id || hover) && (
+                <Dropdown menuItem={<DropdownMenuSong song={song} />} />
+              )}
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };

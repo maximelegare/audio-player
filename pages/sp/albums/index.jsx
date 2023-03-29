@@ -53,7 +53,8 @@ export async function getServerSideProps(context) {
       route: `/sp/albums/${album.id}`,
       images:album.images,
       year:album.release_date.slice(0,4),
-      title:album.name
+      title:album.name,
+      provider:"spotify"
     };
   });
   // console.log(artists)

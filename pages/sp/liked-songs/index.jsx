@@ -50,6 +50,7 @@ export async function getServerSideProps(context) {
       title: track.name,
       album: track.album.name,
       duration: track.duration_ms / 1000,
+      provider:"spotify",
       spotify: { ...track },
     };
     // id:item.track.id,

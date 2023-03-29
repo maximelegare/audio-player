@@ -50,7 +50,8 @@ export async function getServerSideProps(context) {
   s.liked,
   p.title as playlist_title,
   a.title_route as album_route,
-  a.artist_route
+  a.artist_route,
+  'hodei' as provider
   FROM songs s 
   JOIN song_playlist sp 
   ON s.title_route = sp.song_route 

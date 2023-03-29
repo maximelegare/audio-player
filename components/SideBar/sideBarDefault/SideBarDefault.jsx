@@ -62,10 +62,10 @@ export const SideBarDefault = () => {
   const getColor = (provier) => {
     switch (provider){
       case "hodei":{
-        return "bg-[#5d1d91]"
+        return "bg-hodeiAccent"
       }
       case "spotify":{
-        return "bg-[#3BD75F]"
+        return "bg-spotifyAccent"
       }
       default:{
         return "bg-[#2c0948]"
