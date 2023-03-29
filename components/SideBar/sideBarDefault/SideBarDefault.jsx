@@ -119,7 +119,7 @@ export const SideBarDefault = () => {
         <SideBarLink
           icon={<AiOutlineHome className={styles.sideBarIcon} />}
           text="Home"
-          href="/home"
+          href="/"
         />
         <SideBarLink
           icon={<MdPlaylistPlay className={styles.sideBarIcon} />}

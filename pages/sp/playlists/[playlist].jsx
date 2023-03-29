@@ -52,13 +52,14 @@ export async function getServerSideProps(context) {
 
   const formatedPlaylist = res.tracks.map((item) => {
     playlistImagesSet.add(item.track.album.images[0].url);
+
     return {
       id:item.track.id,
       title: item.track.name,
       artist: item.track.artists[0].name,
       picture_url: item.track.album.images[0].url,
       album: item.track.album.name,
-      duration: item.track.duration_ms,
+      duration: item.track.duration_ms / 1000,
       ...item,
     };
 
