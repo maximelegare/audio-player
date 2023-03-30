@@ -8,9 +8,6 @@ import RowList from "../../../components/_Partials/List/RowList/RowList";
 import PageLayout from "../../../components/Layout/PageLayout";
 
 const Song = ({ song }) => {
-
-
-
   return (
     <>
       <Header
