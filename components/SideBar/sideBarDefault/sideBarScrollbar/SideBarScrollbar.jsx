@@ -5,10 +5,16 @@ import styles from "../../../../styles/SideBar/SideBarScrollbar.module.scss";
 import { useRecoilValue } from "recoil";
 import { selectedSideBarProvider } from "../../../../atoms/generalAtom";
 import CustomButton from "../../../_Core/CustomButton";
+import { FaCaretUp } from "react-icons/fa";
+import { FaCaretDown } from "react-icons/fa";
 
 import { IoIosCloseCircle } from "react-icons/io";
 
-export const SideBarScrollbar = ({ playlists }) => {
+export const SideBarScrollbar = ({
+  playlists,
+  extendPlaylistSection,
+  isplaylistExtended,
+}) => {
   const [selectedFilter, setSelectedFilter] = useState("");
 
   const setFilter = (value) => {
@@ -102,7 +108,35 @@ export const SideBarScrollbar = ({ playlists }) => {
 
   return (
     <div className={styles.scrollbarContainer}>
-      <div className={styles.buttonsSection}>{getButtons(selectedFilter)}</div>
+      <div className={styles.buttonsSection}>
+        <div className="flex items-center">
+          <div className="flex">
+            {selectedFilter === "liked" && (
+              <CustomButton
+                handleClick={() =>""}
+                variant="iconOnly"
+              >
+                <IoIosCloseCircle />
+              </CustomButton>
+            )}
+            <CustomButton
+              handleClick={() => ""}
+              variant="textOutline"
+            >
+              Liked
+            </CustomButton>
+          </div>
+          {provider === "spotify" && getButtons(selectedFilter)}
+        </div>
+
+        <CustomButton handleClick={extendPlaylistSection} variant="iconOnly">
+          {isplaylistExtended ? (
+            <FaCaretDown className="text-lg" />
+          ) : (
+            <FaCaretUp className="text-lg" />
+          )}
+        </CustomButton>
+      </div>
       <Scrollbar
         noScrollX
         style={{ marginTop: "8px", height: "100%", width: "100%" }}

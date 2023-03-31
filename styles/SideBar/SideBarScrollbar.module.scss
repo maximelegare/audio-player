@@ -2,11 +2,13 @@
 .scrollbarContainer{
     flex-grow: 1;
     padding-bottom: 35px;
+    padding-top: 15px;
 }
 
 .buttonsSection{
    display: flex;
-   justify-items: center;
+   justify-content: space-between;
    gap: 10px;
+   
 }
 

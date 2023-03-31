@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useRecoilState } from "recoil";
 import { selectedSideBarProvider } from "../../../atoms/generalAtom";
@@ -48,6 +48,8 @@ export const SideBarDefault = () => {
     searchSectionVisibilityState
   );
 
+  const [isplaylistExtended, setIsPlaylistExtended] = useState(false);
+
   const getPlaylists = (provider) => {
     switch (provider) {
       case "hodei": {
@@ -60,119 +62,130 @@ export const SideBarDefault = () => {
   };
 
   const getColor = (provier) => {
-    switch (provider){
-      case "hodei":{
-        return "bg-hodeiAccent"
+    switch (provider) {
+      case "hodei": {
+        return "bg-hodeiAccent";
       }
-      case "spotify":{
-        return "bg-spotifyAccent"
+      case "spotify": {
+        return "bg-spotifyAccent";
       }
-      default:{
-        return "bg-[#2c0948]"
+      default: {
+        return "bg-[#2c0948]";
       }
     }
-  }
-
+  };
 
   return (
     <>
-      <div className={styles.linkContainer}>
-        <div className="flex items-center gap-4">
-          <CustomButton
-            variant="iconOnly"
-            underline={provider === "hodei"}
-            handleClick={() => setSelectedProvider("hodei")}
-          >
-            <div className="flex items-center">
-              <Image src={hodeiSmallLogo} width={25} height={25} alt="" />
+      {isplaylistExtended ? (
+        ""
+      ) : (
+        <>
+          <div className={styles.linkContainer}>
+            <div className="flex items-center gap-4">
+              <CustomButton
+                variant="iconOnly"
+                underline={provider === "hodei"}
+                handleClick={() => setSelectedProvider("hodei")}
+              >
+                <div className="flex items-center">
+                  <Image src={hodeiSmallLogo} width={25} height={25} alt="" />
+                </div>
+              </CustomButton>
+              {session?.user ? (
+                <CustomButton
+                  variant="iconOnly"
+                  handleClick={() => setSelectedProvider("spotify")}
+                  underline={provider === "spotify"}
+                >
+                  <div className="flex items-center">
+                    <Image src={spotify} width={25} height={25} alt="" />
+                    {/* <div className="text-base">+</div> */}
+                  </div>
+                </CustomButton>
+              ) : (
+                <CustomButton
+                  variant="iconOnly"
+                  handleClick={(e) => {
+                    e.preventDefault();
+                    signIn("spotify", { callbackUrl: "/" });
+                  }}
+                >
+                  <div className="flex items-center">
+                    <Image src={spotify} width={25} height={25} alt="" />
+                    <div className="text-base">+</div>
+                  </div>
+                </CustomButton>
+              )}
             </div>
-          </CustomButton>
-          {session?.user ? (
-            <CustomButton
-              variant="iconOnly"
-              handleClick={() => setSelectedProvider("spotify")}
-              underline={provider === "spotify"}
-            >
-              <div className="flex items-center">
-                <Image src={spotify} width={25} height={25} alt="" />
-                {/* <div className="text-base">+</div> */}
-              </div>
-            </CustomButton>
-          ) : (
-            <CustomButton
-              variant="iconOnly"
-              handleClick={(e) => {
-                e.preventDefault();
-                signIn("spotify", { callbackUrl: "/" });
-              }}
-            >
-              <div className="flex items-center">
-                <Image src={spotify} width={25} height={25} alt="" />
-                <div className="text-base">+</div>
-              </div>
-            </CustomButton>
-          )}
-        </div>
-      </div>
-      <hr />
-      <div className={styles.linkContainer}>
-        <SideBarLink
-          icon={<AiOutlineHome className={styles.sideBarIcon} />}
-          text="Home"
-          href="/"
-        />
-        <SideBarLink
-          icon={<MdPlaylistPlay className={styles.sideBarIcon} />}
-          text="Queue"
-          href="/queue"
-        />
-        <SideBarLink
-          handleClick={() => setSearchVisibility(!searchVisibility)}
-          icon={<BsSearch className={`${styles.sideBarIcon}`} />}
-          text="Search"
-          // dotsIcon
-          // wholeButtonTrigger
-          menuItem={<CustomInput placeHolder="Search Anything" />}
-        />
-      </div>
-      <hr />
-      <div className={`flex m-3 gap-2`}>
-        <div className={`w-[2px] h-full ${getColor(provider)}`}></div>
-        <div className="flex-grow">
+          </div>
+          <hr />
           <div className={styles.linkContainer}>
             <SideBarLink
-              icon={<HiUserGroup className={styles.sideBarIcon} />}
-              text="Artists"
-              href={providers[provider].artists}
+              icon={<AiOutlineHome className={styles.sideBarIcon} />}
+              text="Home"
+              href="/"
             />
             <SideBarLink
-              icon={<BsDisc className={styles.sideBarIcon} />}
-              text="Albums"
-              href={providers[provider].albums}
+              icon={<MdPlaylistPlay className={styles.sideBarIcon} />}
+              text="Queue"
+              href="/queue"
             />
             <SideBarLink
-              icon={<FaItunesNote className={styles.sideBarIcon} />}
-              text="Songs"
-              href={providers[provider].songs}
+              handleClick={() => setSearchVisibility(!searchVisibility)}
+              icon={<BsSearch className={`${styles.sideBarIcon}`} />}
+              text="Search"
+              // dotsIcon
+              // wholeButtonTrigger
+              menuItem={<CustomInput placeHolder="Search Anything" />}
             />
           </div>
-          <div className={styles.linkContainer}>
-            <SideBarLink
-              icon={<BsSuitHeart className={styles.sideBarIcon} />}
-              text="Liked Songs"
-              href={providers[provider].likedSongs}
-            />
-            <SideBarLink
-              icon={<MdOutlinePlaylistAdd className={styles.sideBarIcon} />}
-              text="New Playlist"
-              wholeButtonTrigger
-              dotsIcon
-              menuItem={<PopOverInner buttonText="Create" playlistPopover />}
-            />
+          <hr />
+          <div className={`flex mt-3 ml-3 gap-2`}>
+            <div className={`w-[2px] h-full ${getColor(provider)}`}></div>
+            <div className="flex-grow">
+              <div className={styles.linkContainer}>
+                <SideBarLink
+                  icon={<HiUserGroup className={styles.sideBarIcon} />}
+                  text="Artists"
+                  href={providers[provider].artists}
+                />
+                <SideBarLink
+                  icon={<BsDisc className={styles.sideBarIcon} />}
+                  text="Albums"
+                  href={providers[provider].albums}
+                />
+                <SideBarLink
+                  icon={<FaItunesNote className={styles.sideBarIcon} />}
+                  text="Songs"
+                  href={providers[provider].songs}
+                />
+              </div>
+              <div className={styles.linkContainer}>
+                <SideBarLink
+                  icon={<BsSuitHeart className={styles.sideBarIcon} />}
+                  text="Liked Songs"
+                  href={providers[provider].likedSongs}
+                />
+                <SideBarLink
+                  icon={<MdOutlinePlaylistAdd className={styles.sideBarIcon} />}
+                  text="New Playlist"
+                  wholeButtonTrigger
+                  dotsIcon
+                  menuItem={
+                    <PopOverInner buttonText="Create" playlistPopover />
+                  }
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <SideBarScrollbar playlists={getPlaylists(provider)} />
+        </>
+      )}
+      <SideBarScrollbar
+        extendPlaylistSection={() => setIsPlaylistExtended(!isplaylistExtended)}
+        isplaylistExtended={isplaylistExtended}
+        playlists={getPlaylists(provider)}
+      />
     </>
   );
 };
