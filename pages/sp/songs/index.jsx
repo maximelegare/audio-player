@@ -47,15 +47,17 @@ export async function getServerSideProps(context) {
   }
 
 
-  const topTracks = topTracksRes.map((song) => {
+  const topTracks = topTracksRes?.map((song) => {
     return {
       id: song.id,
       picture_url: song.album.images[0].url,
       artist: song.artists[0].name,
+      artistId:song.artists[0].id,
       route: `/sp/songs/${song.id}`,
       year: song.album.release_date.slice(0, 4),
       title: song.name,
       album:song.album.name,
+      albumId:song.album.id,
       duration:song.duration_ms / 1000,
       provider:"spotify",
       spotify:{...song}
@@ -68,7 +70,6 @@ export async function getServerSideProps(context) {
     //   duration: item.track.duration_ms / 1000,
     //   ...item,
   });
-  console.log("topTracks", topTracks)
   const formatedTopTracks = JSON.parse(JSON.stringify(topTracks));
   return {
     props: {

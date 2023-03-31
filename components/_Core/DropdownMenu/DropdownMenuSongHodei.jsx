@@ -11,7 +11,7 @@ import DropdownItemWithIcon from "./DropdownItemWithIcon";
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
 import { useRouter } from "next/router";
 
-const DropdownMenuSong = ({ song }) => {
+const DropdownMenuSongHodei = ({ song }) => {
   const {
     playlists,
     toggleSongFromQueue,
@@ -92,4 +92,4 @@ const DropdownMenuSong = ({ song }) => {
   );
 };
 
-export default DropdownMenuSong;
+export default DropdownMenuSongHodei;

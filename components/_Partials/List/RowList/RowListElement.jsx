@@ -10,7 +10,8 @@ import { useAudioPlayer } from "../../../../hooks/AudioHooks";
 
 import Dropdown from "../../../_Core/DropdownMenu/DropownMenu";
 
-import DropdownMenuSong from "../../../_Core/DropdownMenu/DropdownMenuSong";
+import DropdownMenuSongHodei from "../../../_Core/DropdownMenu/DropdownMenuSongHodei";
+import { DropdownMenuSongSpotify } from "../../../_Core/DropdownMenu/DropdownMenuSongSpotify";
 
 import CustomButton from "../../../_Core/CustomButton";
 import { GiPauseButton } from "react-icons/gi";
@@ -31,7 +32,7 @@ const RowListElement = ({
   options,
 }) => {
   const [highlightedSong, setHighlightedSong] =
-    useRecoilState(highlightedSongState);    
+    useRecoilState(highlightedSongState);
 
   const setSearchVisibility = useSetRecoilState(searchSectionVisibilityState);
 
@@ -71,18 +72,27 @@ const RowListElement = ({
     setIsPlaying(!isPlaying);
   };
 
-  const getColor = (color) => {
-    switch (color){
-      case "hodei" :{
-        return "bg-hodeiAccent"
+  const getColor = (provider) => {
+    switch (provider) {
+      case "hodei": {
+        return "bg-hodeiAccent";
       }
-      case "spotify":{
-        return "bg-spotifyAccent"
+      case "spotify": {
+        return "bg-spotifyAccent";
       }
-    } 
-  }
+    }
+  };
 
-
+  const getSongDropdown = (provider) => {
+    switch (provider) {
+      case "hodei": {
+        return <DropdownMenuSongHodei song={song} />;
+      }
+      case "spotify": {
+        return <DropdownMenuSongSpotify song={song} />;
+      }
+    }
+  };
 
   return (
     <>
@@ -141,7 +151,11 @@ const RowListElement = ({
                         ) : (
                           // Otherwise show number
                           <div className="flex items-center flex-col ">
-                            <div className={`${styles.dot} ${getColor(song.provider)}`}></div>
+                            <div
+                              className={`${styles.dot} ${getColor(
+                                song.provider
+                              )}`}
+                            ></div>
                             <p className={styles.number}>{idx + 1}</p>
                           </div>
                         )}
@@ -193,7 +207,7 @@ const RowListElement = ({
             {!options?.noOptionsIcon &&
               // If a song is highlighted (clicked and stay) or Hover, show options
               (highlightedSong === id || hover) && (
-                <Dropdown menuItem={<DropdownMenuSong song={song} />} />
+                <Dropdown menuItem={getSongDropdown(song.provider)} />
               )}
           </div>
         </div>
