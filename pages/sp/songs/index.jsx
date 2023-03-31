@@ -17,7 +17,7 @@ const Index = ({ topTracks }) => {
 />
       <PageLayout>
         <RowList 
-        topHeaderTitle="Most listened songs"
+        topHeaderTitle="Most listened"
         data={topTracks} 
         />
       </PageLayout>

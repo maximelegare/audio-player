@@ -11,7 +11,7 @@ const Index = ({ likedSongs }) => {
     <>
       <Header title="Spotify Liked Songs" variant="small" />
       <PageLayout>
-        <RowList topHeaderTitle="Most listened songs" data={likedSongs} />
+        <RowList data={likedSongs} />
       </PageLayout>
     </>
   );

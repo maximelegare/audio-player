@@ -1,7 +1,12 @@
 @import "../variables.module.scss";
 
-.container{
-    color:$white;
-    margin-top: 30px;
-    margin-bottom: 15px;
-}
+
+
+.topTitle{
+    font-size: 1.5rem;
+    opacity: 0.8;
+    margin-bottom: 10px;
+    width: fit-content;
+    font-weight: 600;
+  }
+  

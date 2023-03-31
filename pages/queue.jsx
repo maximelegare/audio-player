@@ -10,7 +10,7 @@ function Queue() {
 
   return (
     <div>
-      <Header title="Queue" />
+      <Header title="Queue" variant="small"/>
       <PageLayout>
         <RowList data={queue.songs} />
       </PageLayout>

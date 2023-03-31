@@ -25,9 +25,7 @@ export default function Home({ playlists }) {
       <Header title="Good Morning!" />
       <PageLayout>
         <BigCard title="Liked Songs" route="/liked-songs"/>
-        <TitleSection>
-          <h2>Playlists</h2>
-        </TitleSection>
+        <TitleSection title="Playlists"/>
         <GridList data={playlists} variant="bigCard" />
       </PageLayout>
     </div>

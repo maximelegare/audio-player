@@ -3,6 +3,8 @@ import React from "react";
 import styles from "../../../../styles/List/RowList.module.scss";
 
 import { FiClock, FiHash } from "react-icons/fi";
+import TitleSection from "../../Title/TitleSection";
+
 
 const RowHeader = ({ topTitle, showImageSection }) => {
   return (
@@ -23,7 +25,7 @@ const RowHeader = ({ topTitle, showImageSection }) => {
         ""
       )}
 
-      {/* {topTitle && <h2 className={styles.topTitle}>{topTitle}:</h2>} */}
+      <TitleSection title={topTitle} noBottomMargin noMarginTop/>
       <div className={`${styles.rowListContainer} ${styles.header}`}>
         <div className={styles.firstThird}>
           <div className={styles.numberContainer}>
@@ -36,7 +38,7 @@ const RowHeader = ({ topTitle, showImageSection }) => {
         <h4>Album</h4>
         <FiClock className={styles.time} style={{ marginRight: "45px" }} />
       </div>
-      <hr style={{ marginBottom: "30px" }} />
+      <hr className="mb-8 opacity-10" />
     </div>
   );
 };

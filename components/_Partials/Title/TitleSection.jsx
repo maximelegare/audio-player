@@ -1,11 +1,21 @@
-import React from 'react'
-import styles from "../../../styles/Title/titleSection.module.scss"
+import React from "react";
+import styles from "../../../styles/Title/titleSection.module.scss";
 
-
-const TitleSection = ({children}) => {
+const TitleSection = ({ title, noBottomMargin, noMarginTop }) => {
   return (
-    <div className={styles.container}>{children}</div>
-  )
-}
+    <>
+      {title && (
+        <div
+          className={`${noBottomMargin ? "" : "mb-7"} ${
+            noMarginTop ? "" : "mt-4"
+          }  `}
+        >
+          <h2 className={styles.topTitle}>{title}</h2>
+          <hr className="opacity-10" />
+        </div>
+      )}
+    </>
+  );
+};
 
-export default TitleSection
+export default TitleSection;
