@@ -50,7 +50,6 @@ export default NextAuth({
       //   Initial sign in of the user
       if (account && user) {
         if (account.providerAccountId === process.env.SPOTIFY_USERID) {
-          spotifyApi.setAccessToken(token);
           return {
             ...token,
             accessToken: account.access_token,
@@ -78,6 +77,7 @@ export default NextAuth({
       session.user.refreshToken = token.refreshToken;
       session.user.userId = token.username;
 
+      spotifyApi.setAccessToken(token)
       return session;
     },
   },

@@ -5,13 +5,20 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import styles from "../../../styles/_Core/PopOver.module.scss";
 
 import { IoIosArrowForward } from "react-icons/io";
-
+import { useEffect } from "react";
 import DropdownItemWithIcon from "./DropdownItemWithIcon";
 import { useRouter } from "next/router";
 
-export const DropdownMenuSongSpotify = ({song}) => {
-  const router = useRouter()  
+import useSpotify from "../../../hooks/useSpotify";
 
+import { useAudioPlayer } from "../../../hooks/AudioHooks";
+
+export const DropdownMenuSongSpotify = ({ song }) => {
+  const router = useRouter();
+  const { playlists } = useAudioPlayer();
+
+  console.log(playlists);
+  const { spotifyPlaylists, addSongToSpotifyPlaylist } = useSpotify();
 
   return (
     <>
@@ -40,10 +47,7 @@ export const DropdownMenuSongSpotify = ({song}) => {
       <DropdownMenu.Separator>
         <hr />
       </DropdownMenu.Separator>
-      <DropdownMenu.Item
-        className={styles.menuItem}
-        onClick={() => ""}
-      >
+      <DropdownMenu.Item className={styles.menuItem} onClick={() => ""}>
         {song.liked ? "Remove from SP" : "Add to SP"} liked Songs
       </DropdownMenu.Item>
 
@@ -52,7 +56,7 @@ export const DropdownMenuSongSpotify = ({song}) => {
           className={styles.menuItem}
           style={{ display: "flex" }}
         >
-          <DropdownItemWithIcon text="Add to SP Playlist">
+          <DropdownItemWithIcon text="Add to Playlist">
             <IoIosArrowForward className={styles.rightArrow} />
           </DropdownItemWithIcon>
         </DropdownMenu.TriggerItem>
@@ -61,27 +65,40 @@ export const DropdownMenuSongSpotify = ({song}) => {
           alignOffset={-7}
           className={styles.menuContent}
         >
-          {/* {playlists?.map(({ id, title, route }) => (
+          <DropdownMenu.Label className={styles.label}>Hodei:</DropdownMenu.Label>
+          {playlists?.map(({ id, title }) => (
             <DropdownMenu.Item
               key={id}
               className={styles.menuItem}
-              onClick={() => addAndRemoveSongFromPlaylist("add", song, title)}
+              onClick={() => ""}
             >
               {title}
             </DropdownMenu.Item>
-          ))} */}
+          ))}
+          <DropdownMenu.Separator>
+            <hr />
+          </DropdownMenu.Separator>
+          <DropdownMenu.Label className={styles.label}>Spotify:</DropdownMenu.Label>
+          {spotifyPlaylists
+            ?.filter((playlist) => {
+              return playlist.isUserPlaylist;
+            })
+            .map(({ id, name }) => (
+              <DropdownMenu.Item
+                key={id}
+                className={styles.menuItem}
+                onClick={() => ""}
+              >
+                {name}
+              </DropdownMenu.Item>
+            ))}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
-      {/* {router.pathname.includes("/sp/playlists") && (
-        <DropdownMenu.Item
-          className={styles.menuItem}
-          onClick={() =>
-            ""
-          }
-        >
+      {router.pathname.includes("/sp/playlists") && (
+        <DropdownMenu.Item className={styles.menuItem} onClick={() => ""}>
           Remove from this playlist
         </DropdownMenu.Item>
-      )} */}
+      )}
     </>
   );
 };

@@ -7,10 +7,7 @@ import { spotifyPlaylistsAtomState } from "../atoms/audioAtomSpotify";
 import { spotifyCurrentPlaylistAtomState } from "../atoms/audioAtomSpotify";
 import { spotifyCurrentPlaylistIdAtomState } from "../atoms/audioAtomSpotify";
 
-
 function useSpotify() {
-  
-
   // Create Spotify APi
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT_ID,
@@ -18,10 +15,6 @@ function useSpotify() {
   });
 
   const { data: session, status } = useSession();
-
-
-
-
 
   const [spotifyPlaylists, setSpotifyPlaylists] = useRecoilState(
     spotifyPlaylistsAtomState
@@ -33,7 +26,6 @@ function useSpotify() {
 
   const [spotifyCurrentPlaylistId, setspotifyCurrentPlaylistId] =
     useRecoilState(spotifyCurrentPlaylistIdAtomState);
-
 
   useEffect(() => {
     if (session) {
@@ -61,7 +53,6 @@ function useSpotify() {
             isUserPlaylist,
           };
         });
-        console.log(formatedItems)
         setSpotifyPlaylists(formatedItems);
       });
     }
@@ -77,11 +68,42 @@ function useSpotify() {
       .catch((err) => console.log(err));
   };
 
+  // Add track to spotify playlist
+  const addSongToSpotifyPlaylist = (playlistId, tracksUris) => {
+    spotifyApi.setAccessToken(session.user.accessToken);
+    spotifyApi.addTracksToPlaylist(playlistId, tracksUris).then(
+      function (data) {
+        return console.log("Added tracks to playlist!");
+      },
+      function (err) {
+        console.log("Something went wrong!", err);
+      }
+    );
+  };
+
+  const removeTrackFromPlaylistByPosition = (playlistId, idx, songId) => {
+    spotifyApi
+      .removeTracksFromPlaylistByPosition(
+        "5ieJqeLJjjI8iJWaxeBLuK",
+        [idx],
+        "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9"
+      )
+      .then(
+        function (data) {
+          console.log("Tracks removed from playlist!");
+        },
+        function (err) {
+          console.log("Something went wrong!", err);
+        }
+      );
+  };
+
   return {
     spotifyApi,
     spotifyPlaylists,
     spotifyCurrentPlaylist,
     getSpotifyCurrentPlaylist,
+    addSongToSpotifyPlaylist,
   };
 }
 
