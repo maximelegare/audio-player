@@ -7,10 +7,9 @@ const FourImagesSquare = ({ images, width, height }) => {
     <div className={styles.fourImagesContainer}>
       {images.map((img, idx) => {
         return (
-          <>
+          <div key={idx}>
             {img.picture_url ? (
               <CustomImage
-                key={idx}
                 src={img.picture_url}
                 width={width}
                 height={height}
@@ -19,7 +18,6 @@ const FourImagesSquare = ({ images, width, height }) => {
               />
             ) : (
               <CustomImage
-                key={idx}
                 src={img}
                 width={width}
                 height={height}
@@ -27,7 +25,7 @@ const FourImagesSquare = ({ images, width, height }) => {
                 noBorderRadius
               />
             )}
-          </>
+          </div>
         );
       })}
     </div>

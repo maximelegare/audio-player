@@ -10,7 +10,16 @@ import fallbackImage from "../../../public/assets/SVG/musicNote.svg";
 import PageLayout from "../../../components/Layout/PageLayout";
 import spotifyApi from "../../../lib/spotify";
 
+import { useAudioPlayer } from "../../../hooks/AudioHooks";
+
+
 const Playlist = ({ playlistTitle, playlistImages, playlist }) => {
+
+  const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer();
+
+  useEffect(() => {
+    setCurrentRouteSongs(playlist);
+  }, [playlist]);
 
   return (
     <div>
@@ -21,7 +30,7 @@ const Playlist = ({ playlistTitle, playlistImages, playlist }) => {
         smallTitle="Spotify Playlist"
       />
       <PageLayout>
-        <RowList data={playlist} />
+        <RowList data={currentRouteSongs} />
       </PageLayout>
     </div>
   );

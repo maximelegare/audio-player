@@ -199,6 +199,9 @@ const useAudioPlayer = (fileUrl, duration) => {
     likedSongsPlaylistState
   );
 
+  //////////////////////////// 
+  // Is used in Spotify too //
+  //////////////////////////// 
   // Playlist displayed on the current route (the songs)
   // To update in real time songs in playlist
   const [currentRouteSongs, setCurrentRouteSongs] = useRecoilState(
