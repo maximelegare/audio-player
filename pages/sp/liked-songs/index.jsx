@@ -39,7 +39,6 @@ export async function getServerSideProps(context) {
         }
       );
   }
-  console.log(savedTracks)
   const likedSongs = savedTracks.map(({track}) => {
     return {
       id: track.id,

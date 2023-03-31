@@ -10,7 +10,6 @@ const GridList = ({ data, variant, ...otherProps }) => {
 
 
   const selectCard = (item) => {
-    console.log(item)
     switch (variant) {
       case "bigCard":
         return (

@@ -44,7 +44,6 @@ export async function getServerSideProps(context) {
   }
 
   const albumSongs = res?.tracks.items.map((item) => {
-    console.log(res.images[0].url)
     return {
       id: item.id,
       title: item.name,

@@ -29,7 +29,6 @@ export async function getServerSideProps(context) {
   let res;
 
   if (session) {
-    console.log("here");
     res = await spotifyApi
       .getMySavedAlbums({
         limit: 20,
@@ -57,7 +56,6 @@ export async function getServerSideProps(context) {
       provider:"spotify"
     };
   });
-  // console.log(artists)
     const formatedAlbums = JSON.parse(JSON.stringify(albums));
   return {
     props: {

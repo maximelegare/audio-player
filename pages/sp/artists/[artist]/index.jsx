@@ -25,7 +25,6 @@ export default Index;
 
 export async function getServerSideProps(context) {
   const { artist } = context.query;
-  //   console.log("artist", artist)
   const session = await getSession(context);
 
   spotifyApi.setAccessToken(session.user.accessToken);

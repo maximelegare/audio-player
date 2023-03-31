@@ -11,9 +11,6 @@ import PageLayout from "../../../components/Layout/PageLayout";
 import spotifyApi from "../../../lib/spotify";
 
 const Playlist = ({ playlistTitle, playlistImages, playlist }) => {
-  useEffect(() => {
-    console.log(playlist);
-  }, [playlist]);
 
   return (
     <div>

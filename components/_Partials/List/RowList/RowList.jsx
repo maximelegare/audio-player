@@ -13,7 +13,6 @@ const RowList = ({ data, topHeaderTitle }) => {
     <>
       <RowHeader topTitle={topHeaderTitle}></RowHeader>
       {data?.map((song, idx) => {
-        console.log(song)
         return (
           <ListElement
             key={song.title}

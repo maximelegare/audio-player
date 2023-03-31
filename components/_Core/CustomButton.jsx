@@ -30,6 +30,9 @@ const CustomButton = ({
       case "text": {
         return styles.text;
       }
+      case "textOutline": {
+        return styles.textOutline;
+      }
     }
   };
 

@@ -136,7 +136,7 @@ export const SideBarDefault = () => {
         />
       </div>
       <hr />
-      <div className={`flex mt-3 gap-2`}>
+      <div className={`flex m-3 gap-2`}>
         <div className={`w-[2px] h-full ${getColor(provider)}`}></div>
         <div className="flex-grow">
           <div className={styles.linkContainer}>

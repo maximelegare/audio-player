@@ -9,10 +9,6 @@ import { useEffect } from "react";
 
 const Index = ({artists}) => {
 
-  useEffect(() => {
-    console.log(artists)
-  },[artists])
-
   return (
     <>
       <Header
@@ -37,7 +33,6 @@ export async function getServerSideProps(context) {
   let res;
 
   if (session) {
-    console.log("here");
     res = await spotifyApi
       .getFollowedArtists({ limit: 20 })
       .then((data) => {
@@ -56,7 +51,6 @@ export async function getServerSideProps(context) {
       round:true
     };
   });
-  // console.log(artists)
   const formatedArtists = JSON.parse(JSON.stringify(artists));
   return {
     props: {

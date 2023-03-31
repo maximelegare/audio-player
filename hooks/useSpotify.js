@@ -38,34 +38,42 @@ function useSpotify() {
     }
   }, [session]);
 
-  
   // Get all the user's spotify playlists
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
       return spotifyApi.getUserPlaylists().then((data) => {
-        setSpotifyPlaylists(data.body.items);
+        const formatedItems = data?.body.items.map((item) => {
+          let isUserPlaylist = false;
+          if (session?.user.userId === item.owner.id) {
+            isUserPlaylist = true;
+          }
+
+          return {
+            ...item,
+            isUserPlaylist,
+          };
+        });
+        console.log(formatedItems)
+        setSpotifyPlaylists(formatedItems);
       });
     }
   }, [session, spotifyApi]);
 
-
-  // Get specific spotify playlist 
-  const getSpotifyCurrentPlaylist = () =>{
+  // Get specific spotify playlist
+  const getSpotifyCurrentPlaylist = () => {
     spotifyApi
       ?.getPlaylist(spotifyCurrentPlaylistId)
       .then((data) => {
         setSpotifyCurrentPlaylist(data?.body);
       })
       .catch((err) => console.log(err));
-  }    
-    
-
+  };
 
   return {
     spotifyApi,
     spotifyPlaylists,
     spotifyCurrentPlaylist,
-    getSpotifyCurrentPlaylist
+    getSpotifyCurrentPlaylist,
   };
 }
 
