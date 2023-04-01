@@ -7,8 +7,11 @@ import { selectedSideBarProvider } from "../../../../atoms/generalAtom";
 import CustomButton from "../../../_Core/CustomButton";
 import { FaCaretUp } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa";
+import { MdOutlinePlaylistAdd } from "react-icons/md";
 
-import { IoIosCloseCircle } from "react-icons/io";
+import PopOverInner from "../../../_Core/PopOver/PopOverInner";
+
+import { IoIosCloseCircle, IoIosAdd } from "react-icons/io";
 
 export const SideBarScrollbar = ({
   playlists,
@@ -108,34 +111,42 @@ export const SideBarScrollbar = ({
 
   return (
     <div className={styles.scrollbarContainer}>
-      <div className={styles.buttonsSection}>
-        <div className="flex items-center">
-          <div className="flex">
-            {selectedFilter === "liked" && (
-              <CustomButton
-                handleClick={() =>""}
-                variant="iconOnly"
-              >
-                <IoIosCloseCircle />
-              </CustomButton>
-            )}
-            <CustomButton
-              handleClick={() => ""}
-              variant="textOutline"
-            >
-              Liked
-            </CustomButton>
-          </div>
-          {provider === "spotify" && getButtons(selectedFilter)}
+      <div className="pt-1 bg-[#231b1b39] rounded-bl-md rounded-br-md">
+        <div className="mb-3 flex justify-between">
+          <SideBarLink
+            icon={<MdOutlinePlaylistAdd className={styles.sideBarIcon} />}
+            text="Playlists"
+            isLabel
+            fontWeight={"font-semibold"}
+          />
+          <CustomButton handleClick={() => ""} variant="iconOnly">
+            <IoIosAdd />
+          </CustomButton>
         </div>
+        <div className={styles.buttonsSection}>
+          <div className="flex items-center">
+            <div className="flex">
+              {selectedFilter === "liked" && (
+                <CustomButton handleClick={() => ""} variant="iconOnly">
+                  <IoIosCloseCircle />
+                </CustomButton>
+              )}
 
-        <CustomButton handleClick={extendPlaylistSection} variant="iconOnly">
-          {isplaylistExtended ? (
-            <FaCaretDown className="text-lg" />
-          ) : (
-            <FaCaretUp className="text-lg" />
-          )}
-        </CustomButton>
+              <CustomButton handleClick={() => ""} variant="textOutline">
+                Liked
+              </CustomButton>
+            </div>
+            {provider === "spotify" && getButtons(selectedFilter)}
+          </div>
+
+          <CustomButton handleClick={extendPlaylistSection} variant="iconOnly">
+            {isplaylistExtended ? (
+              <FaCaretDown className="text-lg" />
+            ) : (
+              <FaCaretUp className="text-lg" />
+            )}
+          </CustomButton>
+        </div>
       </div>
       <Scrollbar
         noScrollX
@@ -159,6 +170,7 @@ export const SideBarScrollbar = ({
                     key={item.id}
                     text={item.name}
                     href={`/sp/playlists/${item.id}`}
+                    fontWeight={"font-light"}
                   />
                 );
               } else {

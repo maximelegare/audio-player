@@ -13,6 +13,8 @@ const SideBarLink = ({
   dotsIcon,
   menuItem,
   handleClick,
+  isLabel,
+  fontWeight
 }) => {
   const router = useRouter();
 
@@ -24,7 +26,16 @@ const SideBarLink = ({
   return (
     <div>
       {
-        // If the element possess the three dots icon
+        // Element is a limel
+        isLabel ? (
+          <div className={styles.container}>
+            {icon && <div className={styles.sideBarIcon}>{icon}</div>}
+
+            <h4 className={`${styles.text} ${fontWeight}`}>
+              {text?.length > 30 ? `${text.slice(0, 30)} ...` : text}
+            </h4>
+          </div>
+        ) : // If the element possess the three dots icon
         dotsIcon ? (
           <>
             <div className={styles.container}>
@@ -41,7 +52,7 @@ const SideBarLink = ({
                             <div className={styles.sideBarIcon}>{icon}</div>
                           )}
                         </div>
-                        <h4 className={styles.text}>
+                        <h4 className={`${styles.text} ${fontWeight}`}>
                           {text.length > 20 ? text.slice(0, 20) : text}
                         </h4>
                       </>
@@ -53,7 +64,7 @@ const SideBarLink = ({
                   // Top container set display flex to these elements
                   <>
                     {icon && <div className={styles.sideBarIcon}>{icon}</div>}
-                    <h4 className={styles.text}>
+                    <h4 className={`${styles.text} ${fontWeight}`}>
                       {text.length > 20 ? text.slice(0, 20) : text}
                     </h4>
                     <SidePopOver
@@ -75,7 +86,7 @@ const SideBarLink = ({
                   <div className={styles.container} style={style}>
                     {icon && <div className={styles.sideBarIcon}>{icon}</div>}
 
-                    <h4 className={styles.text}>{text}</h4>
+                    <h4 className={`${styles.text} ${fontWeight}`}>{text}</h4>
                   </div>
                 </Link>
               ) : (
@@ -88,7 +99,7 @@ const SideBarLink = ({
                   >
                     {icon && <div className={styles.sideBarIcon}>{icon}</div>}
 
-                    <h4 className={styles.text}>
+                    <h4 className={`${styles.text} ${fontWeight}`}>
                       {text?.length > 30 ? `${text.slice(0, 30)} ...` : text}
                     </h4>
                   </div>

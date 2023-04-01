@@ -22,11 +22,17 @@ import Image from "next/image";
 import hodeiSmallLogo from "../../../public/assets/SVG/hodei.svg";
 import spotify from "../../../public/assets/SVG/spotify.svg";
 
+import { RiPlayListFill } from "react-icons/ri";
+
 import { AiOutlineHome, AiOutlineSync } from "react-icons/ai";
 import { BsDisc, BsSearch, BsSuitHeart } from "react-icons/bs";
-import { HiOutlineCog, HiUserGroup } from "react-icons/hi";
+import { HiOutlineCog, HiUserGroup, HiQueueList } from "react-icons/hi";
 import { FaItunesNote } from "react-icons/fa";
-import { MdOutlinePlaylistAdd, MdPlaylistPlay } from "react-icons/md";
+import {
+  MdOutlinePlaylistAdd,
+  MdPlaylistPlay,
+  MdOutlineQueueMusic,
+} from "react-icons/md";
 import { Scrollbar } from "react-scrollbars-custom";
 
 import providers from "../../../lib/providersData.json";
@@ -125,17 +131,18 @@ export const SideBarDefault = () => {
               icon={<AiOutlineHome className={styles.sideBarIcon} />}
               text="Home"
               href="/"
-            />
+              fontWeight={'font-semibold'}            />
             <SideBarLink
               icon={<MdPlaylistPlay className={styles.sideBarIcon} />}
               text="Queue"
               href="/queue"
+              fontWeight={'font-semibold'}
             />
             <SideBarLink
               handleClick={() => setSearchVisibility(!searchVisibility)}
               icon={<BsSearch className={`${styles.sideBarIcon}`} />}
               text="Search"
-              // dotsIcon
+              fontWeight={'font-semibold'}              // dotsIcon
               // wholeButtonTrigger
               menuItem={<CustomInput placeHolder="Search Anything" />}
             />
@@ -147,16 +154,19 @@ export const SideBarDefault = () => {
               <div className={styles.linkContainer}>
                 <SideBarLink
                   icon={<HiUserGroup className={styles.sideBarIcon} />}
+                  fontWeight={'font-light'}
                   text="Artists"
                   href={providers[provider].artists}
                 />
                 <SideBarLink
                   icon={<BsDisc className={styles.sideBarIcon} />}
+                  fontWeight={'font-light'}
                   text="Albums"
                   href={providers[provider].albums}
                 />
                 <SideBarLink
                   icon={<FaItunesNote className={styles.sideBarIcon} />}
+                  fontWeight={'font-light'}
                   text="Songs"
                   href={providers[provider].songs}
                 />
@@ -164,17 +174,9 @@ export const SideBarDefault = () => {
               <div className={styles.linkContainer}>
                 <SideBarLink
                   icon={<BsSuitHeart className={styles.sideBarIcon} />}
+                  fontWeight={'font-light'}
                   text="Liked Songs"
                   href={providers[provider].likedSongs}
-                />
-                <SideBarLink
-                  icon={<MdOutlinePlaylistAdd className={styles.sideBarIcon} />}
-                  text="New Playlist"
-                  wholeButtonTrigger
-                  dotsIcon
-                  menuItem={
-                    <PopOverInner buttonText="Create" playlistPopover />
-                  }
                 />
               </div>
             </div>
