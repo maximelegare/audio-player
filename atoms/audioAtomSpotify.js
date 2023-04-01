@@ -9,10 +9,6 @@ export const spotifyPlaylistsAtomState = atom({
     default:null
 })
 
-export const spotifyCurrentPlaylistIdAtomState = atom({
-    key:"spotifyCurrentPlaylistIdAtomState",
-    default:"",
-})
 
 export const spotifyCurrentPlaylistAtomState = atom({
     key:"spotifyPlaylistAtomState",

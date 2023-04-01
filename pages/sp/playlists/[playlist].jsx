@@ -51,15 +51,22 @@ export async function getServerSideProps(context) {
       return {
         tracks: data.body.tracks.items,
         playlistTitle: data.body.name,
+        id:data.body.id,
+        snapshotId:data.body.snapshot_id,
+        ...data
       };
     });
   }
   const playlistImagesSet = new Set();
 
+
+  console.log("snapshotId", res.snapshotId)
+
   const formatedPlaylist = res.tracks.map((item) => {
     playlistImagesSet.add(item.track.album.images[0].url);
-
     return {
+      playlistId:playlistId,
+      playlistSnapshotId:res.snapshotId,
       id:item.track.id,
       title: item.track.name,
       artist: item.track.artists[0].name,

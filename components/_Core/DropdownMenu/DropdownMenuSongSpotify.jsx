@@ -13,12 +13,17 @@ import useSpotify from "../../../hooks/useSpotify";
 
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
 
-export const DropdownMenuSongSpotify = ({ song }) => {
+export const DropdownMenuSongSpotify = ({ song, idx }) => {
   const router = useRouter();
   const { playlists } = useAudioPlayer();
 
-  console.log(playlists);
-  const { spotifyPlaylists, addSongToSpotifyPlaylist } = useSpotify();
+  
+
+  const {
+    spotifyPlaylists,
+    addSongToSpotifyPlaylist,
+    removeTrackFromPlaylistByPosition,
+  } = useSpotify();
 
   return (
     <>
@@ -65,7 +70,9 @@ export const DropdownMenuSongSpotify = ({ song }) => {
           alignOffset={-7}
           className={styles.menuContent}
         >
-          <DropdownMenu.Label className={styles.label}>Hodei:</DropdownMenu.Label>
+          <DropdownMenu.Label className={styles.label}>
+            Hodei :
+          </DropdownMenu.Label>
           {playlists?.map(({ id, title }) => (
             <DropdownMenu.Item
               key={id}
@@ -78,24 +85,40 @@ export const DropdownMenuSongSpotify = ({ song }) => {
           <DropdownMenu.Separator>
             <hr />
           </DropdownMenu.Separator>
-          <DropdownMenu.Label className={styles.label}>Spotify:</DropdownMenu.Label>
+          <DropdownMenu.Label className={styles.label}>
+            Spotify :
+          </DropdownMenu.Label>
           {spotifyPlaylists
             ?.filter((playlist) => {
               return playlist.isUserPlaylist;
             })
-            .map(({ id, name }) => (
-              <DropdownMenu.Item
-                key={id}
-                className={styles.menuItem}
-                onClick={() => ""}
-              >
-                {name}
-              </DropdownMenu.Item>
-            ))}
+            .map(({ id, name }) => {
+              return (
+                <DropdownMenu.Item
+                  key={id}
+                  className={styles.menuItem}
+                  onClick={() =>
+                    addSongToSpotifyPlaylist(id, [song.spotify.uri])
+                  }
+                >
+                  {name}
+                </DropdownMenu.Item>
+              );
+            })}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
       {router.pathname.includes("/sp/playlists") && (
-        <DropdownMenu.Item className={styles.menuItem} onClick={() => ""}>
+        <DropdownMenu.Item
+          className={styles.menuItem}
+          onClick={() =>
+            removeTrackFromPlaylistByPosition(
+              song.playlistId,
+              song.id,
+              idx,
+              song.playlistSnapshotId
+            )
+          }
+        >
           Remove from this playlist
         </DropdownMenu.Item>
       )}

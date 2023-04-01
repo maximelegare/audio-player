@@ -1,8 +1,3 @@
-// Component used to display text items
-// Displays elements based by receiving an Array[]
-
-
-
 import React from "react";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 

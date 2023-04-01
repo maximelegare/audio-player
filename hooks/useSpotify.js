@@ -5,7 +5,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import { useRecoilState } from "recoil";
 import { spotifyPlaylistsAtomState } from "../atoms/audioAtomSpotify";
 import { spotifyCurrentPlaylistAtomState } from "../atoms/audioAtomSpotify";
-import { spotifyCurrentPlaylistIdAtomState } from "../atoms/audioAtomSpotify";
+import { useAudioPlayer } from "./AudioHooks";
 
 function useSpotify() {
   // Create Spotify APi
@@ -13,6 +13,8 @@ function useSpotify() {
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   });
+
+  const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer();
 
   const { data: session, status } = useSession();
 
@@ -23,9 +25,6 @@ function useSpotify() {
   const [spotifyCurrentPlaylist, setSpotifyCurrentPlaylist] = useRecoilState(
     spotifyCurrentPlaylistAtomState
   );
-
-  const [spotifyCurrentPlaylistId, setspotifyCurrentPlaylistId] =
-    useRecoilState(spotifyCurrentPlaylistIdAtomState);
 
   useEffect(() => {
     if (session) {
@@ -58,16 +57,6 @@ function useSpotify() {
     }
   }, [session, spotifyApi]);
 
-  // Get specific spotify playlist
-  const getSpotifyCurrentPlaylist = () => {
-    spotifyApi
-      ?.getPlaylist(spotifyCurrentPlaylistId)
-      .then((data) => {
-        setSpotifyCurrentPlaylist(data?.body);
-      })
-      .catch((err) => console.log(err));
-  };
-
   // Add track to spotify playlist
   const addSongToSpotifyPlaylist = (playlistId, tracksUris) => {
     spotifyApi.setAccessToken(session.user.accessToken);
@@ -81,13 +70,19 @@ function useSpotify() {
     );
   };
 
-  const removeTrackFromPlaylistByPosition = (playlistId, idx, songId) => {
+  const removeTrackFromPlaylistByPosition = (
+    playlistId,
+    songId,
+    idx,
+    snapshotId
+  ) => {
+    const filteredSongs = currentRouteSongs.filter(
+      (song) => songId !== song.id
+    );
+    setCurrentRouteSongs(filteredSongs);
+    spotifyApi.setAccessToken(session.user.accessToken);  
     spotifyApi
-      .removeTracksFromPlaylistByPosition(
-        "5ieJqeLJjjI8iJWaxeBLuK",
-        [idx],
-        "0wD+DKCUxiSR/WY8lF3fiCTb7Z8X4ifTUtqn8rO82O4Mvi5wsX8BsLj7IbIpLVM9"
-      )
+      .removeTracksFromPlaylistByPosition(playlistId, [idx], snapshotId)
       .then(
         function (data) {
           console.log("Tracks removed from playlist!");
@@ -102,8 +97,8 @@ function useSpotify() {
     spotifyApi,
     spotifyPlaylists,
     spotifyCurrentPlaylist,
-    getSpotifyCurrentPlaylist,
     addSongToSpotifyPlaylist,
+    removeTrackFromPlaylistByPosition,
   };
 }
 

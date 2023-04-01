@@ -89,7 +89,7 @@ const RowListElement = ({
         return <DropdownMenuSongHodei song={song} />;
       }
       case "spotify": {
-        return <DropdownMenuSongSpotify song={song} />;
+        return <DropdownMenuSongSpotify song={song} idx={idx} />;
       }
     }
   };
