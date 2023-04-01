@@ -12,12 +12,14 @@ import { useRouter } from "next/router";
 import useSpotify from "../../../hooks/useSpotify";
 
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
+import { useRecoilValue } from "recoil";
+import { currentRouteInfosAtom } from "../../../atoms/generalAtom";
 
 export const DropdownMenuSongSpotify = ({ song, idx }) => {
   const router = useRouter();
   const { playlists } = useAudioPlayer();
 
-  
+  const currentRouteInfos = useRecoilValue(currentRouteInfosAtom);
 
   const {
     spotifyPlaylists,
@@ -107,21 +109,22 @@ export const DropdownMenuSongSpotify = ({ song, idx }) => {
             })}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
-      {router.pathname.includes("/sp/playlists") && (
-        <DropdownMenu.Item
-          className={styles.menuItem}
-          onClick={() =>
-            removeTrackFromPlaylistByPosition(
-              song.playlistId,
-              song.id,
-              idx,
-              song.playlistSnapshotId
-            )
-          }
-        >
-          Remove from this playlist
-        </DropdownMenu.Item>
-      )}
+      {router.pathname.includes("/sp/playlists") &&
+        currentRouteInfos.isUserPlaylist && (
+          <DropdownMenu.Item
+            className={styles.menuItem}
+            onClick={() =>
+              removeTrackFromPlaylistByPosition(
+                currentRouteInfos.playlistId,
+                song.id,
+                idx,
+                currentRouteInfos.playlistSnapshotId
+              )
+            }
+          >
+            Remove from this playlist
+          </DropdownMenu.Item>
+        )}
     </>
   );
 };

@@ -18,3 +18,8 @@ export const sideBarPage = atom({
     key:"sideBarPage",
     default:"default"
 })
+
+export const currentRouteInfosAtom = atom({
+    key:"currentRouteInfosAtom",
+    default:{}
+})

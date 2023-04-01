@@ -11,22 +11,38 @@ import PageLayout from "../../../components/Layout/PageLayout";
 import spotifyApi from "../../../lib/spotify";
 
 import { useAudioPlayer } from "../../../hooks/AudioHooks";
+import { useSetRecoilState } from "recoil";
+import { currentRouteInfosAtom } from "../../../atoms/generalAtom";
 
-
-const Playlist = ({ playlistTitle, playlistImages, playlist }) => {
-
+const Playlist = ({
+  playlistSongs,
+  title,
+  playlistId,
+  playlistSnapshotId,
+  images,
+  isUserPlaylist
+}) => {
   const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer();
 
+  const setCurrentRouteInfos = useSetRecoilState(currentRouteInfosAtom);
+
   useEffect(() => {
-    setCurrentRouteSongs(playlist);
-  }, [playlist]);
+    setCurrentRouteSongs(playlistSongs);
+    setCurrentRouteInfos({
+      title,
+      playlistId,
+      playlistSnapshotId,
+      images,
+      isUserPlaylist
+    });
+  }, [playlistSongs, images, playlistSnapshotId, playlistId, title]);
 
   return (
     <div>
       <Header
         src={fallbackImage}
-        images={playlistImages}
-        title={playlistTitle}
+        images={images}
+        title={title}
         smallTitle="Spotify Playlist"
       />
       <PageLayout>
@@ -48,26 +64,28 @@ export async function getServerSideProps(context) {
 
   if (session) {
     res = await spotifyApi.getPlaylist(playlistId).then((data) => {
+
+      let isUserPlaylist = false;
+      if (session?.user.userId === data.body.owner.id) {
+        isUserPlaylist = true;
+      }
       return {
         tracks: data.body.tracks.items,
-        playlistTitle: data.body.name,
-        id:data.body.id,
-        snapshotId:data.body.snapshot_id,
-        ...data
+        title: data.body.name,
+        id: data.body.id,
+        isUserPlaylist,
+        playlistSnapshotId: data.body.snapshot_id,
+        ...data,
       };
     });
   }
   const playlistImagesSet = new Set();
 
 
-  console.log("snapshotId", res.snapshotId)
-
   const formatedPlaylist = res.tracks.map((item) => {
     playlistImagesSet.add(item.track.album.images[0].url);
     return {
-      playlistId:playlistId,
-      playlistSnapshotId:res.snapshotId,
-      id:item.track.id,
+      id: item.track.id,
       title: item.track.name,
       artist: item.track.artists[0].name,
       artistId: item.track.artists[0].id,
@@ -75,20 +93,21 @@ export async function getServerSideProps(context) {
       album: item.track.album.name,
       albumId: item.track.album.id,
       duration: item.track.duration_ms / 1000,
-      provider:"spotify",
-      spotify:{...item}
-      
+      provider: "spotify",
+      spotify: { ...item },
     };
-
   });
   const playlistImagesArray = Array.from(playlistImagesSet).slice(0, 4);
   const playlist = JSON.parse(JSON.stringify(formatedPlaylist));
+
   return {
     props: {
-      playlist: playlist,
-      playlistImages: playlistImagesArray,
-      playlistTitle: res.playlistTitle,
+      playlistSongs: playlist,
+      title: res.title,
+      playlistId: res.id,
+      images: playlistImagesArray,
+      playlistSnapshotId: res.playlistSnapshotId,
+      isUserPlaylist:res.isUserPlaylist
     },
   };
 }
-

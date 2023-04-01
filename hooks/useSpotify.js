@@ -96,7 +96,6 @@ function useSpotify() {
   return {
     spotifyApi,
     spotifyPlaylists,
-    spotifyCurrentPlaylist,
     addSongToSpotifyPlaylist,
     removeTrackFromPlaylistByPosition,
   };
