@@ -7,8 +7,6 @@ import CustomButton from "../_Core/CustomButton";
 import { signIn } from "next-auth/react";
 import * as Dialog from "@radix-ui/react-dialog";
 
-
-
 const DialogComponent = ({
   children,
   noCloseButton,
@@ -38,23 +36,13 @@ const DialogComponent = ({
                 {title}
               </Dialog.Title>
             )}
-            {
-              children
-            }
-            <div
-              style={{
-                display: "flex",
-                marginTop: 25,
-                justifyContent: "flex-end",
-              }}
-            >
-              <Dialog.Close asChild>
-                <button className="Button green">Save changes</button>
+            {children}
+            <div className="flex m-[10px] gap-1 justify-end pt-3">
+              <Dialog.Close >
+                <CustomButton variant="textOutline">Close</CustomButton>
               </Dialog.Close>
-              <Dialog.Close asChild>
-                <button className="IconButton" aria-label="Close">
-                  Close
-                </button>
+              <Dialog.Close >
+                <CustomButton variant="text">Create</CustomButton>
               </Dialog.Close>
             </div>
           </Dialog.Content>

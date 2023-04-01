@@ -65,14 +65,14 @@
   background: linear-gradient($primary-gradiant-colors);
   border: none;
   outline: none;
-  font-size: 12px;
+  font-size: 13px;
   color: white;
   width: fit-content;
   cursor: pointer;
   // margin-bottom: 20px;
-
+  opacity: 0.9;
   &:hover{
-    transform: scale(1.05);
+    opacity: 1;
     transition: 200ms all ease-in-out;
   }
 }  
@@ -83,7 +83,7 @@
   opacity: 0.7;
   border: $white 1px solid;
   outline: none;
-  font-size: 14px;
+  font-size: 13px;
   font-weight:100;
   color: $white;
   width: fit-content;
