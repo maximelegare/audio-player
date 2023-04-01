@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Scrollbar } from "react-scrollbars-custom";
 import SideBarLink from "../../SideBarLink";
 import styles from "../../../../styles/SideBar/SideBarScrollbar.module.scss";
+
+
 import { useRecoilValue } from "recoil";
 import { selectedSideBarProvider } from "../../../../atoms/generalAtom";
 import CustomButton from "../../../_Core/CustomButton";
@@ -12,6 +14,8 @@ import { MdOutlinePlaylistAdd } from "react-icons/md";
 import PopOverInner from "../../../_Core/PopOver/PopOverInner";
 
 import { IoIosCloseCircle, IoIosAdd } from "react-icons/io";
+import DialogComponent from "../../../Dialog/Dialog";
+import { NewPlaylistDialog } from "../../../Dialog/NewPlaylistDialog";
 
 export const SideBarScrollbar = ({
   playlists,
@@ -43,7 +47,7 @@ export const SideBarScrollbar = ({
               handleClick={() => setFilter("by-you")}
               variant="textOutline"
             >
-              By You
+              By&nbsp;You
             </CustomButton>
           </div>
         );
@@ -63,7 +67,7 @@ export const SideBarScrollbar = ({
               handleClick={() => setFilter("by-spotify")}
               variant="textOutline"
             >
-              By Spotify
+              By&nbsp;Spotify
             </CustomButton>
           </div>
         );
@@ -84,7 +88,7 @@ export const SideBarScrollbar = ({
                 handleClick={() => setFilter("by-you")}
                 variant="textOutline"
               >
-                By You
+                By&nbsp;You
               </CustomButton>
             </div>
             <div className="flex">
@@ -100,7 +104,7 @@ export const SideBarScrollbar = ({
                 handleClick={() => setFilter("by-spotify")}
                 variant="textOutline"
               >
-                By Spotify
+                By&nbsp;Spotify
               </CustomButton>
             </div>
           </>
@@ -119,21 +123,21 @@ export const SideBarScrollbar = ({
             isLabel
             fontWeight={"font-semibold"}
           />
-          <CustomButton handleClick={() => ""} variant="iconOnly">
-            <IoIosAdd />
-          </CustomButton>
+          
+        <NewPlaylistDialog />
+
         </div>
         <div className={styles.buttonsSection}>
-          <div className="flex items-center">
+          <div className="flex items-center gap-1">
             <div className="flex">
-              {selectedFilter === "liked" && (
+              {selectedFilter === "Loved" && (
                 <CustomButton handleClick={() => ""} variant="iconOnly">
                   <IoIosCloseCircle />
                 </CustomButton>
               )}
 
               <CustomButton handleClick={() => ""} variant="textOutline">
-                Liked
+                Loved
               </CustomButton>
             </div>
             {provider === "spotify" && getButtons(selectedFilter)}
