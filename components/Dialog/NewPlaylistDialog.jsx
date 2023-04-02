@@ -10,10 +10,15 @@ import styles from "../../styles/_Core/Dialog.module.scss";
 
 import playlistRadioData from "../../lib/playlistRadioButtons.json";
 
+import { useRecoilValue } from "recoil";
+import { selectedSideBarProvider } from "../../atoms/generalAtom";
+
 export const NewPlaylistDialog = () => {
   const [inputValues, setInputValues] = useState({
     playlistTitle: "",
   });
+
+  const provider = useRecoilValue(selectedSideBarProvider)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +40,7 @@ export const NewPlaylistDialog = () => {
           <h4>What type of Playlist do you want?</h4>
           <RadioGroupComponent
             radioButtons={playlistRadioData}
-            defaultValue="hodei"
+            defaultValue={provider}
           />
         </div>
         <div className={styles.inputContainer}>
