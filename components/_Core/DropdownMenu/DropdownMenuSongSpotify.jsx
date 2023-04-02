@@ -100,7 +100,7 @@ export const DropdownMenuSongSpotify = ({ song, idx }) => {
                   key={id}
                   className={styles.menuItem}
                   onClick={() =>
-                    addSongToSpotifyPlaylist(id, [song.spotify.uri])
+                    addSongToSpotifyPlaylist(id, [song.uri])
                   }
                 >
                   {name}

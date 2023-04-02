@@ -55,6 +55,7 @@ export async function getServerSideProps(context) {
   const topTracks = topTracksRes?.map((track) => {
     return {
       id: track.id,
+      uri:track.uri,
       picture_url: track.album.images[0].url,
       album: track.album.name,
       albumId: track.album.id,

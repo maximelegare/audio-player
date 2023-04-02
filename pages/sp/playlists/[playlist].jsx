@@ -86,6 +86,7 @@ export async function getServerSideProps(context) {
     playlistImagesSet.add(item.track.album.images[0].url);
     return {
       id: item.track.id,
+      uri:item.track.uri,
       title: item.track.name,
       artist: item.track.artists[0].name,
       artistId: item.track.artists[0].id,

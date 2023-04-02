@@ -6,7 +6,7 @@ import CustomInput from "../_Core/CustomInput/CustomInput";
 import { useState } from "react";
 import RadioGroupComponent from "../_Core/RadioGroup";
 
-import styles from "../../styles/_Core/Dialog.module.scss"
+import styles from "../../styles/_Core/Dialog.module.scss";
 
 import playlistRadioData from "../../lib/playlistRadioButtons.json";
 
@@ -25,10 +25,14 @@ export const NewPlaylistDialog = () => {
     <>
       <DialogComponent
         title="Create a playlist"
-        openTriggerComponent={<IoIosAdd className={buttonStyles.iconOnly} />}
+        openTriggerComponent={
+          <div className={buttonStyles.iconOnly}>
+            <IoIosAdd />
+          </div>
+        }
       >
         <div className={styles.inputContainer}>
-        <h4>What type of Playlist do you want?</h4>
+          <h4>What type of Playlist do you want?</h4>
           <RadioGroupComponent
             radioButtons={playlistRadioData}
             defaultValue="hodei"
