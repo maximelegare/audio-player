@@ -3,7 +3,6 @@ import { Scrollbar } from "react-scrollbars-custom";
 import SideBarLink from "../../SideBarLink";
 import styles from "../../../../styles/SideBar/SideBarScrollbar.module.scss";
 
-
 import { useRecoilValue } from "recoil";
 import { selectedSideBarProvider } from "../../../../atoms/generalAtom";
 import CustomButton from "../../../_Core/CustomButton";
@@ -120,12 +119,11 @@ export const SideBarScrollbar = ({
           <SideBarLink
             icon={<MdOutlinePlaylistAdd className={styles.sideBarIcon} />}
             text="Playlists"
-            isLabel
+            variant="label"
             fontWeight={"font-semibold"}
           />
-          
-        <NewPlaylistDialog />
 
+          <NewPlaylistDialog />
         </div>
         <div className={styles.buttonsSection}>
           <div className="flex items-center gap-1">
@@ -170,20 +168,30 @@ export const SideBarScrollbar = ({
             ?.map((item) => {
               if (provider === "spotify") {
                 return (
-                  <SideBarLink
-                    key={item.id}
-                    text={item.name}
-                    href={`/sp/playlists/${item.id}`}
-                    fontWeight={"font-light"}
-                  />
+                  <div className="my-1">
+                    <SideBarLink
+                      key={item.id}
+                      text={item.name}
+                      href={`/sp/playlists/${item.id}`}
+                      fontWeight={"font-light"}
+                      variant="link"
+                      dotsIcon
+                      provider={provider}
+                    />
+                  </div>
                 );
               } else {
                 return (
-                  <SideBarLink
-                    key={item.id}
-                    text={item.title}
-                    href={item.route}
-                  />
+                  <div className="my-1">
+                    <SideBarLink
+                      key={item.id}
+                      text={item.title}
+                      href={item.route}
+                      variant="link"
+                      dotsIcon
+                      provider={provider}
+                    />
+                  </div>
                 );
               }
             })}

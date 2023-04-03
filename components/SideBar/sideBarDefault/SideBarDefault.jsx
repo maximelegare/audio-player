@@ -132,12 +132,14 @@ export const SideBarDefault = () => {
                 icon={<AiOutlineHome className={styles.sideBarIcon} />}
                 text="Home"
                 href="/"
+                variant="link"
                 fontWeight={"font-semibold"}
               />
               <SideBarLink
                 icon={<MdPlaylistPlay className={styles.sideBarIcon} />}
                 text="Queue"
                 href="/queue"
+                variant="link"
                 fontWeight={"font-semibold"}
               />
               <SideBarLink
@@ -158,18 +160,21 @@ export const SideBarDefault = () => {
                     icon={<HiUserGroup className={styles.sideBarIcon} />}
                     fontWeight={"font-light"}
                     text="Artists"
+                    variant="link"
                     href={providers[provider].artists}
                   />
                   <SideBarLink
                     icon={<BsDisc className={styles.sideBarIcon} />}
                     fontWeight={"font-light"}
                     text="Albums"
+                    variant="link"
                     href={providers[provider].albums}
                   />
                   <SideBarLink
                     icon={<FaItunesNote className={styles.sideBarIcon} />}
                     fontWeight={"font-light"}
                     text="Songs"
+                    variant="link"
                     href={providers[provider].songs}
                   />
                 </div>
@@ -178,6 +183,7 @@ export const SideBarDefault = () => {
                     icon={<BsSuitHeart className={styles.sideBarIcon} />}
                     fontWeight={"font-light"}
                     text="Liked Songs"
+                    variant="link"
                     href={providers[provider].likedSongs}
                   />
                 </div>

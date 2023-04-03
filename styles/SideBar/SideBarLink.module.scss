@@ -4,12 +4,11 @@
 // Containr of the whole trigger section
 .container {
   display: flex;
-  align-items: end;
-  padding-left: 3px;
-  padding-right: 3px;
+  // align-items: end;
+  justify-content: space-between;
+  padding: 0 3px;
   color: $white;
-  opacity: 0.7;
-
+  opacity: 0.8;
   &:hover{
     color: $hover-white;
     opacity: 1;
@@ -17,11 +16,6 @@
     transition: 200ms all ease-in-out;
   }
 }
-
-.label{
-
-}
-
 
 
 // Color when a link is selected

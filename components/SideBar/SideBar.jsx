@@ -49,7 +49,7 @@ const SideBar = () => {
         {page === "default" ? (
           <SideBarLink
             icon={<HiOutlineCog className={`${styles.sideBarIcon}`} />}
-            wholeButtonTrigger
+            // wholeButtonTrigger
             handleClick={() => {
               setSideBarPage("options");
             }}
@@ -57,7 +57,7 @@ const SideBar = () => {
         ) : (
           <SideBarLink
             icon={<MdArrowBackIosNew className={`${styles.sideBarIcon}`} />}
-            wholeButtonTrigger
+            // wholeButtonTrigger
             text="Back"
             handleClick={() => {
               setSideBarPage("default");
