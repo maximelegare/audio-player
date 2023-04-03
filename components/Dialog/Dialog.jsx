@@ -12,21 +12,14 @@ const DialogComponent = ({
   noCloseButton,
   openTriggerComponent,
   title,
+  onOpenChange
 }) => {
-  const [inputValues, setInputValues] = useState({
-    username: "",
-    password: "",
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
 
-    setInputValues({ ...inputValues, [name]: value });
-  };
 
   return (
     <div suppressHydrationWarning={true}>
-      <Dialog.Root>
+      <Dialog.Root onOpenChange={() => onOpenChange()}>
         <Dialog.Trigger asChild>{openTriggerComponent}</Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Overlay className={styles.DialogOverlay} />
@@ -37,14 +30,6 @@ const DialogComponent = ({
               </Dialog.Title>
             )}
             {children}
-            <div className="flex m-[10px] gap-1 justify-end pt-3">
-              <Dialog.Close >
-                <CustomButton variant="textOutline">Close</CustomButton>
-              </Dialog.Close>
-              <Dialog.Close >
-                <CustomButton variant="text">Create</CustomButton>
-              </Dialog.Close>
-            </div>
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>

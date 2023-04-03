@@ -283,7 +283,7 @@ const useAudioPlayer = (fileUrl, duration) => {
       title: name,
       route: `/${route}`,
     };
-    setRecoilPlaylists([...playlists, playlist]);
+    setRecoilPlaylists([ playlist, ...playlists]);
 
     try {
       await axios.post("/api/playlist", {

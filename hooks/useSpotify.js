@@ -36,8 +36,10 @@ function useSpotify() {
       spotifyApi.setAccessToken(session.user.accessToken);
     }
   }, [session]);
+  ///////////////
+  // Playlists //
+  ///////////////
 
-  // Get all the user's spotify playlists
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
       return spotifyApi.getUserPlaylists().then((data) => {
@@ -70,6 +72,7 @@ function useSpotify() {
     );
   };
 
+  // Remove track from playlist
   const removeTrackFromPlaylistByPosition = (
     playlistId,
     songId,
@@ -80,7 +83,7 @@ function useSpotify() {
       (song) => songId !== song.id
     );
     setCurrentRouteSongs(filteredSongs);
-    spotifyApi.setAccessToken(session.user.accessToken);  
+    spotifyApi.setAccessToken(session.user.accessToken);
     spotifyApi
       .removeTracksFromPlaylistByPosition(playlistId, [idx], snapshotId)
       .then(
@@ -93,10 +96,31 @@ function useSpotify() {
       );
   };
 
+  const createSpotifyPlaylist = (title, description = "") => {
+    spotifyApi.setAccessToken(session.user.accessToken);
+    spotifyApi
+      .createPlaylist(title, {
+        description: description,
+        public: true,
+      })
+      .then(
+        function ({ body }) {
+          setSpotifyPlaylists([
+            { ...body, isUserPlaylist: true },
+            ...spotifyPlaylists,
+          ]);
+        },
+        function (err) {
+          console.log("Something went wrong!", err);
+        }
+      );
+  };
+
   return {
     spotifyApi,
     spotifyPlaylists,
     addSongToSpotifyPlaylist,
+    createSpotifyPlaylist,
     removeTrackFromPlaylistByPosition,
   };
 }

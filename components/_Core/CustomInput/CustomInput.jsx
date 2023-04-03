@@ -28,7 +28,7 @@ const CustomInput = ({
 
   const handleChangeLocally = (e) => {
     if (!isLoading) {
-      handleChange(e);
+      handleChange({ name: e.target.name, value: e.target.value });
       setInputValue(e.target.value);
     }
   };
