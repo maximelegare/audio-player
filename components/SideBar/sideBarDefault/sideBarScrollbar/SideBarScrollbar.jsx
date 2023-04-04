@@ -16,6 +16,10 @@ import { IoIosCloseCircle, IoIosAdd } from "react-icons/io";
 import DialogComponent from "../../../Dialog/Dialog";
 import { NewPlaylistDialog } from "../../../Dialog/NewPlaylistDialog";
 
+import useSpotify from "../../../../hooks/useSpotify";
+
+import { useSetRecoilState } from "recoil";
+
 export const SideBarScrollbar = ({
   playlists,
   extendPlaylistSection,
@@ -23,10 +27,13 @@ export const SideBarScrollbar = ({
 }) => {
   const [selectedFilter, setSelectedFilter] = useState("");
 
+  const [noScrollY, setNoScrollY] = useState(false);
+
   const setFilter = (value) => {
     setSelectedFilter(value);
   };
 
+  const { removeTrackFromPlaylistByPosition } = useSpotify();
   const provider = useRecoilValue(selectedSideBarProvider);
 
   const getButtons = (selectedFilter) => {
@@ -152,49 +159,63 @@ export const SideBarScrollbar = ({
       </div>
       <Scrollbar
         noScrollX
-        style={{ marginTop: "8px", height: "100%", width: "100%" }}
+        noScrollY={noScrollY}
+        className="overflow-hidden"
+        id="scrollBarSideBar"
+        style={{
+          marginTop: "8px",
+          height: "100%",
+          width: "100%",
+        }}
       >
-        <div className={styles.linkContainer}>
-          {playlists
-            ?.filter((playlist) => {
-              if (selectedFilter === "by-you") {
-                return playlist.isUserPlaylist;
-              } else if (selectedFilter === "by-spotify") {
-                return !playlist.isUserPlaylist;
-              } else {
-                return playlist;
-              }
-            })
-            ?.map((item) => {
-              if (provider === "spotify") {
-                return (
-                  <div className="my-1">
-                    <SideBarLink
-                      key={item.id}
-                      text={item.name}
-                      href={`/sp/playlists/${item.id}`}
-                      fontWeight={"font-light"}
-                      variant="link"
-                      dotsIcon
-                      provider={provider}
-                    />
-                  </div>
-                );
-              } else {
-                return (
-                  <div className="my-1">
-                    <SideBarLink
-                      key={item.id}
-                      text={item.title}
-                      href={item.route}
-                      variant="link"
-                      dotsIcon
-                      provider={provider}
-                    />
-                  </div>
-                );
-              }
-            })}
+        <div style={{ marginRight: `${noScrollY ? "10px" : ""}` }}>
+          <div className={styles.linkContainer}>
+            {playlists
+              ?.filter((playlist) => {
+                if (selectedFilter === "by-you") {
+                  return playlist.isUserPlaylist;
+                } else if (selectedFilter === "by-spotify") {
+                  return !playlist.isUserPlaylist;
+                } else {
+                  return playlist;
+                }
+              })
+              ?.map((item, idx) => {
+                if (provider === "spotify") {
+                  return (
+                    <div className="my-1" key={item.id}>
+                      <SideBarLink
+                        text={item.name}
+                        id={item.id}
+                        idx={idx}
+                        href={`/sp/playlists/${item.id}`}
+                        fontWeight={"font-light"}
+                        variant="link"
+                        dotsIcon
+                        onDropdownOpen={(value) => setNoScrollY(value)}
+                        provider={provider}
+                      />
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="my-1" key={item.id}>
+                      <SideBarLink
+                        id={item.id}
+                        idx={idx}
+                        text={item.title}
+                        href={item.route}
+                        variant="link"
+                        fontWeight={"font-light"}
+                        dotsIcon
+                        onDropdownOpen={(value) => setNoScrollY(value)}
+                        provider={provider}
+                      />
+                    </div>
+                  );
+                }
+              })}
+          </div>
         </div>
       </Scrollbar>
     </div>

@@ -7,10 +7,16 @@ import { useRouter } from "next/router";
 import { If, Then, Else, When } from "react-if";
 
 import providerDotStyles from "../../styles/_Core/providerDot.module.scss";
-
+import Dropdown from "../../components/_Core/DropdownMenu/DropownMenu";
+import { DropdownPlaylist } from "../_Core/DropdownMenu/DropdownPlaylist";
 import SidePopOver from "../_Core/PopOver/PopOver";
+
+import { useSetRecoilState } from "recoil";
+
 const SideBarLink = ({
   icon,
+  id,
+  idx,
   text,
   href,
   wholeButtonTrigger,
@@ -20,8 +26,12 @@ const SideBarLink = ({
   fontWeight,
   variant,
   provider,
+  onDropdownOpen,
 }) => {
   const router = useRouter();
+
+  
+
 
   const style = {
     color: router.asPath === href && "#fff0e8",
@@ -102,9 +112,11 @@ const SideBarLink = ({
                   </When>
                   {getButton(variant)}
                 </div>
-                <SidePopOver
-                  wholeButtonTrigger={wholeButtonTrigger}
-                  menuItem={menuItem}
+                <Dropdown
+                  menuItem={<DropdownPlaylist id={id} idx={idx} />}
+                  onOpenChange={(isOpen) => {
+                    onDropdownOpen(isOpen);
+                  }}
                 />
               </>
             </Then>

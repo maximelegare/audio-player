@@ -17,9 +17,12 @@ import { currentRouteInfosAtom } from "../../../atoms/generalAtom";
 
 export const DropdownMenuSongSpotify = ({ song, idx }) => {
   const router = useRouter();
-  const { playlists } = useAudioPlayer();
+  const { playlists, toggleSongFromQueue } = useAudioPlayer();
 
   const currentRouteInfos = useRecoilValue(currentRouteInfosAtom);
+
+
+
 
   const {
     spotifyPlaylists,

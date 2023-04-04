@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import { spotifyPlaylistsAtomState } from "../atoms/audioAtomSpotify";
 import { spotifyCurrentPlaylistAtomState } from "../atoms/audioAtomSpotify";
 import { useAudioPlayer } from "./AudioHooks";
+import { useRouter } from "next/router";
 
 function useSpotify() {
   // Create Spotify APi
@@ -15,7 +16,7 @@ function useSpotify() {
   });
 
   const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer();
-
+  const router = useRouter();
   const { data: session, status } = useSession();
 
   const [spotifyPlaylists, setSpotifyPlaylists] = useRecoilState(
@@ -96,6 +97,7 @@ function useSpotify() {
       );
   };
 
+  // Create spotify playlist
   const createSpotifyPlaylist = (title, description = "") => {
     spotifyApi.setAccessToken(session.user.accessToken);
     spotifyApi
@@ -115,13 +117,37 @@ function useSpotify() {
         }
       );
   };
+  // Delete and unfollow a playlist
+  const deleteOrUnfollowSpotifyPlaylist = (id, idx) => {
+    spotifyApi.setAccessToken(session.user.accessToken);
+
+    const filteredPlaylists = spotifyPlaylists.filter((playlist, index) => {
+      return index !== idx;
+    });
+
+    setSpotifyPlaylists([...filteredPlaylists]);
+
+    spotifyApi.unfollowPlaylist(id).then(
+      function (data) {
+        console.log("Playlist successfully unfollowed!");
+      },
+      function (err) {
+        console.log("Something went wrong!", err);
+      }
+    );
+
+    if (router.pathname.includes(id)) {
+      router.push("/");
+    }
+  };
 
   return {
-    spotifyApi,
-    spotifyPlaylists,
     addSongToSpotifyPlaylist,
     createSpotifyPlaylist,
+    deleteOrUnfollowSpotifyPlaylist,
     removeTrackFromPlaylistByPosition,
+    spotifyApi,
+    spotifyPlaylists,
   };
 }
 

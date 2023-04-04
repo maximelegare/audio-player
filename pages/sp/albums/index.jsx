@@ -43,7 +43,6 @@ export async function getServerSideProps(context) {
       );
   }
 
-  console.log(res)
   const albums = res.map(({album}) => {
     return {
       id: album.id,

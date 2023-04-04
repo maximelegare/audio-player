@@ -23,3 +23,4 @@ export const currentRouteInfosAtom = atom({
     key:"currentRouteInfosAtom",
     default:{}
 })
+
