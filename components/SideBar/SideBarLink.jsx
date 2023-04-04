@@ -19,6 +19,7 @@ const SideBarLink = ({
   idx,
   text,
   href,
+  iconOnly,
   wholeButtonTrigger,
   dotsIcon,
   menuItem,
@@ -29,9 +30,6 @@ const SideBarLink = ({
   onDropdownOpen,
 }) => {
   const router = useRouter();
-
-  
-
 
   const style = {
     color: router.asPath === href && "#fff0e8",
@@ -62,7 +60,9 @@ const SideBarLink = ({
               <div className={styles.sideBarIcon}>{icon}</div>
             </When>
 
-            <h4 className={`${styles.text} ${fontWeight}`}>{getText(text)}</h4>
+            <h4 className={`${styles.text} ${fontWeight}`}>
+              {text && getText(text)}
+            </h4>
           </div>
         );
       }
@@ -74,7 +74,7 @@ const SideBarLink = ({
                 <div className={styles.sideBarIcon}>{icon}</div>
               </When>
               <h4 className={`${styles.text} ${fontWeight}`}>
-                {getText(text)}
+                {text && getText(text)}
               </h4>
             </div>
           </Link>
@@ -88,7 +88,7 @@ const SideBarLink = ({
               <div className={styles.sideBarIcon}>{icon}</div>
             </When>
 
-            <h4 className={`${styles.text} ${fontWeight}`}>{getText(text)}</h4>
+            <h4 className={`${styles.text} ${fontWeight}`}>{text && getText(text)}</h4>
           </div>
         );
       }
@@ -97,7 +97,7 @@ const SideBarLink = ({
 
   return (
     <>
-      <When condition={text}>
+      <When condition={text || iconOnly}>
         <div className={styles.container}>
           <If condition={dotsIcon}>
             <Then>

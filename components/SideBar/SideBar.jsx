@@ -13,6 +13,7 @@ import SideBarLink from "./SideBarLink";
 import { HiOutlineCog } from "react-icons/hi";
 import { SideBarOptions } from "./sideBarOptions/SideBarOptions";
 import { MdArrowBackIosNew } from "react-icons/md";
+import { If, Then, Else } from "react-if";
 
 const SideBar = () => {
   const [isSynching, setIsSynching] = useState(false);
@@ -43,27 +44,29 @@ const SideBar = () => {
       </div>
       <hr />
       {getSideBarPage(page)}
-      <div className="w-100 h-2" ></div>
+      <div className="w-100 h-2"></div>
       <hr />
       <div className={styles.linkContainer}>
-        {page === "default" ? (
-          <SideBarLink
-            icon={<HiOutlineCog className={`${styles.sideBarIcon}`} />}
-            // wholeButtonTrigger
-            handleClick={() => {
-              setSideBarPage("options");
-            }}
-          />
-        ) : (
-          <SideBarLink
-            icon={<MdArrowBackIosNew className={`${styles.sideBarIcon}`} />}
-            // wholeButtonTrigger
-            text="Back"
-            handleClick={() => {
-              setSideBarPage("default");
-            }}
-          />
-        )}
+        <If condition={page === "default"}>
+          <Then>
+            <SideBarLink
+              icon={<HiOutlineCog className={`${styles.sideBarIcon}`} />}
+              iconOnly
+              handleClick={() => {
+                setSideBarPage("options");
+              }}
+            />
+          </Then>
+          <Else>
+            <SideBarLink
+              icon={<MdArrowBackIosNew className={`${styles.sideBarIcon}`} />}
+              text="Back"
+              handleClick={() => {
+                setSideBarPage("default");
+              }}
+            />
+          </Else>
+        </If>
       </div>
     </div>
   );

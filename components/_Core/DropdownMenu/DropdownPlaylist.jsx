@@ -5,25 +5,26 @@ import styles from "../../../styles/_Core/PopOver.module.scss";
 import { FaTrashAlt } from "react-icons/fa";
 
 import useSpotify from "../../../hooks/useSpotify";
-import { useRecoilValue } from "recoil";
+import { useRouter } from "next/router";
+
 
 export const DropdownPlaylist = ({id, idx}) => {
 
   const { deleteOrUnfollowSpotifyPlaylist } = useSpotify()
-  
+  const router = useRouter()  
 
   // C:\Users\maxle\Desktop\audioPlayer\audio-player\components\_Core\DropdownMenu\DropdownPlaylist.jsx
   return (
     <>
-      <DropdownMenu.Item
+      {/* <DropdownMenu.Item
         className={styles.menuItem}
         // onClick={() => router.push(`/sp/albums/${song.albumId}`)}
       >
         Create playlist
-      </DropdownMenu.Item>
+      </DropdownMenu.Item> */}
       <DropdownMenu.Item
         className={styles.menuItem}
-        // onClick={() => router.push(`/sp/albums/${song.albumId}`)}
+        onClick={() => router.push(`/sp/playlists/${id}`)}
       >
         Go to playlist
       </DropdownMenu.Item>
