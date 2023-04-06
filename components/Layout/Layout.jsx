@@ -42,6 +42,7 @@ const Layout = ({ children }) => {
           fileUrl={`/api/stream-song${currentSong.RP_streaming_path}`}
           // fileUrl="api/stream-song"
           // fileUrl={currentSong.streaming_url}
+          provider={currentSong.provider}
           imgUrl={currentSong.picture_url}
           duration={currentSong.duration}
         />

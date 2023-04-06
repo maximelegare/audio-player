@@ -7,13 +7,13 @@ import { useAudioPlayer } from "../../hooks/AudioHooks";
 
 const PlayingIcon = () => {
 
-  const {isPlaying} = useAudioPlayer()  
+  const {isPlaying, spotifyIsPlaying} = useAudioPlayer()  
 
   return (
     <div className={styles.container}>
-      <span className={`${styles.col} ${!isPlaying && styles.paused}`}></span>
-      <span className={`${styles.col} ${!isPlaying && styles.paused}`}></span>
-      <span className={`${styles.col} ${!isPlaying && styles.paused}`}></span>
+      <span className={`${styles.col} ${!isPlaying && !spotifyIsPlaying && styles.paused}`}></span>
+      <span className={`${styles.col} ${!isPlaying && !spotifyIsPlaying && styles.paused}`}></span>
+      <span className={`${styles.col} ${!isPlaying && !spotifyIsPlaying && styles.paused}`}></span>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { playlistRouteTypes as routeType } from "../lib/route_types/playlist.types";
 import { useState, useRef, useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   currentRouteSongsState,
   currentSongState,
@@ -12,13 +12,24 @@ import {
   randomState,
   randomQueueState,
 } from "../atoms/audioAtom";
+import { spotifyDeviceIdAtom } from "../atoms/audioAtomSpotify";
+
 import axios from "axios";
 import { createUrlRoute } from "../lib/utilities";
 
+import { spotifyIsPlayingAtom } from "../atoms/audioAtomSpotify";
+import spotifyApi from "../lib/spotify";
+import { useSession } from "next-auth/react";
 import { shuffleArray } from "../lib/utilities";
 const useAudioPlayer = (fileUrl, duration) => {
+  const { data: session } = useSession();
+  const spotifyDeviceId = useRecoilValue(spotifyDeviceIdAtom);
+
   // Global state for song
-  const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
+  const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState); //hodei playing state
+  const [spotifyIsPlaying, setSpotifyIsPlaying] =
+    useRecoilState(spotifyIsPlayingAtom); // Spotify playing state
+
   const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
 
   // Queue state
@@ -84,16 +95,81 @@ const useAudioPlayer = (fileUrl, duration) => {
   //   SONGS   //
   ///////////////
 
+  // Is playing dispatcher
+  const setPlayingStateDispatcher = (provider) => {
+    switch (provider) {
+      case "hodei": {
+        if (isPlaying) {
+          sPause();
+          hPlay();
+        } else {
+          hPause();
+        }
+      }
+      case "spotify": {
+        if (spotifyIsPlaying) {
+          hPause();
+          sPlay(currentSong.uri);
+        } else {
+          sPause();
+        }
+      }
+    }
+  };
+
+  // hodei play pause functions
+  const hPlay = () => {
+    audioPlayer?.current?.play();
+    // animationRef.current = requestAnimationFrame(whilePlaying); // Start range input animation
+  };
+
+  const hPause = () => {
+    audioPlayer?.current?.pause();
+    // cancelAnimationFrame(animationRef.current);
+  };
+
+  // Spotify play pause functions
+  const sPlay = (songUri) => {
+    spotifyApi.setAccessToken(session?.user.accessToken);
+
+    
+
+    if (session?.user.accessToken) {
+     
+
+      spotifyApi.transferMyPlayback({device_ids:["2349e17ca5694253687aa0bead5ee4303209dff5"], play:true})
+
+      spotifyApi.play({ uris: [songUri] }).then(
+        function () {
+          console.log("Playback started");
+        },
+        function (err) {
+          console.log("Something went wrong!", err);
+        }
+      );
+    }
+    // animationRef.current = requestAnimationFrame(whilePlaying);
+  };
+
+  const sPause = () => {
+    spotifyApi.setAccessToken(session?.user.accessToken);
+    if (session?.user.accessToken) {
+      spotifyApi.pause().then(
+        function () {
+          console.log("Playback paused");
+        },
+        function (err) {
+          console.log("Something went wrong!", err);
+        }
+      );
+    }
+    // cancelAnimationFrame(animationRef.current); // Stop range input animation
+  };
+
   // Set play/pause based on isPlaying value & when file changes
   useEffect(() => {
-    if (isPlaying) {
-      audioPlayer?.current?.play();
-      animationRef.current = requestAnimationFrame(whilePlaying); // Start range input animation
-    } else {
-      audioPlayer?.current?.pause();
-      cancelAnimationFrame(animationRef.current); // Stop range input animation
-    }
-  }, [isPlaying, fileUrl]);
+    setPlayingStateDispatcher(currentSong?.provider);
+  }, [isPlaying, session, spotifyIsPlaying,  fileUrl]);
 
   // Sets the next song Automatically when the previous song finished
   useEffect(() => {
@@ -116,7 +192,7 @@ const useAudioPlayer = (fileUrl, duration) => {
             setCurrentSong({});
             changeRange(0);
           }
-        // It's not the last song
+          // It's not the last song
         } else {
           setCurrentSong({
             ...recoilQueue.songs[currentSong.songIdx + 1],
@@ -129,7 +205,7 @@ const useAudioPlayer = (fileUrl, duration) => {
       }
     }
   }, [audioPlayer?.current?.currentTime, duration, repeatValue]);
-    // Set the next or previous song when button cliked
+  // Set the next or previous song when button cliked
   const setNextSong = (status) => {
     if (status === "previous") {
       // If it's the first song
@@ -164,8 +240,6 @@ const useAudioPlayer = (fileUrl, duration) => {
     }
   };
 
-
-
   // Change Repeat state based on the number received
   const changeRepeatValue = (number) => {
     if (number >= 2) {
@@ -187,7 +261,13 @@ const useAudioPlayer = (fileUrl, duration) => {
     setRecoilRandomState(!randomValue);
   };
 
+  //###############################################################################//
   ///////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////
+
+  ///////////////////////
+  ////SPOTIFY PLAYING////
+  ///////////////////////
 
   ///////////////
   // PLAYLISTS //
@@ -199,9 +279,6 @@ const useAudioPlayer = (fileUrl, duration) => {
     likedSongsPlaylistState
   );
 
-  //////////////////////////// 
-  // Is used in Spotify too //
-  //////////////////////////// 
   // Playlist displayed on the current route (the songs)
   // To update in real time songs in playlist
   const [currentRouteSongs, setCurrentRouteSongs] = useRecoilState(
@@ -283,7 +360,7 @@ const useAudioPlayer = (fileUrl, duration) => {
       title: name,
       route: `/${route}`,
     };
-    setRecoilPlaylists([ playlist, ...playlists]);
+    setRecoilPlaylists([playlist, ...playlists]);
 
     try {
       await axios.post("/api/playlist", {
@@ -297,9 +374,6 @@ const useAudioPlayer = (fileUrl, duration) => {
   };
 
   const addAndRemoveSongFromPlaylist = async (type, song, playlistName) => {
-
-    
-
     // Add song to specific playlist if type add
     if (type === "add") {
       // Add Locally
@@ -333,7 +407,6 @@ const useAudioPlayer = (fileUrl, duration) => {
       }
     }
   };
-
   // Sets playlists to local storage
   const setPlaylistsDataGlobally = (data) => {
     setRecoilPlaylists(data);
@@ -352,6 +425,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     queue,
     randomValue,
     repeatValue,
+    spotifyIsPlaying,
     addAndRemoveSongFromPlaylist,
     changeRandomValue,
     changeRange,
@@ -364,6 +438,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     setNextSong,
     setPlaylistAndSong,
     setPlaylistsDataGlobally,
+    setSpotifyIsPlaying,
     toggleLikedSong,
     toggleSongFromQueue,
   };

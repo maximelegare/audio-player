@@ -10,15 +10,29 @@ import VolumeControles from "./VolumeControles";
 
 import { useAudioPlayer } from "../../hooks/AudioHooks";
 
-const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
+const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration, provider }) => {
   const {
     isPlaying,
     setIsPlaying,
+    spotifyIsPlaying,
+    setSpotifyIsPlaying,
     progressInput,
     max,
     audioPlayer,
     changeRange,
   } = useAudioPlayer(fileUrl, duration);
+
+  const handlePlayPause = (prov) => {
+    switch (prov){
+      case "hodei":{
+        setIsPlaying(!isPlaying)
+      }
+      case "spotify":{
+        setSpotifyIsPlaying(!spotifyIsPlaying)
+      }
+    }
+  }
+
 
   return (
     <>
@@ -27,8 +41,8 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration }) => {
           <InfosAlbumPlaying title={title} artist={artist} imgUrl={imgUrl} />
           <div className={styles.controles}>
             <AudioControlesCenter
-              isPlaying={isPlaying}
-              handlePlayPause={() => setIsPlaying(!isPlaying)}
+              isPlaying={isPlaying || spotifyIsPlaying}
+              handlePlayPause={() => handlePlayPause(provider)}
               audioElement={
                 <audio ref={audioPlayer} src={fileUrl} preload="metadata">
                   <source src={fileUrl} />

@@ -38,7 +38,9 @@ export async function getServerSideProps(context) {
   if (session) {
     topTracksRes = await spotifyApi.getMyTopTracks().then(
       function (data) {
+        console.log(data.body.items[0])
         return data.body.items;
+
       },
       function (err) {
         console.log("Something went wrong!", err);

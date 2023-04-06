@@ -2,9 +2,13 @@ import { useSession, signIn } from "next-auth/react";
 import React, { useEffect } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 
-import { useRecoilState } from "recoil";
-import { spotifyPlaylistsAtomState } from "../atoms/audioAtomSpotify";
-import { spotifyCurrentPlaylistAtomState } from "../atoms/audioAtomSpotify";
+import { useRecoilState, useSetRecoilState } from "recoil";
+
+import {
+  spotifyPlaylistsAtomState,
+  spotifyCurrentPlaylistAtomState,
+  spotifyDeviceIdAtom,
+} from "../atoms/audioAtomSpotify";
 import { useAudioPlayer } from "./AudioHooks";
 import { useRouter } from "next/router";
 
@@ -15,9 +19,27 @@ function useSpotify() {
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   });
 
+  const  setSpotifyDeviceId = useSetRecoilState(spotifyDeviceIdAtom);
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (session?.user.accessToken) {
+      spotifyApi.setAccessToken(session?.user.accessToken);
+      
+      return spotifyApi.getMyDevices().then(
+        function (data) {
+          console.log(data)
+          // setSpotifyDeviceId(data.body.devices[0].id)
+        },
+        function (err) {
+          console.log("Something went wrong!", err);
+        }
+      );
+    }
+  }, [session?.user.accessToken]);
+
   const { currentRouteSongs, setCurrentRouteSongs } = useAudioPlayer();
   const router = useRouter();
-  const { data: session, status } = useSession();
 
   const [spotifyPlaylists, setSpotifyPlaylists] = useRecoilState(
     spotifyPlaylistsAtomState

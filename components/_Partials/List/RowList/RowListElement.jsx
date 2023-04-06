@@ -36,22 +36,40 @@ const RowListElement = ({
 
   const setSearchVisibility = useSetRecoilState(searchSectionVisibilityState);
 
-  const { currentSong, setIsPlaying, isPlaying } = useAudioPlayer();
+  const { currentSong, setIsPlaying, isPlaying, setSpotifyIsPlaying, spotifyIsPlaying } =
+    useAudioPlayer();
   const router = useRouter();
 
-  const { title, artist, picture_url, album, duration, song_route, id } = song;
+  const {
+    title,
+    artist,
+    picture_url,
+    album,
+    duration,
+    song_route,
+    id,
+    provider,
+  } = song;
 
   const [hover, setHover] = useState(false);
 
   // Pass the song clicked to the parent for it to set the song & playlist when clicked
   const handleSongDoubleClick = (e) => {
     // If the song currently playing is not the one clicked, play it
-    if (song_route !== currentSong.song_route) {
+    if (id !== currentSong.id) {
       setPlaylistBasedOnSongClicked(idx);
-      setIsPlaying(true);
+      if (provider === "hodei") {
+        setIsPlaying(true);
+      } else if (provider === "spotify") {
+        setSpotifyIsPlaying(true);
+      }
       // Otherwise pause
     } else {
-      setIsPlaying(!isPlaying);
+      if (provider === "hodei") {
+        setIsPlaying(!isPlaying);
+      } else if (provider === "spotify") {
+        setSpotifyIsPlaying(!spotifyIsPlaying);
+      }
     }
   };
 
@@ -66,11 +84,6 @@ const RowListElement = ({
     }
   };
 
-  const handlePlayPauseClick = (e) => {
-    e.stopPropagation();
-    setPlaylistBasedOnSongClicked(idx);
-    setIsPlaying(!isPlaying);
-  };
 
   const getColor = (provider) => {
     switch (provider) {
@@ -136,7 +149,7 @@ const RowListElement = ({
                         {
                           // show pause if it's the current song playing
                           // Or show play for the other ones
-                          isPlaying && currentSong.id === id ? (
+                          isPlaying || spotifyIsPlaying && currentSong.id === id ? (
                             <GiPauseButton />
                           ) : (
                             <FaPlay className={styles.playIcon} />

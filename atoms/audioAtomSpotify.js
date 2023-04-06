@@ -9,6 +9,16 @@ export const spotifyPlaylistsAtomState = atom({
     default:null
 })
 
+export const spotifyDeviceIdAtom = atom({
+    key:"spotifyDeviceIdAtom",
+    default:""
+})
+
+export const spotifyIsPlayingAtom = atom({
+    key:"spotifyIsPlayingAtom",
+    default:false
+})
+
 
 export const spotifyCurrentPlaylistAtomState = atom({
     key:"spotifyPlaylistAtomState",
