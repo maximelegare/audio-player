@@ -36,7 +36,7 @@ const RowListElement = ({
 
   const setSearchVisibility = useSetRecoilState(searchSectionVisibilityState);
 
-  const { currentSong, setIsPlaying, isPlaying, setSpotifyIsPlaying, spotifyIsPlaying } =
+  const { currentSong, setIsPlaying, isPlaying, setSpotifyIsPlaying, sPlay, sPause, spotifyIsPlaying, setPlayingStateDispatcher } =
     useAudioPlayer();
   const router = useRouter();
 
@@ -49,6 +49,7 @@ const RowListElement = ({
     song_route,
     id,
     provider,
+    uri
   } = song;
 
   const [hover, setHover] = useState(false);
@@ -58,17 +59,17 @@ const RowListElement = ({
     // If the song currently playing is not the one clicked, play it
     if (id !== currentSong.id) {
       setPlaylistBasedOnSongClicked(idx);
-      if (provider === "hodei") {
-        setIsPlaying(true);
-      } else if (provider === "spotify") {
-        setSpotifyIsPlaying(true);
+      setPlayingStateDispatcher(provider, "play")
+      if(provider === "spotify"){
+        setSpotifyIsPlaying(true)
+        sPlay(uri)
       }
       // Otherwise pause
     } else {
-      if (provider === "hodei") {
-        setIsPlaying(!isPlaying);
-      } else if (provider === "spotify") {
-        setSpotifyIsPlaying(!spotifyIsPlaying);
+      setPlayingStateDispatcher(provider, "pause")
+      if(provider === "spotify"){
+        setSpotifyIsPlaying(false)
+        sPause()
       }
     }
   };
@@ -150,7 +151,7 @@ const RowListElement = ({
                           // show pause if it's the current song playing
                           // Or show play for the other ones
                           isPlaying || spotifyIsPlaying && currentSong.id === id ? (
-                            <GiPauseButton />
+                             <GiPauseButton />
                           ) : (
                             <FaPlay className={styles.playIcon} />
                           )

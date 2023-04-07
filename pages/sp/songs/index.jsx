@@ -50,6 +50,7 @@ export async function getServerSideProps(context) {
 
 
   const topTracks = topTracksRes?.map((song) => {
+    console.log(song)
     return {
       id: song.id,
       uri:song.uri,
@@ -65,6 +66,7 @@ export async function getServerSideProps(context) {
       provider:"spotify",
       spotify:{...song}
     };
+
     // id:item.track.id,
     //   title: item.track.name,
     //   artist: item.track.artists[0].name,

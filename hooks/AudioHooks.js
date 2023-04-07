@@ -30,7 +30,12 @@ const useAudioPlayer = (fileUrl, duration) => {
   const [spotifyIsPlaying, setSpotifyIsPlaying] =
     useRecoilState(spotifyIsPlayingAtom); // Spotify playing state
 
-  const [currentSong, setCurrentSong] = useRecoilState(currentSongState);
+  const [currentSong, setCurrentSong] = useState({});
+  const [recoilCurrentSong, setRecoilCurrentSong] =
+    useRecoilState(currentSongState);
+  useEffect(() => {
+    setCurrentSong(recoilCurrentSong);
+  }, [recoilCurrentSong]);
 
   // Queue state
   const [queue, setQueue] = useState([]);
@@ -96,23 +101,27 @@ const useAudioPlayer = (fileUrl, duration) => {
   ///////////////
 
   // Is playing dispatcher
-  const setPlayingStateDispatcher = (provider) => {
+  const setPlayingStateDispatcher = (provider, status, value) => {
     switch (provider) {
       case "hodei": {
-        if (isPlaying) {
-          sPause();
+        if (status === "play" || (!status && isPlaying)) {
+          setIsPlaying(value? value: true);
           hPlay();
         } else {
+          setIsPlaying(value? value: false);
           hPause();
         }
+        break;
       }
       case "spotify": {
-        if (spotifyIsPlaying) {
-          hPause();
-          sPlay(currentSong.uri);
+        if (status === "play" || (!status && spotifyIsPlaying)) {
+          setSpotifyIsPlaying(value? value: true);
+          // sPlay(currentSong.uri);
         } else {
-          sPause();
+          setSpotifyIsPlaying(value? value: false);
+          // sPause();
         }
+        break;
       }
     }
   };
@@ -132,12 +141,8 @@ const useAudioPlayer = (fileUrl, duration) => {
   const sPlay = (songUri) => {
     spotifyApi.setAccessToken(session?.user.accessToken);
 
-    
-
     if (session?.user.accessToken) {
-     
-
-      spotifyApi.transferMyPlayback({device_ids:["2349e17ca5694253687aa0bead5ee4303209dff5"], play:true})
+      // spotifyApi.transferMyPlayback({device_ids:["2349e17ca5694253687aa0bead5ee4303209dff5"], play:true})
 
       spotifyApi.play({ uris: [songUri] }).then(
         function () {
@@ -168,8 +173,13 @@ const useAudioPlayer = (fileUrl, duration) => {
 
   // Set play/pause based on isPlaying value & when file changes
   useEffect(() => {
+    // if (isPlaying) {
+    //   animationRef.current = requestAnimationFrame(whilePlaying); // Start range input animation
+    // } else {
+    //   cancelAnimationFrame(animationRef.current); // Stop range input animation
+    // }
     setPlayingStateDispatcher(currentSong?.provider);
-  }, [isPlaying, session, spotifyIsPlaying,  fileUrl]);
+  }, [isPlaying, fileUrl]);
 
   // Sets the next song Automatically when the previous song finished
   useEffect(() => {
@@ -181,7 +191,7 @@ const useAudioPlayer = (fileUrl, duration) => {
         if (currentSong.songIdx === queue.songs.length - 1) {
           // Repeat playlist
           if (repeatValue === 1) {
-            setCurrentSong({
+            setRecoilCurrentSong({
               ...queue.songs[0],
               songIdx: 0,
             });
@@ -189,12 +199,12 @@ const useAudioPlayer = (fileUrl, duration) => {
           // Stop the player
           else {
             setIsPlaying(false);
-            setCurrentSong({});
+            setRecoilCurrentSong({});
             changeRange(0);
           }
           // It's not the last song
         } else {
-          setCurrentSong({
+          setRecoilCurrentSong({
             ...recoilQueue.songs[currentSong.songIdx + 1],
             songIdx: currentSong.songIdx + 1,
           });
@@ -210,14 +220,14 @@ const useAudioPlayer = (fileUrl, duration) => {
     if (status === "previous") {
       // If it's the first song
       if (currentSong.songIdx === 0) {
-        setCurrentSong({
+        setRecoilCurrentSong({
           ...queue.songs[0],
           songIdx: 0,
         });
         changeRange(0);
       } else {
         setIsPlaying(true);
-        setCurrentSong({
+        setRecoilCurrentSong({
           // Check the current song in the playlist based on it's index
           ...recoilQueue.songs[currentSong.songIdx - 1],
           songIdx: currentSong.songIdx - 1,
@@ -226,13 +236,13 @@ const useAudioPlayer = (fileUrl, duration) => {
     } else {
       // If it's the last song
       if (currentSong.songIdx === queue.songs.length - 1) {
-        setCurrentSong({
+        setRecoilCurrentSong({
           ...queue.songs[0],
           songIdx: 0,
         });
       } else {
         setIsPlaying(true);
-        setCurrentSong({
+        setRecoilCurrentSong({
           ...recoilQueue.songs[currentSong.songIdx + 1],
           songIdx: currentSong.songIdx + 1,
         });
@@ -350,7 +360,7 @@ const useAudioPlayer = (fileUrl, duration) => {
     // const shuffledPlaylistSongs = shuffleArray(playlistSongs);
     // setRecoilRandomQueue({ songs: shuffledPlaylistSongs, title });
 
-    setCurrentSong({ ...playlistSongs[songIdx], songIdx });
+    setRecoilCurrentSong({ ...playlistSongs[songIdx], songIdx });
   };
 
   // Send data to backend for it to create playlist in mysql
@@ -429,10 +439,14 @@ const useAudioPlayer = (fileUrl, duration) => {
     addAndRemoveSongFromPlaylist,
     changeRandomValue,
     changeRange,
+    sPause,
+    sPlay,
+    hPause,
+    hPlay,
+    setPlayingStateDispatcher,
     changeRepeatValue,
     createPlaylist,
     setCurrentRouteSongs,
-    setCurrentSong,
     setIsPlaying,
     setLikedSongsPlaylist,
     setNextSong,

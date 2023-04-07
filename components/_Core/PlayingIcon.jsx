@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import styles from "../../styles/_Core/PlayingIcon.module.scss";
 
@@ -7,8 +7,13 @@ import { useAudioPlayer } from "../../hooks/AudioHooks";
 
 const PlayingIcon = () => {
 
+  
   const {isPlaying, spotifyIsPlaying} = useAudioPlayer()  
+  
 
+  // useEffect(() => {
+
+  // },[])
   return (
     <div className={styles.container}>
       <span className={`${styles.col} ${!isPlaying && !spotifyIsPlaying && styles.paused}`}></span>

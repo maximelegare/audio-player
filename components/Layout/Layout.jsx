@@ -14,27 +14,26 @@ const Layout = ({ children }) => {
   const seachVisibility = useRecoilValue(searchSectionVisibilityState);
   const { currentSong } = useAudioPlayer();
   const memoizedValue = useMemo(() => <>{children}</>, [children]);
-
   return (
     <div>
       <main className={styles.main}>
         <div className={styles.top}>
           <SideBar />
 
-          <Scrollbar
-            noScrollX
-            style={{
-              width: "100%",
-              height: "100%",
-              position: "relative",
-              zIndex: 1,
-            }}
-          >
-            <div style={{ position: "relative" }}>
-              {seachVisibility && <Search />}
-              <div>{memoizedValue}</div>
-            </div>
-          </Scrollbar>
+            <Scrollbar
+              noScrollX
+              style={{
+                width: "100%",
+                height: "100%",
+                position: "relative",
+                zIndex: 1,
+              }}
+            >
+              <div style={{ position: "relative" }}>
+                {seachVisibility && <Search />}
+                <div>{memoizedValue}</div>
+              </div>
+            </Scrollbar>
         </div>
         <AudioPlayer
           title={currentSong.title}
