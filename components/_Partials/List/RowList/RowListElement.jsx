@@ -62,14 +62,14 @@ const RowListElement = ({
       setPlayingStateDispatcher(provider, "play")
       if(provider === "spotify"){
         setSpotifyIsPlaying(true)
-        sPlay(uri)
+        // sPlay(uri)
       }
       // Otherwise pause
     } else {
       setPlayingStateDispatcher(provider, "pause")
       if(provider === "spotify"){
         setSpotifyIsPlaying(false)
-        sPause()
+        // sPause()
       }
     }
   };

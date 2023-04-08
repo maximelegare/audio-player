@@ -14,6 +14,8 @@ const Layout = ({ children }) => {
   const seachVisibility = useRecoilValue(searchSectionVisibilityState);
   const { currentSong } = useAudioPlayer();
   const memoizedValue = useMemo(() => <>{children}</>, [children]);
+
+  console.log(currentSong)
   return (
     <div>
       <main className={styles.main}>
@@ -44,6 +46,7 @@ const Layout = ({ children }) => {
           provider={currentSong.provider}
           imgUrl={currentSong.picture_url}
           duration={currentSong.duration}
+          uri={currentSong.uri}
         />
       </main>
     </div>

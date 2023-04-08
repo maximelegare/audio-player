@@ -9,8 +9,9 @@ import AudioControlesCenter from "./AudioControlesCenter";
 import VolumeControles from "./VolumeControles";
 
 import { useAudioPlayer } from "../../hooks/AudioHooks";
+import { SpotifyPlayer } from "./SpotifyPlayer";
 
-const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration, provider }) => {
+const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration, provider, uri }) => {
   const {
     isPlaying,
     setIsPlaying,
@@ -37,6 +38,7 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration, provider
   return (
     <>
       <div className={styles.audioPlayer}>
+          <SpotifyPlayer uri={uri}></SpotifyPlayer>
         <div className={styles.layout}>
           <InfosAlbumPlaying title={title} artist={artist} imgUrl={imgUrl} />
           <div className={styles.controles}>
