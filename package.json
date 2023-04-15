@@ -29,6 +29,7 @@
     "react-if": "^4.1.4",
     "react-range": "^1.8.12",
     "react-scrollbars-custom": "^4.0.27",
+    "react-spotify-web-playback": "github:maximelegare/react-spotify-web-playback#b30f6ea626d2195dac8a8b3cca6323eac0530f15",
     "react-transition-group": "^4.4.2",
     "recoil": "^0.5.1",
     "recoil-persist": "^4.0.0",

@@ -9,9 +9,20 @@ import AudioControlesCenter from "./AudioControlesCenter";
 import VolumeControles from "./VolumeControles";
 
 import { useAudioPlayer } from "../../hooks/AudioHooks";
-import { SpotifyPlayer } from "./SpotifyPlayer";
+import { SpotifyPlayerComponent } from "./SpotifyPlayer";
 
-const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration, provider, uri }) => {
+import { If, Then, Else } from "react-if";
+
+const AudioPlayer = ({
+  fileUrl,
+  title,
+  artist,
+  album,
+  imgUrl,
+  duration,
+  provider,
+  uri,
+}) => {
   const {
     isPlaying,
     setIsPlaying,
@@ -24,21 +35,20 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration, provider
   } = useAudioPlayer(fileUrl, duration);
 
   const handlePlayPause = (prov) => {
-    switch (prov){
-      case "hodei":{
-        setIsPlaying(!isPlaying)
+    switch (prov) {
+      case "hodei": {
+        setIsPlaying(!isPlaying);
       }
-      case "spotify":{
-        setSpotifyIsPlaying(!spotifyIsPlaying)
+      case "spotify": {
+        setSpotifyIsPlaying(!spotifyIsPlaying);
       }
     }
-  }
-
+  };
 
   return (
     <>
       <div className={styles.audioPlayer}>
-          <SpotifyPlayer uri={uri}></SpotifyPlayer>
+        
         <div className={styles.layout}>
           <InfosAlbumPlaying title={title} artist={artist} imgUrl={imgUrl} />
           <div className={styles.controles}>
@@ -51,14 +61,22 @@ const AudioPlayer = ({ fileUrl, title, artist, album, imgUrl, duration, provider
                 </audio>
               }
             />
-            <ProgressBar
-              values={progressInput.values}
-              min={progressInput.min}
-              max={max}
-              step={progressInput.step}
-              updateValues={(values) => changeRange(values)}
-              width="max(30vw, 300px)"
-            />
+           <If condition={provider === "spotify"}>
+              <Then>
+                <SpotifyPlayerComponent uri={uri} />
+              </Then>
+              <Else>
+                <ProgressBar
+                  values={progressInput.values}
+                  min={progressInput.min}
+                  max={max}
+                  step={progressInput.step}
+                  updateValues={(values) => changeRange(values)}
+                  width="100%"
+                />
+              </Else>
+            </If>
+
           </div>
           <VolumeControles audioRef={audioPlayer} />
         </div>

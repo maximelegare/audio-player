@@ -32,7 +32,7 @@ const RangeInput = ({ values, step, min, max, updateValues, width }) => {
             style={{
               ...props.style,
               height: "6px",
-              width: "max(30vw, 300px)",
+              width: "100%",
               borderRadius: "10px",
               // backgroundColor: "#ffe3d4",
               cursor: "pointer",
