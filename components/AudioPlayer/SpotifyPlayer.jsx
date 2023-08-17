@@ -1,6 +1,5 @@
-
 import dynamic from "next/dynamic";
-import React from 'react'
+import React from "react";
 import { useSession } from "next-auth/react";
 const SpotifyPlayer = dynamic(() => import("react-spotify-web-playback"), {
   loading: () => <p>Loading...</p>,
@@ -9,11 +8,12 @@ import { When } from "react-if";
 
 import { useRecoilValue } from "recoil";
 import { spotifyIsPlayingAtom } from "../../atoms/audioAtomSpotify";
+import { useAudioPlayer } from "../../hooks/AudioHooks";
 
+export const SpotifyPlayerComponent = ({ uri }) => {
+  const { setNextSong } = useAudioPlayer();
 
-export const SpotifyPlayerComponent = ({uri}) => {
-  
-   const { data: session } = useSession();
+  const { data: session } = useSession();
   const spotifyIsPlaying = useRecoilValue(spotifyIsPlayingAtom);
 
   console.log(session?.user.accessToken);
@@ -21,7 +21,7 @@ export const SpotifyPlayerComponent = ({uri}) => {
     <div className="mt-[15px]">
       <When condition={session?.user.accessToken}>
         <SpotifyPlayer
-
+          setNextSong={() => console.log("song finished")}
           uris={[uri]}
           token={session?.user.accessToken}
           play={spotifyIsPlaying}
@@ -38,13 +38,10 @@ export const SpotifyPlayerComponent = ({uri}) => {
       </When>
     </div>
   );
-  
-}
-
-
+};
 
 // const SpotifyPlayerComponent = ({ uri }) => {
-//   return 
+//   return
 //   <></>
 //   // const { data: session } = useSession();
 //   // const spotifyIsPlaying = useRecoilValue(spotifyIsPlayingAtom);
@@ -73,7 +70,3 @@ export const SpotifyPlayerComponent = ({uri}) => {
 //   // );
 // };
 // export default SpotifyPlayerComponent
-
-
-
-

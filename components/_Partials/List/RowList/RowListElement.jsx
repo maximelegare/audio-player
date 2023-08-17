@@ -36,8 +36,16 @@ const RowListElement = ({
 
   const setSearchVisibility = useSetRecoilState(searchSectionVisibilityState);
 
-  const { currentSong, setIsPlaying, isPlaying, setSpotifyIsPlaying, sPlay, sPause, spotifyIsPlaying, setPlayingStateDispatcher } =
-    useAudioPlayer();
+  const {
+    currentSong,
+    setIsPlaying,
+    isPlaying,
+    setSpotifyIsPlaying,
+    sPlay,
+    sPause,
+    spotifyIsPlaying,
+    setPlayingStateDispatcher,
+  } = useAudioPlayer();
   const router = useRouter();
 
   const {
@@ -49,7 +57,7 @@ const RowListElement = ({
     song_route,
     id,
     provider,
-    uri
+    uri,
   } = song;
 
   const [hover, setHover] = useState(false);
@@ -57,19 +65,42 @@ const RowListElement = ({
   // Pass the song clicked to the parent for it to set the song & playlist when clicked
   const handleSongDoubleClick = (e) => {
     // If the song currently playing is not the one clicked, play it
+    // if (id !== currentSong.id) {
+    //   setPlaylistBasedOnSongClicked(idx);
+
+    //   if (provider === "spotify") {
+    //     setSpotifyIsPlaying(true);
+    //     // sPlay(uri)
+    //   } else {
+    //     setPlayingStateDispatcher(provider, "play");
+    //   }
+
+    //   // Otherwise pause
+    // } else {
+    //   if (provider === "spotify") {
+    //     setSpotifyIsPlaying(!spotifyIsPlaying);
+    //     // sPause()
+    //   } else {
+    //     setPlayingStateDispatcher(provider, "pause");
+    //   }
+    // }
+
     if (id !== currentSong.id) {
       setPlaylistBasedOnSongClicked(idx);
-      setPlayingStateDispatcher(provider, "play")
-      if(provider === "spotify"){
-        setSpotifyIsPlaying(true)
-        // sPlay(uri)
+      if (provider === "hodei") {
+          setSpotifyIsPlaying(false)
+          setIsPlaying(true);
+        
+      } else if (provider === "spotify") {
+          setIsPlaying(false);
+          setSpotifyIsPlaying(true);
+        
       }
-      // Otherwise pause
     } else {
-      setPlayingStateDispatcher(provider, "pause")
-      if(provider === "spotify"){
-        setSpotifyIsPlaying(false)
-        // sPause()
+      if (provider === "hodei") {
+        setIsPlaying(!isPlaying);
+      } else if (provider === "spotify") {
+        setSpotifyIsPlaying(!spotifyIsPlaying);
       }
     }
   };
@@ -84,7 +115,6 @@ const RowListElement = ({
       setHighlightedSong(song.id); // Highlight song
     }
   };
-
 
   const getColor = (provider) => {
     switch (provider) {
@@ -150,8 +180,9 @@ const RowListElement = ({
                         {
                           // show pause if it's the current song playing
                           // Or show play for the other ones
-                          isPlaying || spotifyIsPlaying && currentSong.id === id ? (
-                             <GiPauseButton />
+                          isPlaying ||
+                          (spotifyIsPlaying && currentSong.id === id) ? (
+                            <GiPauseButton />
                           ) : (
                             <FaPlay className={styles.playIcon} />
                           )
